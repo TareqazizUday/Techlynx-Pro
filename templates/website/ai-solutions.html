@@ -1,0 +1,396 @@
+{% extends 'base.html' %}
+
+{% block title %}AI Solutions & Machine Learning Services | Automation & AI Agents{% endblock %}
+
+{% block meta_description %}Transform your business with custom AI solutions. We build intelligent chatbots, machine learning models, computer vision systems, and automation workflows that reduce costs by 85%. Expert AI development with proven ROI from $25K. Free AI consultation available.{% endblock %}
+
+{% block meta_keywords %}AI solutions, machine learning, artificial intelligence, AI automation, chatbot development, computer vision, AI agents, ML models, deep learning, NLP services, AI consulting, intelligent automation{% endblock %}
+
+{% block og_title %}AI Solutions & Intelligent Automation | 85% Cost Reduction{% endblock %}
+
+{% block og_description %}Custom AI & ML solutions: chatbots, automation, computer vision. 85% cost reduction. Expert development from $25K. Free consultation.{% endblock %}
+
+{% block content %}
+<main>
+<!-- Hero Section -->
+<section class="relative overflow-hidden pt-16 pb-20 lg:pt-24 lg:pb-32 bg-background-light dark:bg-background-dark">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="lg:grid lg:grid-cols-2 lg:gap-16 items-center">
+            <div>
+                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-primary/10 text-primary mb-6 uppercase tracking-wider">
+                    <span class="material-symbols-outlined text-sm">psychology</span> Next-Gen AI Technology
+                </span>
+                <h1 class="text-4xl md:text-6xl font-black text-slate-900 dark:text-white leading-[1.1] mb-6">
+                    Transform Your Business with <span class="text-primary">AI-Powered</span> Intelligence
+                </h1>
+                <p class="text-lg md:text-xl text-slate-600 dark:text-slate-400 mb-8 leading-relaxed">
+                    From intelligent chatbots to predictive analytics and machine learning models. We build custom AI solutions that automate workflows, enhance decision-making, and drive exponential growth.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a href="{% url 'contact' %}" class="px-8 py-4 bg-primary text-white rounded-lg font-bold text-lg hover:shadow-lg hover:shadow-primary/30 transition-all flex items-center gap-2 justify-center group">
+                        Start AI Transformation <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                    </a>
+                    <a href="{% url 'case_studies' %}" class="px-8 py-4 border border-[#cfd9e7] dark:border-slate-700 rounded-lg font-bold text-lg hover:bg-white dark:hover:bg-slate-800 transition-all">
+                        View AI Case Studies
+                    </a>
+                </div>
+            </div>
+            <div class="mt-12 lg:mt-0 relative">
+                <div class="absolute -top-12 -left-12 w-64 h-64 bg-primary/10 rounded-full blur-3xl"></div>
+                <div class="absolute -bottom-12 -right-12 w-64 h-64 bg-primary/20 rounded-full blur-3xl"></div>
+                <div class="relative bg-white dark:bg-slate-900 border border-[#e7ecf3] dark:border-slate-800 p-6 rounded-3xl shadow-xl">
+                    <!-- AI Metrics Visualization -->
+                    <div class="flex justify-between items-end mb-8">
+                        <div>
+                            <p class="text-xs text-slate-500 uppercase font-bold tracking-widest">AI Impact Forecast</p>
+                            <h3 class="text-2xl font-bold">85% Cost Reduction</h3>
+                        </div>
+                        <div class="flex gap-1 items-end h-32">
+                            <div class="w-8 bg-primary/20 rounded-t h-[35%]"></div>
+                            <div class="w-8 bg-primary/30 rounded-t h-[50%]"></div>
+                            <div class="w-8 bg-primary/40 rounded-t h-[45%]"></div>
+                            <div class="w-8 bg-primary/60 rounded-t h-[70%]"></div>
+                            <div class="w-8 bg-primary rounded-t h-[100%]"></div>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="p-4 bg-slate-50 dark:bg-slate-800 rounded-xl">
+                            <p class="text-sm text-slate-500">Automation Rate</p>
+                            <p class="text-xl font-bold text-primary">94%</p>
+                        </div>
+                        <div class="p-4 bg-slate-50 dark:bg-slate-800 rounded-xl">
+                            <p class="text-sm text-slate-500">Time Saved</p>
+                            <p class="text-xl font-bold text-green-500">2,400h/mo</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- AI Services Grid -->
+<section class="py-24 bg-white dark:bg-background-dark">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold mb-4">Comprehensive AI Solutions</h2>
+            <p class="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">We don't just implement AI; we engineer intelligent systems that adapt, learn, and scale with your business needs.</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- AI Chatbots -->
+            <div class="group p-6 rounded-xl border border-[#cfd9e7] dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-primary transition-all duration-300">
+                <div class="size-12 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                    <span class="material-symbols-outlined text-2xl">smart_toy</span>
+                </div>
+                <h3 class="text-lg font-bold mb-2">AI Chatbots & Agents</h3>
+                <p class="text-sm text-slate-600 dark:text-slate-400 mb-4">Intelligent conversational AI that handles customer queries 24/7 with human-like understanding.</p>
+                <ul class="text-xs space-y-2 text-slate-500">
+                    <li class="flex items-center gap-2"><span class="material-symbols-outlined text-xs text-green-500">check_circle</span> Natural Language Processing</li>
+                    <li class="flex items-center gap-2"><span class="material-symbols-outlined text-xs text-green-500">check_circle</span> Multi-Platform Integration</li>
+                </ul>
+            </div>
+            
+            <!-- Machine Learning -->
+            <div class="group p-6 rounded-xl border border-[#cfd9e7] dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-primary transition-all duration-300">
+                <div class="size-12 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                    <span class="material-symbols-outlined text-2xl">model_training</span>
+                </div>
+                <h3 class="text-lg font-bold mb-2">Machine Learning Models</h3>
+                <p class="text-sm text-slate-600 dark:text-slate-400 mb-4">Custom ML algorithms that predict trends, automate decisions, and optimize operations.</p>
+                <ul class="text-xs space-y-2 text-slate-500">
+                    <li class="flex items-center gap-2"><span class="material-symbols-outlined text-xs text-green-500">check_circle</span> Predictive Analytics</li>
+                    <li class="flex items-center gap-2"><span class="material-symbols-outlined text-xs text-green-500">check_circle</span> Pattern Recognition</li>
+                </ul>
+            </div>
+            
+            <!-- Computer Vision -->
+            <div class="group p-6 rounded-xl border border-[#cfd9e7] dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-primary transition-all duration-300">
+                <div class="size-12 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                    <span class="material-symbols-outlined text-2xl">visibility</span>
+                </div>
+                <h3 class="text-lg font-bold mb-2">Computer Vision</h3>
+                <p class="text-sm text-slate-600 dark:text-slate-400 mb-4">Image and video analysis for object detection, facial recognition, and quality control.</p>
+                <ul class="text-xs space-y-2 text-slate-500">
+                    <li class="flex items-center gap-2"><span class="material-symbols-outlined text-xs text-green-500">check_circle</span> Object Detection</li>
+                    <li class="flex items-center gap-2"><span class="material-symbols-outlined text-xs text-green-500">check_circle</span> OCR & Document Processing</li>
+                </ul>
+            </div>
+            
+            <!-- Process Automation -->
+            <div class="group p-6 rounded-xl border border-[#cfd9e7] dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-primary transition-all duration-300">
+                <div class="size-12 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                    <span class="material-symbols-outlined text-2xl">precision_manufacturing</span>
+                </div>
+                <h3 class="text-lg font-bold mb-2">Process Automation</h3>
+                <p class="text-sm text-slate-600 dark:text-slate-400 mb-4">RPA and AI-driven workflow automation that eliminates repetitive tasks and human error.</p>
+                <ul class="text-xs space-y-2 text-slate-500">
+                    <li class="flex items-center gap-2"><span class="material-symbols-outlined text-xs text-green-500">check_circle</span> Workflow Optimization</li>
+                    <li class="flex items-center gap-2"><span class="material-symbols-outlined text-xs text-green-500">check_circle</span> Data Entry Automation</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- AI Technology Stack -->
+<section class="py-24 bg-slate-50 dark:bg-slate-900/30">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid lg:grid-cols-2 gap-16 items-center">
+            <div>
+                <h2 class="text-3xl font-bold text-slate-900 dark:text-white mb-6">Cutting-Edge AI Frameworks</h2>
+                <p class="text-slate-600 dark:text-slate-400 mb-8">We leverage industry-leading AI platforms and frameworks to build robust, scalable solutions tailored to your unique challenges.</p>
+                <div class="space-y-6">
+                    <div class="flex gap-4">
+                        <div class="flex-shrink-0 bg-white dark:bg-slate-800 p-3 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700 h-fit">
+                            <span class="material-symbols-outlined text-primary text-3xl">psychology</span>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-slate-900 dark:text-white">OpenAI & GPT Models</h4>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">Advanced language models for content generation, analysis, and conversation.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4">
+                        <div class="flex-shrink-0 bg-white dark:bg-slate-800 p-3 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700 h-fit">
+                            <span class="material-symbols-outlined text-primary text-3xl">hub</span>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-slate-900 dark:text-white">TensorFlow & PyTorch</h4>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">Deep learning frameworks for custom neural networks and complex AI models.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4">
+                        <div class="flex-shrink-0 bg-white dark:bg-slate-800 p-3 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700 h-fit">
+                            <span class="material-symbols-outlined text-primary text-3xl">cloud</span>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-slate-900 dark:text-white">Cloud AI Services</h4>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">AWS SageMaker, Google Cloud AI, Azure ML for scalable deployment.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="grid grid-cols-3 gap-4">
+                <div class="aspect-square bg-white dark:bg-slate-800 rounded-xl flex flex-col items-center justify-center p-4 border border-slate-200 dark:border-slate-700 shadow-sm">
+                    <div class="text-slate-900 dark:text-white font-bold">OpenAI</div>
+                </div>
+                <div class="aspect-square bg-white dark:bg-slate-800 rounded-xl flex flex-col items-center justify-center p-4 border border-slate-200 dark:border-slate-700 shadow-sm">
+                    <div class="text-slate-900 dark:text-white font-bold">TensorFlow</div>
+                </div>
+                <div class="aspect-square bg-white dark:bg-slate-800 rounded-xl flex flex-col items-center justify-center p-4 border border-slate-200 dark:border-slate-700 shadow-sm">
+                    <div class="text-slate-900 dark:text-white font-bold">PyTorch</div>
+                </div>
+                <div class="aspect-square bg-white dark:bg-slate-800 rounded-xl flex flex-col items-center justify-center p-4 border border-slate-200 dark:border-slate-700 shadow-sm">
+                    <div class="text-slate-900 dark:text-white font-bold">LangChain</div>
+                </div>
+                <div class="aspect-square bg-white dark:bg-slate-800 rounded-xl flex flex-col items-center justify-center p-4 border border-slate-200 dark:border-slate-700 shadow-sm">
+                    <div class="text-slate-900 dark:text-white font-bold">Hugging Face</div>
+                </div>
+                <div class="aspect-square bg-white dark:bg-slate-800 rounded-xl flex flex-col items-center justify-center p-4 border border-slate-200 dark:border-slate-700 shadow-sm">
+                    <div class="text-slate-900 dark:text-white font-bold">AWS AI</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- AI Implementation Process -->
+<section class="py-24 bg-white dark:bg-background-dark">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-3xl mx-auto mb-20">
+            <h2 class="text-3xl font-bold text-slate-900 dark:text-white mb-4">Our AI Implementation Methodology</h2>
+            <p class="text-slate-600 dark:text-slate-400">From ideation to deployment, we follow a proven framework that ensures your AI solution delivers measurable ROI.</p>
+        </div>
+        <div class="relative">
+            <div class="hidden lg:block absolute top-1/2 left-0 right-0 h-0.5 bg-slate-200 dark:bg-slate-800 -translate-y-1/2"></div>
+            <div class="grid lg:grid-cols-4 gap-12 lg:gap-8">
+                <!-- Step 1 -->
+                <div class="relative bg-white dark:bg-background-dark px-4">
+                    <div class="w-12 h-12 bg-primary text-white font-black rounded-full flex items-center justify-center mb-6 relative z-10 shadow-lg shadow-primary/30 mx-auto lg:mx-0">01</div>
+                    <h4 class="text-xl font-bold text-slate-900 dark:text-white mb-2 text-center lg:text-left">Use Case Analysis</h4>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 text-center lg:text-left leading-relaxed">
+                        Identify high-impact processes and pain points where AI can drive immediate value and efficiency gains.
+                    </p>
+                </div>
+                <!-- Step 2 -->
+                <div class="relative bg-white dark:bg-background-dark px-4">
+                    <div class="w-12 h-12 bg-primary text-white font-black rounded-full flex items-center justify-center mb-6 relative z-10 shadow-lg shadow-primary/30 mx-auto lg:mx-0">02</div>
+                    <h4 class="text-xl font-bold text-slate-900 dark:text-white mb-2 text-center lg:text-left">Data Preparation</h4>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 text-center lg:text-left leading-relaxed">
+                        Collect, clean, and structure your data to ensure optimal model training and accuracy.
+                    </p>
+                </div>
+                <!-- Step 3 -->
+                <div class="relative bg-white dark:bg-background-dark px-4">
+                    <div class="w-12 h-12 bg-primary text-white font-black rounded-full flex items-center justify-center mb-6 relative z-10 shadow-lg shadow-primary/30 mx-auto lg:mx-0">03</div>
+                    <h4 class="text-xl font-bold text-slate-900 dark:text-white mb-2 text-center lg:text-left">Model Development</h4>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 text-center lg:text-left leading-relaxed">
+                        Build, train, and fine-tune custom AI models using the latest algorithms and frameworks.
+                    </p>
+                </div>
+                <!-- Step 4 -->
+                <div class="relative bg-white dark:bg-background-dark px-4">
+                    <div class="w-12 h-12 bg-primary text-white font-black rounded-full flex items-center justify-center mb-6 relative z-10 shadow-lg shadow-primary/30 mx-auto lg:mx-0">04</div>
+                    <h4 class="text-xl font-bold text-slate-900 dark:text-white mb-2 text-center lg:text-left">Deploy & Optimize</h4>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 text-center lg:text-left leading-relaxed">
+                        Seamless integration with continuous monitoring, retraining, and performance optimization.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ROI Impact Section -->
+<section class="py-24 bg-primary text-white overflow-hidden relative">
+    <div class="absolute top-0 right-0 -mt-20 -mr-20 w-96 h-96 bg-white/10 rounded-full blur-3xl"></div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="lg:grid lg:grid-cols-2 lg:gap-16 items-center">
+            <div class="mb-12 lg:mb-0">
+                <h2 class="text-3xl md:text-4xl font-black mb-6">Measurable AI-Driven Results</h2>
+                <p class="text-blue-100 text-lg mb-8 leading-relaxed">
+                    Our AI solutions don't just automate—they transform. See how businesses like yours are achieving unprecedented efficiency and growth with intelligent automation.
+                </p>
+                <div class="grid sm:grid-cols-2 gap-6">
+                    <div class="flex gap-3">
+                        <span class="material-symbols-outlined text-white">trending_up</span>
+                        <div>
+                            <h5 class="font-bold">85% Cost Reduction</h5>
+                            <p class="text-sm opacity-80">Average operational cost savings within 6 months.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-3">
+                        <span class="material-symbols-outlined text-white">speed</span>
+                        <div>
+                            <h5 class="font-bold">10x Faster Processing</h5>
+                            <p class="text-sm opacity-80">Automated workflows complete in seconds, not hours.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-3">
+                        <span class="material-symbols-outlined text-white">analytics</span>
+                        <div>
+                            <h5 class="font-bold">99.4% Accuracy</h5>
+                            <p class="text-sm opacity-80">Enterprise-grade precision in predictions and decisions.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-3">
+                        <span class="material-symbols-outlined text-white">schedule</span>
+                        <div>
+                            <h5 class="font-bold">24/7 Availability</h5>
+                            <p class="text-sm opacity-80">AI systems that never sleep, ensuring continuous operation.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white/10 backdrop-blur-lg p-8 rounded-2xl border border-white/20">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="w-12 h-12 rounded-full bg-green-400 flex items-center justify-center">
+                        <span class="material-symbols-outlined text-white font-bold">check</span>
+                    </div>
+                    <h4 class="text-xl font-bold">AI Performance Metrics</h4>
+                </div>
+                <div class="space-y-4">
+                    <div>
+                        <div class="flex justify-between items-center text-sm font-bold mb-2">
+                            <span>Automation Rate</span>
+                            <span class="text-green-400">94%</span>
+                        </div>
+                        <div class="w-full bg-white/10 h-2 rounded-full">
+                            <div class="bg-green-400 h-2 rounded-full w-[94%]"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between items-center text-sm font-bold mb-2">
+                            <span>Accuracy Score</span>
+                            <span class="text-green-400">99.4%</span>
+                        </div>
+                        <div class="w-full bg-white/10 h-2 rounded-full">
+                            <div class="bg-green-400 h-2 rounded-full w-[99%]"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between items-center text-sm font-bold mb-2">
+                            <span>Cost Efficiency</span>
+                            <span class="text-green-400">85%</span>
+                        </div>
+                        <div class="w-full bg-white/10 h-2 rounded-full">
+                            <div class="bg-green-400 h-2 rounded-full w-[85%]"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between items-center text-sm font-bold mb-2">
+                            <span>User Satisfaction</span>
+                            <span class="text-green-400">96%</span>
+                        </div>
+                        <div class="w-full bg-white/10 h-2 rounded-full">
+                            <div class="bg-green-400 h-2 rounded-full w-[96%]"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials -->
+<section class="py-24 bg-white dark:bg-background-dark">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl font-bold mb-4">Trusted by Industry Leaders</h2>
+            <p class="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">See how our AI solutions are transforming businesses across industries.</p>
+        </div>
+        <div class="grid md:grid-cols-2 gap-8">
+            <div class="bg-white dark:bg-slate-900 border border-[#e7ecf3] dark:border-slate-800 p-8 rounded-xl">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="size-16 rounded-full overflow-hidden bg-slate-100 flex-shrink-0">
+                        <img class="w-full h-full object-cover" alt="CEO Testimonial" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCSOi_qlLJG0cA7bB7AJTaMW-k_iOXB8SjLZhyp_QwjpXpzWSGZQ81VInZw9-OGALxY51S3iHWNco6afjwiFyrkJ15m9LvprbpkUlSdCx7S0T3EjgRG6Woxry81B2_GWODy6eLJPtjKTbFE5HYk1SnMjDb-7eo1KeBggdqne1jqk1A8SjsD80bWI72x2z9OA6B1bxaB6kNm7vpN7DCm__NfYj7ksaE7mgFJ86PtCWEgVetE7IqtF4CAKHeCgAI3mhnaEO8MBdFBiwzX" />
+                    </div>
+                    <div>
+                        <p class="font-bold text-slate-900 dark:text-white">James Robertson</p>
+                        <p class="text-sm text-slate-500">CEO, TechFlow Systems</p>
+                    </div>
+                </div>
+                <p class="text-slate-600 dark:text-slate-400 italic leading-relaxed">
+                    "Techlynx Pro's AI chatbot reduced our support ticket volume by 70% while improving customer satisfaction scores. The ROI was evident within the first month."
+                </p>
+            </div>
+            <div class="bg-white dark:bg-slate-900 border border-[#e7ecf3] dark:border-slate-800 p-8 rounded-xl">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="size-16 rounded-full overflow-hidden bg-slate-100 flex-shrink-0">
+                        <img class="w-full h-full object-cover" alt="CTO Testimonial" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA8pDDzP6BfevE_JnONcZ529Z_YB1pMIupHHa3rmte_LACgxKO5ewO678gNiI4-5-uoGJ6Aa4DwaAhfsjxvxAeA8WmE27XXqJmgKtMVIdHv4VqwKQmEwklfkjPYYA3E8A6WfeO3LY2l0-OxlSnKvI4xWL5W-DHhb0D3iWsrRi-CsIVm4LwfoZA4ovW1ehUZ5a7r1IWGiU-RBLfJtm3bbvHj7Q9NtrSWDIV-g6PMgMHIsZZv89Doq0oVI_X8YMbZl_lga2YBHQIlAaF3" />
+                    </div>
+                    <div>
+                        <p class="font-bold text-slate-900 dark:text-white">Dr. Maria Chen</p>
+                        <p class="text-sm text-slate-500">CTO, DataPrime Analytics</p>
+                    </div>
+                </div>
+                <p class="text-slate-600 dark:text-slate-400 italic leading-relaxed">
+                    "Their ML models predicted customer churn with 95% accuracy, allowing us to proactively retain high-value clients. Game-changing insights."
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Final CTA -->
+<section class="py-24 bg-slate-50 dark:bg-slate-900/30">
+    <div class="max-w-5xl mx-auto px-4 text-center">
+        <h2 class="text-4xl md:text-5xl font-black text-slate-900 dark:text-white mb-6">Ready to Harness the Power of AI?</h2>
+        <p class="text-xl text-slate-600 dark:text-slate-400 mb-10 max-w-2xl mx-auto">
+            Join forward-thinking enterprises who are gaining competitive advantage through intelligent automation and AI-driven decision making.
+        </p>
+        <div class="flex flex-col sm:flex-row justify-center gap-4">
+            <a href="{% url 'contact' %}" class="bg-primary hover:bg-primary/90 text-white px-10 py-5 rounded-lg font-black text-lg transition-all shadow-xl shadow-primary/25">
+                Start Your AI Journey
+            </a>
+            <a href="{% url 'contact' %}" class="bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white px-10 py-5 rounded-lg font-black text-lg transition-all hover:bg-slate-200 dark:hover:bg-slate-700">
+                Schedule Demo
+            </a>
+        </div>
+        <p class="mt-8 text-sm text-slate-500 flex items-center justify-center gap-2">
+            <span class="material-symbols-outlined text-green-500 text-lg">verified_user</span> 
+            Free AI readiness assessment included with every consultation.
+        </p>
+    </div>
+</section>
+</main>
+{% endblock %}

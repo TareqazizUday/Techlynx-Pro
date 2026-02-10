@@ -1,0 +1,396 @@
+{% extends 'base.html' %}
+
+{% block title %}Finance & Accounting Services | Bookkeeping, CFO & Tax Services{% endblock %}
+
+{% block meta_description %}Professional finance and accounting services with 99.98% accuracy. Virtual CFO, bookkeeping, tax preparation, financial reporting, and payroll management. 42% cost savings vs in-house. US-based CPAs and certified accountants. Services from $800/month. Free financial assessment!{% endblock %}
+
+{% block meta_keywords %}finance services, accounting services, virtual CFO, bookkeeping, tax preparation, financial reporting, payroll management, CPA services, accounting outsourcing, financial consulting{% endblock %}
+
+{% block og_title %}Finance & Accounting Services | 99.98% Accuracy & 42% Savings{% endblock %}
+
+{% block og_description %}Virtual CFO, bookkeeping, tax services with 99.98% accuracy. 42% cost savings. US CPAs from $800/month. Free assessment.{% endblock %}
+
+{% block content %}
+<main>
+<!-- Hero Section -->
+<section class="relative overflow-hidden pt-16 pb-20 lg:pt-24 lg:pb-32 bg-background-light dark:bg-background-dark">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="lg:grid lg:grid-cols-2 lg:gap-16 items-center">
+            <div>
+                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-primary/10 text-primary mb-6 uppercase tracking-wider">
+                    <span class="material-symbols-outlined text-sm">account_balance</span> Strategic Financial Management
+                </span>
+                <h1 class="text-4xl md:text-6xl font-black text-slate-900 dark:text-white leading-[1.1] mb-6">
+                    Expert <span class="text-primary">Finance & Accounting</span> Solutions
+                </h1>
+                <p class="text-lg md:text-xl text-slate-600 dark:text-slate-400 mb-8 leading-relaxed">
+                    Professional bookkeeping, financial reporting, tax compliance, and CFO services that give you clarity and control over your business finances. Focus on growth while we handle the numbers.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a href="{% url 'contact' %}" class="px-8 py-4 bg-primary text-white rounded-lg font-bold text-lg hover:shadow-lg hover:shadow-primary/30 transition-all flex items-center gap-2 justify-center group">
+                        Get Financial Consultation <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                    </a>
+                    <a href="{% url 'case_studies' %}" class="px-8 py-4 border border-[#cfd9e7] dark:border-slate-700 rounded-lg font-bold text-lg hover:bg-white dark:hover:bg-slate-800 transition-all">
+                        View Case Studies
+                    </a>
+                </div>
+            </div>
+            <div class="mt-12 lg:mt-0 relative">
+                <div class="absolute -top-12 -left-12 w-64 h-64 bg-primary/10 rounded-full blur-3xl"></div>
+                <div class="absolute -bottom-12 -right-12 w-64 h-64 bg-primary/20 rounded-full blur-3xl"></div>
+                <div class="relative bg-white dark:bg-slate-900 border border-[#e7ecf3] dark:border-slate-800 p-6 rounded-3xl shadow-xl">
+                    <!-- Financial Performance Metrics -->
+                    <div class="mb-6">
+                        <p class="text-xs text-slate-500 uppercase font-bold tracking-widest mb-2">Average Cost Savings</p>
+                        <div class="flex items-end gap-2 mb-4">
+                            <h3 class="text-4xl font-black text-green-500">42%</h3>
+                            <span class="text-primary font-bold text-sm mb-1">vs In-House Team</span>
+                        </div>
+                        <p class="text-xs text-slate-500 mb-3">Monthly overhead reduction</p>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div class="p-3 bg-slate-50 dark:bg-slate-800 rounded-xl">
+                                <p class="text-xs text-slate-500 mb-1">Time Saved</p>
+                                <p class="text-xl font-bold text-primary">280h/mo</p>
+                            </div>
+                            <div class="p-3 bg-slate-50 dark:bg-slate-800 rounded-xl">
+                                <p class="text-xs text-slate-500 mb-1">Error Rate</p>
+                                <p class="text-xl font-bold text-green-500">0.02%</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-4 bg-primary/5 rounded-xl border border-primary/20">
+                        <div class="flex items-center gap-2 mb-2">
+                            <span class="material-symbols-outlined text-primary text-sm">verified</span>
+                            <p class="text-xs font-bold text-primary">100% Compliance Guarantee</p>
+                        </div>
+                        <p class="text-xs text-slate-500">IRS, GAAP, and industry standards</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Finance Services -->
+<section class="py-24 bg-white dark:bg-background-dark">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold mb-4">Comprehensive Financial Services</h2>
+            <p class="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">Full-spectrum accounting and finance solutions tailored to your business needs.</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- Bookkeeping & Accounting -->
+            <div class="group p-6 rounded-xl border border-[#cfd9e7] dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-primary transition-all duration-300">
+                <div class="size-12 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                    <span class="material-symbols-outlined text-2xl">receipt_long</span>
+                </div>
+                <h3 class="text-lg font-bold mb-2">Bookkeeping & Accounting</h3>
+                <p class="text-sm text-slate-600 dark:text-slate-400 mb-4">Daily transaction recording, account reconciliation, and financial record maintenance.</p>
+                <ul class="text-xs space-y-2 text-slate-500">
+                    <li class="flex items-center gap-2"><span class="material-symbols-outlined text-xs text-green-500">check_circle</span> Transaction Processing</li>
+                    <li class="flex items-center gap-2"><span class="material-symbols-outlined text-xs text-green-500">check_circle</span> Bank Reconciliation</li>
+                </ul>
+            </div>
+            
+            <!-- Financial Reporting -->
+            <div class="group p-6 rounded-xl border border-[#cfd9e7] dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-primary transition-all duration-300">
+                <div class="size-12 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                    <span class="material-symbols-outlined text-2xl">assessment</span>
+                </div>
+                <h3 class="text-lg font-bold mb-2">Financial Reporting</h3>
+                <p class="text-sm text-slate-600 dark:text-slate-400 mb-4">Comprehensive financial statements, P&L, balance sheets, and cash flow analysis.</p>
+                <ul class="text-xs space-y-2 text-slate-500">
+                    <li class="flex items-center gap-2"><span class="material-symbols-outlined text-xs text-green-500">check_circle</span> Monthly Statements</li>
+                    <li class="flex items-center gap-2"><span class="material-symbols-outlined text-xs text-green-500">check_circle</span> KPI Dashboards</li>
+                </ul>
+            </div>
+            
+            <!-- Tax Preparation -->
+            <div class="group p-6 rounded-xl border border-[#cfd9e7] dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-primary transition-all duration-300">
+                <div class="size-12 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                    <span class="material-symbols-outlined text-2xl">gavel</span>
+                </div>
+                <h3 class="text-lg font-bold mb-2">Tax Preparation & Planning</h3>
+                <p class="text-sm text-slate-600 dark:text-slate-400 mb-4">Strategic tax planning, preparation, filing, and compliance with IRS regulations.</p>
+                <ul class="text-xs space-y-2 text-slate-500">
+                    <li class="flex items-center gap-2"><span class="material-symbols-outlined text-xs text-green-500">check_circle</span> Tax Optimization</li>
+                    <li class="flex items-center gap-2"><span class="material-symbols-outlined text-xs text-green-500">check_circle</span> IRS Compliance</li>
+                </ul>
+            </div>
+            
+            <!-- CFO Services -->
+            <div class="group p-6 rounded-xl border border-[#cfd9e7] dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-primary transition-all duration-300">
+                <div class="size-12 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                    <span class="material-symbols-outlined text-2xl">business_center</span>
+                </div>
+                <h3 class="text-lg font-bold mb-2">Virtual CFO Services</h3>
+                <p class="text-sm text-slate-600 dark:text-slate-400 mb-4">Strategic financial leadership, forecasting, budgeting, and business advisory.</p>
+                <ul class="text-xs space-y-2 text-slate-500">
+                    <li class="flex items-center gap-2"><span class="material-symbols-outlined text-xs text-green-500">check_circle</span> Financial Strategy</li>
+                    <li class="flex items-center gap-2"><span class="material-symbols-outlined text-xs text-green-500">check_circle</span> Budget Planning</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Financial Tools & Software -->
+<section class="py-24 bg-slate-50 dark:bg-slate-900/30">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid lg:grid-cols-2 gap-16 items-center">
+            <div>
+                <h2 class="text-3xl font-bold text-slate-900 dark:text-white mb-6">Professional Accounting Software</h2>
+                <p class="text-slate-600 dark:text-slate-400 mb-8">We work with leading accounting platforms to provide accurate, real-time financial insights and reporting.</p>
+                <div class="space-y-6">
+                    <div class="flex gap-4">
+                        <div class="flex-shrink-0 bg-white dark:bg-slate-800 p-3 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700 h-fit">
+                            <span class="material-symbols-outlined text-primary text-3xl">calculate</span>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-slate-900 dark:text-white">Cloud Accounting Platforms</h4>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">QuickBooks Online, Xero, and FreshBooks for seamless financial management.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4">
+                        <div class="flex-shrink-0 bg-white dark:bg-slate-800 p-3 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700 h-fit">
+                            <span class="material-symbols-outlined text-primary text-3xl">paid</span>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-slate-900 dark:text-white">Payroll & HR Integration</h4>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">ADP, Gusto, and Paychex for comprehensive payroll processing.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4">
+                        <div class="flex-shrink-0 bg-white dark:bg-slate-800 p-3 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700 h-fit">
+                            <span class="material-symbols-outlined text-primary text-3xl">currency_exchange</span>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-slate-900 dark:text-white">ERP & Financial Systems</h4>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">NetSuite, Sage, and SAP integration for enterprise finance management.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="grid grid-cols-3 gap-4">
+                <div class="aspect-square bg-white dark:bg-slate-800 rounded-xl flex flex-col items-center justify-center p-4 border border-slate-200 dark:border-slate-700 shadow-sm">
+                    <div class="text-slate-900 dark:text-white font-bold">QuickBooks</div>
+                </div>
+                <div class="aspect-square bg-white dark:bg-slate-800 rounded-xl flex flex-col items-center justify-center p-4 border border-slate-200 dark:border-slate-700 shadow-sm">
+                    <div class="text-slate-900 dark:text-white font-bold">Xero</div>
+                </div>
+                <div class="aspect-square bg-white dark:bg-slate-800 rounded-xl flex flex-col items-center justify-center p-4 border border-slate-200 dark:border-slate-700 shadow-sm">
+                    <div class="text-slate-900 dark:text-white font-bold">NetSuite</div>
+                </div>
+                <div class="aspect-square bg-white dark:bg-slate-800 rounded-xl flex flex-col items-center justify-center p-4 border border-slate-200 dark:border-slate-700 shadow-sm">
+                    <div class="text-slate-900 dark:text-white font-bold">Sage</div>
+                </div>
+                <div class="aspect-square bg-white dark:bg-slate-800 rounded-xl flex flex-col items-center justify-center p-4 border border-slate-200 dark:border-slate-700 shadow-sm">
+                    <div class="text-slate-900 dark:text-white font-bold">ADP</div>
+                </div>
+                <div class="aspect-square bg-white dark:bg-slate-800 rounded-xl flex flex-col items-center justify-center p-4 border border-slate-200 dark:border-slate-700 shadow-sm">
+                    <div class="text-slate-900 dark:text-white font-bold">Gusto</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Finance Process -->
+<section class="py-24 bg-white dark:bg-background-dark">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-3xl mx-auto mb-20">
+            <h2 class="text-3xl font-bold text-slate-900 dark:text-white mb-4">Our Financial Management Process</h2>
+            <p class="text-slate-600 dark:text-slate-400">Systematic approach to maintaining accurate books and providing actionable financial insights.</p>
+        </div>
+        <div class="relative">
+            <div class="hidden lg:block absolute top-1/2 left-0 right-0 h-0.5 bg-slate-200 dark:bg-slate-800 -translate-y-1/2"></div>
+            <div class="grid lg:grid-cols-4 gap-12 lg:gap-8">
+                <!-- Step 1 -->
+                <div class="relative bg-white dark:bg-background-dark px-4">
+                    <div class="w-12 h-12 bg-primary text-white font-black rounded-full flex items-center justify-center mb-6 relative z-10 shadow-lg shadow-primary/30 mx-auto lg:mx-0">01</div>
+                    <h4 class="text-xl font-bold text-slate-900 dark:text-white mb-2 text-center lg:text-left">Account Setup</h4>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 text-center lg:text-left leading-relaxed">
+                        Chart of accounts creation, system integration, and clean historical data migration.
+                    </p>
+                </div>
+                <!-- Step 2 -->
+                <div class="relative bg-white dark:bg-background-dark px-4">
+                    <div class="w-12 h-12 bg-primary text-white font-black rounded-full flex items-center justify-center mb-6 relative z-10 shadow-lg shadow-primary/30 mx-auto lg:mx-0">02</div>
+                    <h4 class="text-xl font-bold text-slate-900 dark:text-white mb-2 text-center lg:text-left">Daily Operations</h4>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 text-center lg:text-left leading-relaxed">
+                        Transaction recording, invoice processing, expense tracking, and payroll management.
+                    </p>
+                </div>
+                <!-- Step 3 -->
+                <div class="relative bg-white dark:bg-background-dark px-4">
+                    <div class="w-12 h-12 bg-primary text-white font-black rounded-full flex items-center justify-center mb-6 relative z-10 shadow-lg shadow-primary/30 mx-auto lg:mx-0">03</div>
+                    <h4 class="text-xl font-bold text-slate-900 dark:text-white mb-2 text-center lg:text-left">Monthly Close</h4>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 text-center lg:text-left leading-relaxed">
+                        Account reconciliation, financial statements, variance analysis, and reporting.
+                    </p>
+                </div>
+                <!-- Step 4 -->
+                <div class="relative bg-white dark:bg-background-dark px-4">
+                    <div class="w-12 h-12 bg-primary text-white font-black rounded-full flex items-center justify-center mb-6 relative z-10 shadow-lg shadow-primary/30 mx-auto lg:mx-0">04</div>
+                    <h4 class="text-xl font-bold text-slate-900 dark:text-white mb-2 text-center lg:text-left">Strategic Advisory</h4>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 text-center lg:text-left leading-relaxed">
+                        Business insights, forecasting, tax planning, and growth strategy recommendations.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Benefits Section -->
+<section class="py-24 bg-primary text-white overflow-hidden relative">
+    <div class="absolute top-0 right-0 -mt-20 -mr-20 w-96 h-96 bg-white/10 rounded-full blur-3xl"></div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="lg:grid lg:grid-cols-2 lg:gap-16 items-center">
+            <div class="mb-12 lg:mb-0">
+                <h2 class="text-3xl md:text-4xl font-black mb-6">Why Outsource Your Finance & Accounting?</h2>
+                <p class="text-blue-100 text-lg mb-8 leading-relaxed">
+                    Save time and money while gaining access to expert financial professionals and enterprise-grade accounting systems.
+                </p>
+                <div class="grid sm:grid-cols-2 gap-6">
+                    <div class="flex gap-3">
+                        <span class="material-symbols-outlined text-white">trending_down</span>
+                        <div>
+                            <h5 class="font-bold">42% Cost Reduction</h5>
+                            <p class="text-sm opacity-80">Lower overhead vs hiring full-time accounting staff.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-3">
+                        <span class="material-symbols-outlined text-white">speed</span>
+                        <div>
+                            <h5 class="font-bold">280 Hours Saved</h5>
+                            <p class="text-sm opacity-80">Monthly time savings to focus on core business activities.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-3">
+                        <span class="material-symbols-outlined text-white">shield</span>
+                        <div>
+                            <h5 class="font-bold">100% Compliance</h5>
+                            <p class="text-sm opacity-80">Stay compliant with IRS, GAAP, and industry regulations.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-3">
+                        <span class="material-symbols-outlined text-white">verified</span>
+                        <div>
+                            <h5 class="font-bold">99.98% Accuracy</h5>
+                            <p class="text-sm opacity-80">Error-free bookkeeping with certified professionals.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white/10 backdrop-blur-lg p-8 rounded-2xl border border-white/20">
+                <h4 class="text-xl font-bold mb-6 flex items-center gap-2">
+                    <span class="material-symbols-outlined">account_balance_wallet</span>
+                    Financial Health Indicators
+                </h4>
+                <div class="space-y-6">
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-sm font-bold">Cash Flow Management</span>
+                            <span class="text-green-400 font-bold">Optimized</span>
+                        </div>
+                        <div class="w-full bg-white/10 h-2 rounded-full">
+                            <div class="bg-green-400 h-2 rounded-full w-[95%]"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-sm font-bold">Reporting Accuracy</span>
+                            <span class="text-green-400 font-bold">99.98%</span>
+                        </div>
+                        <div class="w-full bg-white/10 h-2 rounded-full">
+                            <div class="bg-green-400 h-2 rounded-full w-[99.98%]"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-sm font-bold">Tax Optimization</span>
+                            <span class="text-green-400 font-bold">Maximized</span>
+                        </div>
+                        <div class="w-full bg-white/10 h-2 rounded-full">
+                            <div class="bg-green-400 h-2 rounded-full w-[92%]"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-sm font-bold">Financial Insights</span>
+                            <span class="text-green-400 font-bold">Real-Time</span>
+                        </div>
+                        <div class="w-full bg-white/10 h-2 rounded-full">
+                            <div class="bg-green-400 h-2 rounded-full w-[100%]"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials -->
+<section class="py-24 bg-white dark:bg-background-dark">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl font-bold mb-4">Trusted by Growing Businesses</h2>
+            <p class="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">Our finance and accounting services help businesses make better financial decisions.</p>
+        </div>
+        <div class="grid md:grid-cols-2 gap-8">
+            <div class="bg-white dark:bg-slate-900 border border-[#e7ecf3] dark:border-slate-800 p-8 rounded-xl">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="size-16 rounded-full overflow-hidden bg-slate-100 flex-shrink-0">
+                        <img class="w-full h-full object-cover" alt="CEO" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCSOi_qlLJG0cA7bB7AJTaMW-k_iOXB8SjLZhyp_QwjpXpzWSGZQ81VInZw9-OGALxY51S3iHWNco6afjwiFyrkJ15m9LvprbpkUlSdCx7S0T3EjgRG6Woxry81B2_GWODy6eLJPtjKTbFE5HYk1SnMjDb-7eo1KeBggdqne1jqk1A8SjsD80bWI72x2z9OA6B1bxaB6kNm7vpN7DCm__NfYj7ksaE7mgFJ86PtCWEgVetE7IqtF4CAKHeCgAI3mhnaEO8MBdFBiwzX" />
+                    </div>
+                    <div>
+                        <p class="font-bold text-slate-900 dark:text-white">Robert Chen</p>
+                        <p class="text-sm text-slate-500">CEO, TechStart Inc</p>
+                    </div>
+                </div>
+                <p class="text-slate-600 dark:text-slate-400 italic leading-relaxed">
+                    "Switching to their finance team saved us $8K/month and gave us real-time financial visibility. Best decision we made for our startup."
+                </p>
+            </div>
+            <div class="bg-white dark:bg-slate-900 border border-[#e7ecf3] dark:border-slate-800 p-8 rounded-xl">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="size-16 rounded-full overflow-hidden bg-slate-100 flex-shrink-0">
+                        <img class="w-full h-full object-cover" alt="CFO" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA8pDDzP6BfevE_JnONcZ529Z_YB1pMIupHHa3rmte_LACgxKO5ewO678gNiI4-5-uoGJ6Aa4DwaAhfsjxvxAeA8WmE27XXqJmgKtMVIdHv4VqwKQmEwklfkjPYYA3E8A6WfeO3LY2l0-OxlSnKvI4xWL5W-DHhb0D3iWsrRi-CsIVm4LwfoZA4ovW1ehUZ5a7r1IWGiU-RBLfJtm3bbvHj7Q9NtrSWDIV-g6PMgMHIsZZv89Doq0oVI_X8YMbZl_lga2YBHQIlAaF3" />
+                    </div>
+                    <div>
+                        <p class="font-bold text-slate-900 dark:text-white">Amanda Williams</p>
+                        <p class="text-sm text-slate-500">CFO, RetailPro</p>
+                    </div>
+                </div>
+                <p class="text-slate-600 dark:text-slate-400 italic leading-relaxed">
+                    "Their virtual CFO service provided strategic financial guidance that helped us secure $2M in funding. Absolutely professional team."
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Final CTA -->
+<section class="py-24 bg-slate-50 dark:bg-slate-900/30">
+    <div class="max-w-5xl mx-auto px-4 text-center">
+        <h2 class="text-4xl md:text-5xl font-black text-slate-900 dark:text-white mb-6">Ready to Optimize Your Finances?</h2>
+        <p class="text-xl text-slate-600 dark:text-slate-400 mb-10 max-w-2xl mx-auto">
+            Get expert financial management that saves time, reduces costs, and provides the insights you need to grow your business confidently.
+        </p>
+        <div class="flex flex-col sm:flex-row justify-center gap-4">
+            <a href="{% url 'contact' %}" class="bg-primary hover:bg-primary/90 text-white px-10 py-5 rounded-lg font-black text-lg transition-all shadow-xl shadow-primary/25">
+                Get Free Financial Review
+            </a>
+            <a href="{% url 'contact' %}" class="bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white px-10 py-5 rounded-lg font-black text-lg transition-all hover:bg-slate-200 dark:hover:bg-slate-700">
+                View Pricing Options
+            </a>
+        </div>
+        <p class="mt-8 text-sm text-slate-500 flex items-center justify-center gap-2">
+            <span class="material-symbols-outlined text-green-500 text-lg">verified_user</span> 
+            CPA-certified accountants with 20+ years of experience.
+        </p>
+    </div>
+</section>
+</main>
+{% endblock %}

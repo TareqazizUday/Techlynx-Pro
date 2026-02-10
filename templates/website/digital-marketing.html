@@ -1,0 +1,241 @@
+{% extends 'base.html' %}
+
+{% block title %}Digital Marketing Services | SEO, PPC & Social Media Marketing{% endblock %}
+
+{% block meta_description %}Data-driven digital marketing that delivers 248% revenue growth. Expert SEO, Google Ads, social media marketing, and content strategies. 10x qualified leads, improved conversions. Comprehensive campaigns from $2,500/month. Free marketing audit included!{% endblock %}
+
+{% block meta_keywords %}digital marketing, SEO services, PPC advertising, social media marketing, Google Ads, content marketing, email marketing, marketing strategy, online marketing, growth marketing, lead generation{% endblock %}
+
+{% block og_title %}Digital Marketing Services | 248% Revenue Growth & 10x Leads{% endblock %}
+
+{% block og_description %}Proven digital marketing: SEO, PPC, social media. 248% revenue growth, 10x leads. Campaigns from $2.5K/month. Free audit!{% endblock %}
+
+{% block content %}
+<main class="max-w-[1200px] mx-auto px-4 py-8 lg:py-16">
+    <!-- Hero Section -->
+    <section class="flex flex-col lg:flex-row gap-12 items-center mb-24">
+        <div class="flex-1 space-y-6">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider">
+                <span class="material-symbols-outlined text-sm">trending_up</span> ROI-Focused Growth
+            </div>
+            <h1 class="text-4xl lg:text-6xl font-black leading-[1.1] tracking-tight text-[#0d131b] dark:text-white">
+                Scale Your Business with <span class="text-primary">Strategy-First</span> Marketing
+            </h1>
+            <p class="text-lg text-slate-600 dark:text-slate-400 max-w-xl">
+                High-performance, SEO-first digital growth services designed for measurable ROI. We help US-based brands dominate their niche through data-backed execution.
+            </p>
+            <div class="flex flex-wrap gap-4 pt-4">
+                <a href="{% url 'contact' %}" class="px-8 py-4 bg-primary text-white rounded-lg font-bold text-lg hover:shadow-lg hover:shadow-primary/30 transition-all flex items-center gap-2">
+                    Start Your Growth Journey <span class="material-symbols-outlined">arrow_forward</span>
+                </a>
+                <a href="{% url 'case_studies' %}" class="px-8 py-4 border border-[#cfd9e7] dark:border-slate-700 rounded-lg font-bold text-lg hover:bg-white dark:hover:bg-slate-800 transition-all">
+                    View Case Studies
+                </a>
+            </div>
+        </div>
+        <div class="flex-1 w-full relative">
+            <div class="absolute inset-0 bg-primary/5 rounded-3xl -rotate-2"></div>
+            <div class="relative bg-white dark:bg-slate-900 border border-[#e7ecf3] dark:border-slate-800 p-6 rounded-3xl shadow-xl">
+                <!-- ROI Visualization Component -->
+                <div class="flex justify-between items-end mb-8">
+                    <div>
+                        <p class="text-xs text-slate-500 uppercase font-bold tracking-widest">Growth Forecast</p>
+                        <h3 class="text-2xl font-bold">+248% Revenue Increase</h3>
+                    </div>
+                    <div class="flex gap-1 items-end h-32">
+                        <div class="w-8 bg-primary/20 rounded-t h-[30%]"></div>
+                        <div class="w-8 bg-primary/30 rounded-t h-[45%]"></div>
+                        <div class="w-8 bg-primary/40 rounded-t h-[40%]"></div>
+                        <div class="w-8 bg-primary/60 rounded-t h-[65%]"></div>
+                        <div class="w-8 bg-primary rounded-t h-[95%]"></div>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="p-4 bg-slate-50 dark:bg-slate-800 rounded-xl">
+                        <p class="text-sm text-slate-500">Avg. CPC</p>
+                        <p class="text-xl font-bold text-green-500">-$1.45</p>
+                    </div>
+                    <div class="p-4 bg-slate-50 dark:bg-slate-800 rounded-xl">
+                        <p class="text-sm text-slate-500">Conv. Rate</p>
+                        <p class="text-xl font-bold text-primary">8.4%</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Specialized Services Grid -->
+    <section class="mb-24">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold mb-4">Our Specialized Growth Services</h2>
+            <p class="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">We don't just "run ads." We engineer full-funnel growth engines using the most effective digital channels.</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- SEO -->
+            <div class="group p-6 rounded-xl border border-[#cfd9e7] dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-primary transition-all duration-300">
+                <div class="size-12 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                    <span class="material-symbols-outlined text-2xl">search</span>
+                </div>
+                <h3 class="text-lg font-bold mb-2">SEO Optimization</h3>
+                <p class="text-sm text-slate-600 dark:text-slate-400 mb-4">Drive sustainable organic visibility and dominate long-term authority in your niche market.</p>
+                <ul class="text-xs space-y-2 text-slate-500">
+                    <li class="flex items-center gap-2"><span class="material-symbols-outlined text-xs text-green-500">check_circle</span> Technical Audit</li>
+                    <li class="flex items-center gap-2"><span class="material-symbols-outlined text-xs text-green-500">check_circle</span> Backlink Engineering</li>
+                </ul>
+            </div>
+            <!-- SEM -->
+            <div class="group p-6 rounded-xl border border-[#cfd9e7] dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-primary transition-all duration-300">
+                <div class="size-12 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                    <span class="material-symbols-outlined text-2xl">ads_click</span>
+                </div>
+                <h3 class="text-lg font-bold mb-2">SEM & PPC</h3>
+                <p class="text-sm text-slate-600 dark:text-slate-400 mb-4">Instant lead generation with high-precision Google & Bing Ad campaigns backed by data.</p>
+                <ul class="text-xs space-y-2 text-slate-500">
+                    <li class="flex items-center gap-2"><span class="material-symbols-outlined text-xs text-green-500">check_circle</span> Keyword Research</li>
+                    <li class="flex items-center gap-2"><span class="material-symbols-outlined text-xs text-green-500">check_circle</span> Bid Management</li>
+                </ul>
+            </div>
+            <!-- Social Media -->
+            <div class="group p-6 rounded-xl border border-[#cfd9e7] dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-primary transition-all duration-300">
+                <div class="size-12 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                    <span class="material-symbols-outlined text-2xl">group</span>
+                </div>
+                <h3 class="text-lg font-bold mb-2">Social Media</h3>
+                <p class="text-sm text-slate-600 dark:text-slate-400 mb-4">Build community and brand authority across LinkedIn, Meta, and Twitter with targeted content.</p>
+                <ul class="text-xs space-y-2 text-slate-500">
+                    <li class="flex items-center gap-2"><span class="material-symbols-outlined text-xs text-green-500">check_circle</span> Content Strategy</li>
+                    <li class="flex items-center gap-2"><span class="material-symbols-outlined text-xs text-green-500">check_circle</span> Paid Social Funnels</li>
+                </ul>
+            </div>
+            <!-- Influencer -->
+            <div class="group p-6 rounded-xl border border-[#cfd9e7] dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-primary transition-all duration-300">
+                <div class="size-12 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                    <span class="material-symbols-outlined text-2xl">campaign</span>
+                </div>
+                <h3 class="text-lg font-bold mb-2">Influencer Outreach</h3>
+                <p class="text-sm text-slate-600 dark:text-slate-400 mb-4">Leverage trust and massive reach through strategic partnerships with top industry creators.</p>
+                <ul class="text-xs space-y-2 text-slate-500">
+                    <li class="flex items-center gap-2"><span class="material-symbols-outlined text-xs text-green-500">check_circle</span> Talent Sourcing</li>
+                    <li class="flex items-center gap-2"><span class="material-symbols-outlined text-xs text-green-500">check_circle</span> Campaign Tracking</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Strategy-First Approach -->
+    <section class="mb-24 bg-[#0d131b] text-white rounded-[2rem] p-8 lg:p-16 overflow-hidden relative">
+        <div class="absolute top-0 right-0 w-1/2 h-full opacity-10">
+            <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0,200 C50,150 150,150 200,200 S350,250 400,200" fill="transparent" stroke="white" stroke-width="2"></path>
+                <path d="M0,250 C50,200 150,200 200,250 S350,300 400,250" fill="transparent" stroke="white" stroke-width="1"></path>
+            </svg>
+        </div>
+        <div class="relative z-10 max-w-3xl">
+            <h2 class="text-3xl lg:text-5xl font-bold mb-8">The Strategy-First Approach</h2>
+            <div class="space-y-12">
+                <div class="flex gap-6">
+                    <div class="text-primary font-black text-4xl opacity-50">01</div>
+                    <div>
+                        <h4 class="text-xl font-bold mb-2 text-primary">Data Audit & Discovery</h4>
+                        <p class="text-slate-400">We analyze your current metrics, competitor landscape, and market opportunities to find the "low hanging fruit" for rapid ROI.</p>
+                    </div>
+                </div>
+                <div class="flex gap-6">
+                    <div class="text-primary font-black text-4xl opacity-50">02</div>
+                    <div>
+                        <h4 class="text-xl font-bold mb-2 text-primary">Custom Roadmap Engineering</h4>
+                        <p class="text-slate-400">No cookie-cutter plans. We build a multi-channel funnel designed specifically to convert your high-value target audience.</p>
+                    </div>
+                </div>
+                <div class="flex gap-6">
+                    <div class="text-primary font-black text-4xl opacity-50">03</div>
+                    <div>
+                        <h4 class="text-xl font-bold mb-2 text-primary">Agile Execution & Scaling</h4>
+                        <p class="text-slate-400">Continuous A/B testing and optimization to lower acquisition costs while increasing lead quality and volume.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Proof & Growth Section -->
+    <section class="mb-24">
+        <div class="flex flex-col lg:flex-row gap-12">
+            <div class="flex-1">
+                <h2 class="text-3xl font-bold mb-6">Real Results for US-Based Brands</h2>
+                <div class="space-y-6">
+                    <div class="bg-white dark:bg-slate-900 border border-[#e7ecf3] dark:border-slate-800 p-6 rounded-xl flex items-center gap-6">
+                        <div class="size-16 rounded-full overflow-hidden bg-slate-100 flex-shrink-0">
+                            <img class="w-full h-full object-cover" alt="Headshot of satisfied marketing client CEO" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCSOi_qlLJG0cA7bB7AJTaMW-k_iOXB8SjLZhyp_QwjpXpzWSGZQ81VInZw9-OGALxY51S3iHWNco6afjwiFyrkJ15m9LvprbpkUlSdCx7S0T3EjgRG6Woxry81B2_GWODy6eLJPtjKTbFE5HYk1SnMjDb-7eo1KeBggdqne1jqk1A8SjsD80bWI72x2z9OA6B1bxaB6kNm7vpN7DCm__NfYj7ksaE7mgFJ86PtCWEgVetE7IqtF4CAKHeCgAI3mhnaEO8MBdFBiwzX" />
+                        </div>
+                        <div>
+                            <p class="text-slate-600 dark:text-slate-400 italic mb-2">"Techlynx Pro didn't just give us traffic; they gave us buyers. Our lead cost dropped 40% in just 3 months."</p>
+                            <p class="font-bold text-sm">— Marcus Thorne, CEO of Nexus Cloud</p>
+                        </div>
+                    </div>
+                    <div class="bg-white dark:bg-slate-900 border border-[#e7ecf3] dark:border-slate-800 p-6 rounded-xl flex items-center gap-6">
+                        <div class="size-16 rounded-full overflow-hidden bg-slate-100 flex-shrink-0">
+                            <img class="w-full h-full object-cover" alt="Headshot of happy marketing director" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA8pDDzP6BfevE_JnONcZ529Z_YB1pMIupHHa3rmte_LACgxKO5ewO678gNiI4-5-uoGJ6Aa4DwaAhfsjxvxAeA8WmE27XXqJmgKtMVIdHv4VqwKQmEwklfkjPYYA3E8A6WfeO3LY2l0-OxlSnKvI4xWL5W-DHhb0D3iWsrRi-CsIVm4LwfoZA4ovW1ehUZ5a7r1IWGiU-RBLfJtm3bbvHj7Q9NtrSWDIV-g6PMgMHIsZZv89Doq0oVI_X8YMbZl_lga2YBHQIlAaF3" />
+                        </div>
+                        <div>
+                            <p class="text-slate-600 dark:text-slate-400 italic mb-2">"Their SEO strategy is like nothing we've seen. We now rank #1 for our most competitive terms."</p>
+                            <p class="font-bold text-sm">— Sarah Jenkins, Marketing Director</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex-1 bg-primary rounded-3xl p-10 text-white flex flex-col justify-center items-center text-center">
+                <span class="material-symbols-outlined text-6xl mb-4">insights</span>
+                <h2 class="text-3xl font-black mb-4">Ready to see these results for yourself?</h2>
+                <p class="text-white/80 mb-8 max-w-sm">Schedule a 15-minute strategy call and we'll show you exactly how we'd grow your specific brand.</p>
+                <a href="{% url 'contact' %}" class="w-full max-w-xs bg-white text-primary font-bold py-4 rounded-xl shadow-lg hover:scale-105 transition-transform">
+                    Book Your Free Strategy Call
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ROI Visual Dashboard -->
+    <section class="mb-12">
+        <h2 class="text-2xl font-bold mb-8 text-center">Transparent Growth Monitoring</h2>
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div class="bg-white dark:bg-slate-900 border border-[#e7ecf3] dark:border-slate-800 p-6 rounded-xl">
+                <h4 class="font-bold mb-4 flex items-center justify-between">Organic Impressions <span class="text-green-500 text-xs">+12%</span></h4>
+                <div class="h-24 flex items-end gap-1">
+                    <div class="flex-1 bg-slate-100 dark:bg-slate-800 h-[20%] rounded-t"></div>
+                    <div class="flex-1 bg-slate-100 dark:bg-slate-800 h-[35%] rounded-t"></div>
+                    <div class="flex-1 bg-slate-100 dark:bg-slate-800 h-[30%] rounded-t"></div>
+                    <div class="flex-1 bg-slate-100 dark:bg-slate-800 h-[50%] rounded-t"></div>
+                    <div class="flex-1 bg-primary h-[85%] rounded-t"></div>
+                </div>
+            </div>
+            <div class="bg-white dark:bg-slate-900 border border-[#e7ecf3] dark:border-slate-800 p-6 rounded-xl">
+                <h4 class="font-bold mb-4 flex items-center justify-between">Conversion Value <span class="text-green-500 text-xs">+$42k</span></h4>
+                <div class="h-24 flex items-end gap-1">
+                    <div class="flex-1 bg-slate-100 dark:bg-slate-800 h-[10%] rounded-t"></div>
+                    <div class="flex-1 bg-slate-100 dark:bg-slate-800 h-[25%] rounded-t"></div>
+                    <div class="flex-1 bg-slate-100 dark:bg-slate-800 h-[45%] rounded-t"></div>
+                    <div class="flex-1 bg-slate-100 dark:bg-slate-800 h-[60%] rounded-t"></div>
+                    <div class="flex-1 bg-primary h-[90%] rounded-t"></div>
+                </div>
+            </div>
+            <div class="bg-white dark:bg-slate-900 border border-[#e7ecf3] dark:border-slate-800 p-6 rounded-xl">
+                <h4 class="font-bold mb-4 flex items-center justify-between">Paid Search ROI <span class="text-green-500 text-xs">4.2x</span></h4>
+                <div class="h-24 flex items-end gap-1">
+                    <div class="flex-1 bg-slate-100 dark:bg-slate-800 h-[40%] rounded-t"></div>
+                    <div class="flex-1 bg-slate-100 dark:bg-slate-800 h-[30%] rounded-t"></div>
+                    <div class="flex-1 bg-slate-100 dark:bg-slate-800 h-[55%] rounded-t"></div>
+                    <div class="flex-1 bg-slate-100 dark:bg-slate-800 h-[45%] rounded-t"></div>
+                    <div class="flex-1 bg-primary h-[80%] rounded-t"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<!-- Floating Contact Button -->
+<button onclick="window.location.href='{% url 'contact' %}'" class="fixed bottom-6 right-6 z-40 size-14 bg-primary text-white rounded-full shadow-2xl flex items-center justify-center hover:scale-110 transition-transform cursor-pointer group">
+    <span class="material-symbols-outlined text-2xl group-hover:hidden">chat_bubble</span>
+    <span class="material-symbols-outlined text-2xl hidden group-hover:block">forum</span>
+</button>
+{% endblock %}

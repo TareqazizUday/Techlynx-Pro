@@ -1,56 +1,200 @@
-# Techlynx Pro Website
+# Techlynx Pro - Django Website
 
-A complete multi-page website for Techlynx Pro - a US-based digital innovation company.
+Professional Django website for Techlynx Pro IT Services company.
+
+## Features
+
+- ✅ Modern, responsive design with Tailwind CSS
+- ✅ Dark mode support
+- ✅ Contact form with database storage
+- ✅ Newsletter subscription
+- ✅ SEO-optimized architecture
+- ✅ Professional admin panel
+- ✅ Multiple service pages
+- ✅ Case studies showcase
+- ✅ Blog/Insights section
+- ✅ Careers page
+
+## Tech Stack
+
+- **Backend**: Django 5.0
+- **Frontend**: Tailwind CSS, Material Icons
+- **Database**: SQLite (development), PostgreSQL recommended for production
+- **Fonts**: Google Fonts (Inter)
+
+## Installation & Setup
+
+### 1. Create Virtual Environment
+
+```bash
+python -m venv venv
+```
+
+### 2. Activate Virtual Environment
+
+**Windows:**
+```bash
+venv\Scripts\activate
+```
+
+**Mac/Linux:**
+```bash
+source venv/bin/activate
+```
+
+### 3. Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### 4. Run Migrations
+
+```bash
+python manage.py makemigrations
+python manage.py migrate
+```
+
+### 5. Create Superuser (Admin)
+
+```bash
+python manage.py createsuperuser
+```
+
+Follow the prompts to create your admin account.
+
+### 6. Run Development Server
+
+```bash
+python manage.py runserver
+```
+
+Visit: **http://127.0.0.1:8000/**
+
+### 7. Access Admin Panel
+
+Visit: **http://127.0.0.1:8000/admin/**
+
+Login with the superuser credentials you created.
 
 ## Project Structure
 
 ```
-├── index.html                 (Home Page)
-├── about.html                 (About Us)
-├── services.html             (Services Overview)
-├── web-development.html      (Web Development Services)
-├── digital-marketing.html    (Digital Marketing Services)
-├── industries.html           (Industries We Serve)
-├── case-studies.html         (Success Stories)
-├── blog.html                 (Insights & Blog)
-├── careers.html              (Careers & Talent)
-└── contact.html              (Contact & Quote)
+techlynx_project/
+├── techlynx_project/        # Project settings
+│   ├── settings.py
+│   ├── urls.py
+│   ├── wsgi.py
+│   └── asgi.py
+├── website/                 # Main app
+│   ├── models.py           # Database models
+│   ├── views.py            # View functions
+│   ├── urls.py             # URL routing
+│   └── admin.py            # Admin configuration
+├── templates/              # HTML templates
+│   ├── base.html          # Base template
+│   └── website/           # Page templates
+├── static/                 # Static files
+│   ├── css/
+│   ├── js/
+│   └── images/
+├── manage.py              # Django management
+└── requirements.txt       # Dependencies
 ```
 
-## Features
+## Pages
 
-- ✅ Fully responsive design
-- ✅ Dark mode support
-- ✅ Modern UI with Tailwind CSS
-- ✅ All pages properly linked
-- ✅ SEO-first architecture
-- ✅ Google Material Icons
+- **Home** (`/`) - Landing page
+- **About** (`/about/`) - Company information
+- **Services** (`/services/`) - Services overview
+- **Web Development** (`/services/web-development/`) - Web dev services
+- **Digital Marketing** (`/services/digital-marketing/`) - Marketing services
+- **Industries** (`/industries/`) - Industries served
+- **Case Studies** (`/case-studies/`) - Success stories
+- **Blog** (`/blog/`) - Insights & articles
+- **Careers** (`/careers/`) - Job openings
+- **Contact** (`/contact/`) - Contact form
 
-## How to Use
+## Database Models
 
-1. Open `index.html` in your browser to start
-2. Navigate through all pages using the header menu
-3. All links are working and connected
+### ContactInquiry
+Stores contact form submissions with:
+- Full name, email, service interest
+- Budget range, project details
+- Timestamp
 
-## Technologies Used
+### Newsletter
+Manages newsletter subscriptions:
+- Email address
+- Subscription status
+- Timestamp
 
-- HTML5
-- Tailwind CSS (via CDN)
-- Google Fonts (Inter)
-- Material Symbols Icons
+## Customization
 
-## Pages Overview
+### Update Colors
+Edit Tailwind configuration in `templates/base.html`:
+```javascript
+colors: {
+    "primary": "#136dec",  // Change this
+    ...
+}
+```
 
-- **Home**: Main landing page with hero section and services
-- **About**: Company mission, vision, team, and timeline
-- **Services**: Overview of all services offered
-- **Web Development**: Details about web development services
-- **Digital Marketing**: Marketing and SEO services
-- **Industries**: Sectors and industries served
-- **Case Studies**: Success stories and portfolios
-- **Blog**: Insights and articles
-- **Careers**: Job openings and talent management
-- **Contact**: Contact form and information
+### Add New Pages
+1. Create view in `website/views.py`
+2. Add URL in `website/urls.py`
+3. Create template in `templates/website/`
 
----
-© 2024 Techlynx Pro. All Rights Reserved.
+### Modify Contact Form
+Edit the `ContactInquiry` model in `website/models.py` and run:
+```bash
+python manage.py makemigrations
+python manage.py migrate
+```
+
+## Production Deployment
+
+### Settings for Production
+
+In `techlynx_project/settings.py`:
+
+```python
+DEBUG = False
+ALLOWED_HOSTS = ['yourdomain.com', 'www.yourdomain.com']
+
+# Uncomment security settings
+SECURE_SSL_REDIRECT = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+```
+
+### Collect Static Files
+
+```bash
+python manage.py collectstatic
+```
+
+### Database
+
+Switch to PostgreSQL for production:
+
+```python
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'your_db_name',
+        'USER': 'your_db_user',
+        'PASSWORD': 'your_db_password',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    }
+}
+```
+
+## Support
+
+For issues or questions, contact the development team.
+
+## License
+
+© 2024 Techlynx Pro. All rights reserved.

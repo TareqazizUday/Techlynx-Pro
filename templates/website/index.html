@@ -1,0 +1,525 @@
+{% extends 'base.html' %}
+
+{% block title %}Techlynx Pro | Enterprise IT Solutions & Digital Marketing Services{% endblock %}
+
+{% block meta_description %}Transform your business with Techlynx Pro's expert IT solutions. We offer custom web development, AI automation, digital marketing, SEO, and mobile app development services. Our US-based team has delivered 500+ successful projects with 98% client retention. Get your free strategy consultation today!{% endblock %}
+
+{% block meta_keywords %}enterprise IT solutions, custom web development, AI automation services, digital marketing agency, SEO optimization, mobile app development, US IT company, software development, cloud solutions, business automation, ecommerce development, corporate website design{% endblock %}
+
+{% block og_title %}Techlynx Pro | Transform Your Business with Expert IT Solutions{% endblock %}
+
+{% block og_description %}Award-winning IT and digital marketing services. 500+ successful projects, 98% retention rate. Custom web development, AI solutions, SEO, and app development by certified US experts.{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="relative pt-12 pb-16 lg:pt-20 lg:pb-24 overflow-hidden bg-gradient-to-b from-background-light to-white dark:from-background-dark dark:to-slate-900">
+    <div class="absolute top-0 right-0 -z-10 w-[800px] h-[800px] bg-primary/5 rounded-full blur-3xl"></div>
+    <div class="absolute bottom-0 left-0 -z-10 w-[600px] h-[600px] bg-primary/10 rounded-full blur-3xl"></div>
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="lg:grid lg:grid-cols-2 lg:gap-12 items-center">
+            <!-- Left Content -->
+            <div class="space-y-8">
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-bold uppercase tracking-wider">
+                    <span class="relative flex h-2 w-2">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+                    </span>
+                    US-Based IT Excellence
+                </div>
+                
+                <h1 class="text-5xl lg:text-7xl font-black text-slate-900 dark:text-white leading-[1.05] tracking-tight">
+                    Drive Digital 
+                    <span class="text-primary relative">
+                        Dominance
+                        <svg class="absolute -bottom-2 left-0 w-full" viewBox="0 0 300 12" fill="none">
+                            <path d="M2 10c50-8 100-8 150-8s100 0 150 8" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                        </svg>
+                    </span>
+                    with IT Solutions
+                </h1>
+                
+                <p class="text-xl text-slate-600 dark:text-slate-400 leading-relaxed">
+                    Transform your business with enterprise-grade IT solutions. <strong class="text-slate-900 dark:text-white">AI automation, custom development, and data-driven marketing</strong> that delivers measurable ROI.
+                </p>
+                
+                <!-- Key Benefits -->
+                <div class="grid grid-cols-2 gap-4 py-4">
+                    <div class="flex items-center gap-3">
+                        <div class="size-10 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center flex-shrink-0">
+                            <span class="material-symbols-outlined text-green-600 dark:text-green-400 text-xl">check_circle</span>
+                        </div>
+                        <span class="text-sm font-semibold text-slate-700 dark:text-slate-300">200% AVG ROI</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="size-10 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center flex-shrink-0">
+                            <span class="material-symbols-outlined text-blue-600 dark:text-blue-400 text-xl">schedule</span>
+                        </div>
+                        <span class="text-sm font-semibold text-slate-700 dark:text-slate-300">24/7 Support</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="size-10 rounded-full bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center flex-shrink-0">
+                            <span class="material-symbols-outlined text-purple-600 dark:text-purple-400 text-xl">workspace_premium</span>
+                        </div>
+                        <span class="text-sm font-semibold text-slate-700 dark:text-slate-300">500+ Projects</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="size-10 rounded-full bg-orange-100 dark:bg-orange-900/30 flex items-center justify-center flex-shrink-0">
+                            <span class="material-symbols-outlined text-orange-600 dark:text-orange-400 text-xl">verified</span>
+                        </div>
+                        <span class="text-sm font-semibold text-slate-700 dark:text-slate-300">98% Retention</span>
+                    </div>
+                </div>
+                
+                <div class="flex flex-col sm:flex-row gap-4 pt-4">
+                    <a href="{% url 'contact' %}" class="group bg-primary text-white px-8 py-4 rounded-xl font-bold text-lg hover:shadow-2xl hover:shadow-primary/40 transition-all flex items-center justify-center gap-2">
+                        Get Free Strategy Call
+                        <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                    </a>
+                    <a href="{% url 'case_studies' %}" class="px-8 py-4 border-2 border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white rounded-xl font-bold text-lg hover:bg-slate-50 dark:hover:bg-slate-800 transition-all flex items-center justify-center gap-2">
+                        <span class="material-symbols-outlined">auto_stories</span>
+                        Success Stories
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Right Visual -->
+            <div class="mt-12 lg:mt-0 relative">
+                <div class="relative bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-8 rounded-3xl shadow-2xl">
+                    <!-- Performance Dashboard Mockup -->
+                    <div class="space-y-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-xs text-slate-500 dark:text-slate-400 uppercase font-bold tracking-widest mb-1">Performance Overview</p>
+                                <h3 class="text-2xl font-black text-slate-900 dark:text-white">+340% Growth</h3>
+                            </div>
+                            <div class="px-4 py-2 bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 rounded-lg text-sm font-bold">
+                                ↑ 85% YoY
+                            </div>
+                        </div>
+                        
+                        <!-- Metrics Chart -->
+                        <div class="flex items-end justify-between h-40 gap-2">
+                            <div class="flex-1 flex flex-col items-center justify-end gap-2">
+                                <div class="w-full bg-gradient-to-t from-primary to-primary/50 rounded-t-lg" style="height: 35%;"></div>
+                                <span class="text-xs text-slate-500">Q1</span>
+                            </div>
+                            <div class="flex-1 flex flex-col items-center justify-end gap-2">
+                                <div class="w-full bg-gradient-to-t from-primary to-primary/50 rounded-t-lg" style="height: 55%;"></div>
+                                <span class="text-xs text-slate-500">Q2</span>
+                            </div>
+                            <div class="flex-1 flex flex-col items-center justify-end gap-2">
+                                <div class="w-full bg-gradient-to-t from-primary to-primary/50 rounded-t-lg" style="height: 70%;"></div>
+                                <span class="text-xs text-slate-500">Q3</span>
+                            </div>
+                            <div class="flex-1 flex flex-col items-center justify-end gap-2">
+                                <div class="w-full bg-gradient-to-t from-primary to-primary/60 rounded-t-lg animate-pulse" style="height: 100%;"></div>
+                                <span class="text-xs font-bold text-primary">Q4</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Key Metrics -->
+                        <div class="grid grid-cols-3 gap-4 pt-4 border-t border-slate-200 dark:border-slate-700">
+                            <div>
+                                <p class="text-xs text-slate-500 dark:text-slate-400 mb-1">Revenue</p>
+                                <p class="text-lg font-bold text-slate-900 dark:text-white">$2.4M</p>
+                            </div>
+                            <div>
+                                <p class="text-xs text-slate-500 dark:text-slate-400 mb-1">Conversions</p>
+                                <p class="text-lg font-bold text-slate-900 dark:text-white">12.8K</p>
+                            </div>
+                            <div>
+                                <p class="text-xs text-slate-500 dark:text-slate-400 mb-1">ROI</p>
+                                <p class="text-lg font-bold text-green-600 dark:text-green-400">248%</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Floating Badge -->
+                <div class="absolute -top-6 -right-6 bg-gradient-to-br from-primary to-blue-600 text-white p-6 rounded-2xl shadow-2xl rotate-6 hover:rotate-0 transition-transform">
+                    <div class="text-center">
+                        <div class="text-3xl font-black mb-1">4.9★</div>
+                        <div class="text-xs font-bold opacity-90">Client Rating</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Trusted By Section -->
+<section class="py-12 bg-white dark:bg-background-dark border-y border-slate-100 dark:border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <p class="text-center text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-[0.25em] mb-8">Trusted by 50+ Global Enterprises</p>
+        <div class="flex flex-wrap justify-center items-center gap-12 lg:gap-16 opacity-40 hover:opacity-60 transition-opacity grayscale">
+            <img alt="Partner Logo" class="h-7 lg:h-9" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC_9UtgPGpgyCbeTLBo4b3L8vzgUYUxCLx_ssLnwcR0LB2IF1KrBPnCFMm_6wW8Gg8DB42j0e9iGKVygRE4UMTtRDMr77ELOz_yfhaP1W5ZDaW0ZH3VtFx9aehmFNES6UIdImIkMyZFDZzZR8feFzkS5qHSNWluTlEzsfHYVpgW4FJc-lniXeyZKYOftFvltOvUuO16Wz--68mnDxnExD9I3Rj9cQndlftCmf73dPgq9FsqokIH65L59VouTjvqeo5o4Y6Q4bvgXBEA"/>
+            <img alt="Partner Logo" class="h-7 lg:h-9" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCE6dXIu0VVz1cWC1xpYq3xONZTPLL97Y0nUoWXdonJH7O9klq1CGeN4EcVAVQwh2Gn7rDP4FeBGeOKKiTVUI9QaL3H6rpKipvrVfhfZJT3U1zuSVOuTLifSi_r7lnSUagBV4dBhWEd60VRDDmnRJ0Gg_d5OF5G5k83Sk-xRsgjQlegSeip6vTfNJkJPCj0Two8KPk0eMskckbCPB9Yz2LdV4TZfKMcfv0LfDzSSzfTBK6ceHFPZwrUaP2BMzKgWWLybT_-Ji_9SKKi"/>
+            <img alt="Partner Logo" class="h-7 lg:h-9" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCKxvwWIyA5YhzkzBttf6-I5TGn4nMn5dvAzK0PokBP161AagptCu1E1qi2Vs4XQCtozpZe2tPU8qUQClEFeRes16rrpbNUn_WTLoIaiqRZeKU-2EIZhhstiHE0IrM_NkAmE_77bvoni2w31Cyxu5jePM45RII3eFgyimhLdmVvt8QbzOUxeAtCQ0axkPOtuzkz6d-6fzKMslI92vvD7nGb-JXFTx7Wy_2m9KH7UrVleIfmCIuU053FMT94opl0HrZZZJdJRpZig0Ui"/>
+            <img alt="Partner Logo" class="h-7 lg:h-9" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCpbLb1bQFOABfMdGYBko0N7cNBKWwcq__M7pr_QonYGRYIB9RQnMYWfZhFQo3CqQ1Ybxk1rceu25Zp8BUjYt-eNLYApBjIsi3iIbVrtDep8PoWTPHWCCr6KQZgBYrhmr_oKdAQiuycYUiiBNVz40FhGGazSBUV9G6kjgLxmF1qX3R-NARXOgx2TDFZAiHFHK0bM-n4PpBvYk6p6qNDLdj4zk1Xnzo_SoNWIPNAqY3bGZbGLz14kFwIgvWOZ9o_N5zbho91JAaTa11F"/>
+            <img alt="Partner Logo" class="h-7 lg:h-9" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAklYNEjfDqeBJUi7jkG01FL_hTLQtei_88T98fDvVJ72RPObFhoI8koahTXoqzHqKI7EGxL_JUF5qKwtOAke4R7lNCKTpxkvgppa7Xdc2lOPqdiO3gTHp3rhFOxK-eY4jSuHK20Nfz-wIU09gX9LRpBk1DP1vrvPoX1uDvqu4_DiuB5OrP-eSsIP6jmuiIpkZLvIrvtsTrTLPUSOfAhJT4X9lat_QrQuDSr_DzAKXawc6FZsWHyA_IjEzrf1GrhbXlieADtZqgnklZ"/>
+        </div>
+    </div>
+</section>
+
+<!-- Core Services Section -->
+<section class="py-20 bg-gradient-to-b from-white to-background-light dark:from-slate-900 dark:to-background-dark">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <span class="text-primary font-bold text-sm tracking-[0.3em] uppercase mb-4 block">WHAT WE DO</span>
+            <h2 class="text-4xl lg:text-5xl font-black text-slate-900 dark:text-white mb-6">Comprehensive IT Solutions</h2>
+            <p class="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
+                End-to-end digital services designed to transform your business operations and accelerate growth
+            </p>
+        </div>
+        
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- AI Solutions -->
+            <a href="{% url 'ai_solutions' %}" class="group bg-white dark:bg-slate-800 p-8 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-primary hover:shadow-2xl hover:shadow-primary/10 transition-all duration-300 hover:-translate-y-1">
+                <div class="size-14 bg-gradient-to-br from-primary/20 to-primary/5 rounded-xl flex items-center justify-center text-primary mb-6 group-hover:scale-110 transition-transform">
+                    <span class="material-symbols-outlined text-3xl">psychology</span>
+                </div>
+                <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-3">AI Solutions</h3>
+                <p class="text-sm text-slate-600 dark:text-slate-400 mb-4 leading-relaxed">
+                    Intelligent automation and machine learning solutions that reduce costs by 85%
+                </p>
+                <div class="flex items-center gap-2 text-primary font-semibold text-sm group-hover:gap-3 transition-all">
+                    Explore AI <span class="material-symbols-outlined text-lg">arrow_forward</span>
+                </div>
+            </a>
+            
+            <!-- Web Development -->
+            <a href="{% url 'web_development' %}" class="group bg-white dark:bg-slate-800 p-8 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-primary hover:shadow-2xl hover:shadow-primary/10 transition-all duration-300 hover:-translate-y-1">
+                <div class="size-14 bg-gradient-to-br from-blue-100 to-blue-50 dark:from-blue-900/30 dark:to-blue-900/10 rounded-xl flex items-center justify-center text-blue-600 dark:text-blue-400 mb-6 group-hover:scale-110 transition-transform">
+                    <span class="material-symbols-outlined text-3xl">code</span>
+                </div>
+                <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-3">Web Development</h3>
+                <p class="text-sm text-slate-600 dark:text-slate-400 mb-4 leading-relaxed">
+                    High-performance websites with 95+ Lighthouse scores and blazing-fast load times
+                </p>
+                <div class="flex items-center gap-2 text-primary font-semibold text-sm group-hover:gap-3 transition-all">
+                    View Web Services <span class="material-symbols-outlined text-lg">arrow_forward</span>
+                </div>
+            </a>
+            
+            <!-- Digital Marketing -->
+            <a href="{% url 'digital_marketing' %}" class="group bg-white dark:bg-slate-800 p-8 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-primary hover:shadow-2xl hover:shadow-primary/10 transition-all duration-300 hover:-translate-y-1">
+                <div class="size-14 bg-gradient-to-br from-green-100 to-green-50 dark:from-green-900/30 dark:to-green-900/10 rounded-xl flex items-center justify-center text-green-600 dark:text-green-400 mb-6 group-hover:scale-110 transition-transform">
+                    <span class="material-symbols-outlined text-3xl">trending_up</span>
+                </div>
+                <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-3">Digital Marketing</h3>
+                <p class="text-sm text-slate-600 dark:text-slate-400 mb-4 leading-relaxed">
+                    SEO-first strategies driving 248% revenue growth and 10x qualified leads
+                </p>
+                <div class="flex items-center gap-2 text-primary font-semibold text-sm group-hover:gap-3 transition-all">
+                    Explore Marketing <span class="material-symbols-outlined text-lg">arrow_forward</span>
+                </div>
+            </a>
+            
+            <!-- App Development -->
+            <a href="{% url 'app_development' %}" class="group bg-white dark:bg-slate-800 p-8 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-primary hover:shadow-2xl hover:shadow-primary/10 transition-all duration-300 hover:-translate-y-1">
+                <div class="size-14 bg-gradient-to-br from-purple-100 to-purple-50 dark:from-purple-900/30 dark:to-purple-900/10 rounded-xl flex items-center justify-center text-purple-600 dark:text-purple-400 mb-6 group-hover:scale-110 transition-transform">
+                    <span class="material-symbols-outlined text-3xl">phone_iphone</span>
+                </div>
+                <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-3">App Development</h3>
+                <p class="text-sm text-slate-600 dark:text-slate-400 mb-4 leading-relaxed">
+                    Native iOS/Android and cross-platform apps with 4.8★ average rating
+                </p>
+                <div class="flex items-center gap-2 text-primary font-semibold text-sm group-hover:gap-3 transition-all">
+                    See App Services <span class="material-symbols-outlined text-lg">arrow_forward</span>
+                </div>
+            </a>
+            
+            <!-- SEO Audit -->
+            <a href="{% url 'seo_audit' %}" class="group bg-white dark:bg-slate-800 p-8 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-primary hover:shadow-2xl hover:shadow-primary/10 transition-all duration-300 hover:-translate-y-1">
+                <div class="size-14 bg-gradient-to-br from-orange-100 to-orange-50 dark:from-orange-900/30 dark:to-orange-900/10 rounded-xl flex items-center justify-center text-orange-600 dark:text-orange-400 mb-6 group-hover:scale-110 transition-transform">
+                    <span class="material-symbols-outlined text-3xl">search</span>
+                </div>
+                <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-3">SEO Audit</h3>
+                <p class="text-sm text-slate-600 dark:text-slate-400 mb-4 leading-relaxed">
+                    Comprehensive audits revealing 475% traffic increase opportunities
+                </p>
+                <div class="flex items-center gap-2 text-primary font-semibold text-sm group-hover:gap-3 transition-all">
+                    Get SEO Audit <span class="material-symbols-outlined text-lg">arrow_forward</span>
+                </div>
+            </a>
+            
+            <!-- Project Management -->
+            <a href="{% url 'project_management' %}" class="group bg-white dark:bg-slate-800 p-8 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-primary hover:shadow-2xl hover:shadow-primary/10 transition-all duration-300 hover:-translate-y-1">
+                <div class="size-14 bg-gradient-to-br from-pink-100 to-pink-50 dark:from-pink-900/30 dark:to-pink-900/10 rounded-xl flex items-center justify-center text-pink-600 dark:text-pink-400 mb-6 group-hover:scale-110 transition-transform">
+                    <span class="material-symbols-outlined text-3xl">dashboard</span>
+                </div>
+                <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-3">Project Management</h3>
+                <p class="text-sm text-slate-600 dark:text-slate-400 mb-4 leading-relaxed">
+                    Agile delivery with 98.5% success rate and on-time completion
+                </p>
+                <div class="flex items-center gap-2 text-primary font-semibold text-sm group-hover:gap-3 transition-all">
+                    View PM Services <span class="material-symbols-outlined text-lg">arrow_forward</span>
+                </div>
+            </a>
+            
+            <!-- Finance & Accounting -->
+            <a href="{% url 'finance_accounting' %}" class="group bg-white dark:bg-slate-800 p-8 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-primary hover:shadow-2xl hover:shadow-primary/10 transition-all duration-300 hover:-translate-y-1">
+                <div class="size-14 bg-gradient-to-br from-teal-100 to-teal-50 dark:from-teal-900/30 dark:to-teal-900/10 rounded-xl flex items-center justify-center text-teal-600 dark:text-teal-400 mb-6 group-hover:scale-110 transition-transform">
+                    <span class="material-symbols-outlined text-3xl">account_balance</span>
+                </div>
+                <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-3">Finance & Accounting</h3>
+                <p class="text-sm text-slate-600 dark:text-slate-400 mb-4 leading-relaxed">
+                    Virtual CFO and bookkeeping with 42% cost savings and 99.98% accuracy
+                </p>
+                <div class="flex items-center gap-2 text-primary font-semibold text-sm group-hover:gap-3 transition-all">
+                    Explore Finance <span class="material-symbols-outlined text-lg">arrow_forward</span>
+                </div>
+            </a>
+            
+            <!-- Content Production -->
+            <a href="{% url 'content_production' %}" class="group bg-white dark:bg-slate-800 p-8 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-primary hover:shadow-2xl hover:shadow-primary/10 transition-all duration-300 hover:-translate-y-1">
+                <div class="size-14 bg-gradient-to-br from-yellow-100 to-yellow-50 dark:from-yellow-900/30 dark:to-yellow-900/10 rounded-xl flex items-center justify-center text-yellow-600 dark:text-yellow-400 mb-6 group-hover:scale-110 transition-transform">
+                    <span class="material-symbols-outlined text-3xl">movie_creation</span>
+                </div>
+                <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-3">Content Production</h3>
+                <p class="text-sm text-slate-600 dark:text-slate-400 mb-4 leading-relaxed">
+                    Professional blog, video, and design services with 385% engagement boost
+                </p>
+                <div class="flex items-center gap-2 text-primary font-semibold text-sm group-hover:gap-3 transition-all">
+                    View Content Services <span class="material-symbols-outlined text-lg">arrow_forward</span>
+                </div>
+            </a>
+            
+            <!-- Virtual Assistance -->
+            <a href="{% url 'services' %}" class="group bg-white dark:bg-slate-800 p-8 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-primary hover:shadow-2xl hover:shadow-primary/10 transition-all duration-300 hover:-translate-y-1">
+                <div class="size-14 bg-gradient-to-br from-indigo-100 to-indigo-50 dark:from-indigo-900/30 dark:to-indigo-900/10 rounded-xl flex items-center justify-center text-indigo-600 dark:text-indigo-400 mb-6 group-hover:scale-110 transition-transform">
+                    <span class="material-symbols-outlined text-3xl">support_agent</span>
+                </div>
+                <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-3">Virtual Assistance</h3>
+                <p class="text-sm text-slate-600 dark:text-slate-400 mb-4 leading-relaxed">
+                    Dedicated remote support to handle administrative tasks and operations
+                </p>
+                <div class="flex items-center gap-2 text-primary font-semibold text-sm group-hover:gap-3 transition-all">
+                    Learn More <span class="material-symbols-outlined text-lg">arrow_forward</span>
+                </div>
+            </a>
+        </div>
+        
+        <div class="text-center mt-12">
+            <a href="{% url 'services' %}" class="inline-flex items-center gap-2 px-8 py-4 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-xl font-bold hover:scale-105 transition-transform">
+                View All Services
+                <span class="material-symbols-outlined">grid_view</span>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Benefits Section -->
+<section class="py-20 bg-gradient-to-br from-primary to-blue-600 text-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="lg:grid lg:grid-cols-2 lg:gap-16 items-center">
+            <div>
+                <h2 class="text-4xl lg:text-5xl font-black mb-6">Why Choose Techlynx Pro?</h2>
+                <p class="text-xl text-white/90 mb-8 leading-relaxed">
+                    We're not just service providers—we're your strategic IT partner committed to measurable results and long-term success.
+                </p>
+                
+                <div class="space-y-6">
+                    <div class="flex gap-4">
+                        <div class="size-12 bg-white/20 rounded-xl flex items-center justify-center flex-shrink-0">
+                            <span class="material-symbols-outlined text-2xl">verified</span>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold mb-2">Proven Track Record</h3>
+                            <p class="text-white/80 leading-relaxed">500+ successful projects with 98% client retention rate across diverse industries</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex gap-4">
+                        <div class="size-12 bg-white/20 rounded-xl flex items-center justify-center flex-shrink-0">
+                            <span class="material-symbols-outlined text-2xl">speed</span>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold mb-2">Rapid Deployment</h3>
+                            <p class="text-white/80 leading-relaxed">Agile methodology ensuring 95% on-time delivery without compromising quality</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex gap-4">
+                        <div class="size-12 bg-white/20 rounded-xl flex items-center justify-center flex-shrink-0">
+                            <span class="material-symbols-outlined text-2xl">analytics</span>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold mb-2">Data-Driven Decisions</h3>
+                            <p class="text-white/80 leading-relaxed">Every strategy backed by analytics, A/B testing, and performance metrics</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-12 lg:mt-0">
+                <div class="bg-white/10 backdrop-blur-lg border border-white/20 p-8 rounded-3xl">
+                    <h3 class="text-2xl font-bold mb-6">Our Guarantees</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-start gap-3">
+                            <span class="material-symbols-outlined text-green-300 mt-1">check_circle</span>
+                            <div>
+                                <p class="font-bold">100% Satisfaction</p>
+                                <p class="text-sm text-white/70">Free revisions until you're completely satisfied</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <span class="material-symbols-outlined text-green-300 mt-1">check_circle</span>
+                            <div>
+                                <p class="font-bold">No Hidden Costs</p>
+                                <p class="text-sm text-white/70">Transparent pricing with detailed project quotations</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <span class="material-symbols-outlined text-green-300 mt-1">check_circle</span>
+                            <div>
+                                <p class="font-bold">Ongoing Support</p>
+                                <p class="text-sm text-white/70">24/7 technical assistance and maintenance included</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <span class="material-symbols-outlined text-green-300 mt-1">check_circle</span>
+                            <div>
+                                <p class="font-bold">Measurable ROI</p>
+                                <p class="text-sm text-white/70">Performance tracking with monthly detailed reports</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Stats Section -->
+<section class="py-16 bg-white dark:bg-background-dark border-y border-slate-200 dark:border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-8">
+            <div class="text-center">
+                <div class="text-5xl lg:text-6xl font-black text-primary mb-2">500+</div>
+                <div class="text-slate-600 dark:text-slate-400 font-semibold">Projects Delivered</div>
+            </div>
+            <div class="text-center">
+                <div class="text-5xl lg:text-6xl font-black text-primary mb-2">10+</div>
+                <div class="text-slate-600 dark:text-slate-400 font-semibold">Years Experience</div>
+            </div>
+            <div class="text-center">
+                <div class="text-5xl lg:text-6xl font-black text-primary mb-2">98%</div>
+                <div class="text-slate-600 dark:text-slate-400 font-semibold">Client Retention</div>
+            </div>
+            <div class="text-center">
+                <div class="text-5xl lg:text-6xl font-black text-primary mb-2">24/7</div>
+                <div class="text-slate-600 dark:text-slate-400 font-semibold">Dedicated Support</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Case Study -->
+<section class="py-24 bg-background-light dark:bg-slate-900/50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <span class="text-primary font-bold text-sm tracking-[0.3em] uppercase mb-4 block">SUCCESS STORY</span>
+            <h2 class="text-4xl lg:text-5xl font-black text-slate-900 dark:text-white mb-6">Client Transformation</h2>
+        </div>
+        
+        <div class="bg-slate-900 dark:bg-slate-800 rounded-3xl overflow-hidden shadow-2xl">
+            <div class="lg:grid lg:grid-cols-2">
+                <div class="relative min-h-[400px]">
+                    <img alt="Dashboard Case Study" class="absolute inset-0 w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBpPHzu2XFVDpGBLzJODSpFswdVtjjy2f_9GY-MSmZCT2wG9gIYgp-oIppv0DSeeFla89-qc1mGVv4o55rvuH7nFitxMOIGqfIUvWL3lJJS0tDZQlq3OFBJA-spy5bUfgM0tMZxt8NQe3o_H9jMiywhGa-2FcxA8Ni5J4dBrb78dktayyY8bjr7y-UHG6cOcHyEmfDe1XIebkJ4hhag1iqywPpIl_vZ4azBaVmWvxE-Q13thieqp2h6dURp5DJ9392QQ5p-DEh2BhkA"/>
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/40 to-transparent"></div>
+                </div>
+                
+                <div class="p-10 lg:p-16">
+                    <span class="inline-block px-3 py-1 bg-primary/20 text-primary text-xs font-bold rounded-full mb-6 uppercase tracking-wider">E-commerce</span>
+                    <h3 class="text-3xl lg:text-4xl font-black text-white mb-6">340% Traffic Growth in 6 Months</h3>
+                    <p class="text-slate-300 text-lg mb-8 leading-relaxed">
+                        We developed a custom SEO engine and implemented AI-powered product recommendations that revolutionized their online presence.
+                    </p>
+                    
+                    <div class="grid grid-cols-2 gap-6 mb-10">
+                        <div class="p-4 bg-white/5 rounded-xl border border-white/10">
+                            <div class="text-3xl font-black text-white mb-1">340%</div>
+                            <div class="text-slate-400 text-sm">Organic Traffic</div>
+                        </div>
+                        <div class="p-4 bg-white/5 rounded-xl border border-white/10">
+                            <div class="text-3xl font-black text-white mb-1">$12M</div>
+                            <div class="text-slate-400 text-sm">Revenue Growth</div>
+                        </div>
+                        <div class="p-4 bg-white/5 rounded-xl border border-white/10">
+                            <div class="text-3xl font-black text-white mb-1">45%</div>
+                            <div class="text-slate-400 text-sm">Bounce Reduction</div>
+                        </div>
+                        <div class="p-4 bg-white/5 rounded-xl border border-white/10">
+                            <div class="text-3xl font-black text-white mb-1">6.8x</div>
+                            <div class="text-slate-400 text-sm">Conversion Rate</div>
+                        </div>
+                    </div>
+                    
+                    <a href="{% url 'case_studies' %}" class="inline-flex items-center gap-3 text-white font-bold py-4 px-8 rounded-xl border-2 border-slate-700 hover:border-primary hover:bg-slate-800 transition-all">
+                        Read Full Case Study
+                        <span class="material-symbols-outlined">arrow_forward</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonial Section -->
+<section class="py-20 bg-white dark:bg-slate-900">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <div class="flex justify-center gap-1 text-yellow-400 mb-4">
+                <span class="material-symbols-outlined fill">star</span>
+                <span class="material-symbols-outlined fill">star</span>
+                <span class="material-symbols-outlined fill">star</span>
+                <span class="material-symbols-outlined fill">star</span>
+                <span class="material-symbols-outlined fill">star</span>
+            </div>
+            <h2 class="text-4xl font-black text-slate-900 dark:text-white mb-6">Trusted by Industry Leaders</h2>
+        </div>
+        
+        <div class="bg-background-light dark:bg-slate-800 p-10 lg:p-14 rounded-3xl border border-slate-200 dark:border-slate-700">
+            <p class="text-2xl lg:text-3xl font-medium text-slate-700 dark:text-slate-300 italic leading-relaxed mb-10 text-center">
+                "Techlynx Pro transformed our entire digital infrastructure. Their AI solutions reduced our operational costs by 85%, and their marketing team delivered a 3x ROI within the first year. Simply outstanding."
+            </p>
+            
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-6">
+                <div class="size-20 rounded-full overflow-hidden border-4 border-primary">
+                    <img alt="Marcus Sterling" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAqMmfMzkkpGjAOr5IRoQ6ryMY93FnPfRgF96yyFikWv1fJiXt-F9j1Blj9tnMNPU8zx0NyNCeKzvl3utIJWAHzZJQj1ViILa6E_yFPWnaW00XZ6ov9kTKo6I36NXi-a_fhehQ-t-gS_IZHNlMBBWuOIGQRrQXCQKXneV7w7p1r6qsUDIqyzlVqYSa5AptH-MrB-qEsxnvT6Makv9UdsIkjG90Si6Ippzx8eSl8BELKC0vwsmHbOzOE5d_vg-VH3fvWce0fJoyGcamv"/>
+                </div>
+                <div class="text-center sm:text-left">
+                    <div class="font-bold text-xl text-slate-900 dark:text-white">Marcus Sterling</div>
+                    <div class="text-slate-600 dark:text-slate-400">CEO, Sterling Fintech</div>
+                    <div class="text-sm text-slate-500 mt-1">Fortune 500 Company</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-20 bg-gradient-to-br from-primary via-blue-600 to-primary text-white relative overflow-hidden">
+    <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48cGF0dGVybiBpZD0iZ3JpZCIgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiBwYXR0ZXJuVW5pdHM9InVzZXJTcGFjZU9uVXNlIj48cGF0aCBkPSJNIDQwIDAgTCAwIDAgMCA0MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLW9wYWNpdHk9IjAuMDUiIHN0cm9rZS13aWR0aD0iMSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmlkKSIvPjwvc3ZnPg==')] opacity-30"></div>
+    
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+        <h2 class="text-4xl lg:text-6xl font-black mb-6">Ready to Transform Your Business?</h2>
+        <p class="text-xl lg:text-2xl text-white/90 mb-10 leading-relaxed">
+            Get a free consultation and discover how we can drive 200%+ ROI for your business
+        </p>
+        
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="{% url 'contact' %}" class="group px-10 py-5 bg-white text-primary rounded-xl font-bold text-lg hover:scale-105 transition-all shadow-2xl flex items-center justify-center gap-2">
+                Schedule Free Consultation
+                <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+            </a>
+            <a href="tel:+15206664699" class="px-10 py-5 border-2 border-white text-white rounded-xl font-bold text-lg hover:bg-white/10 transition-all flex items-center justify-center gap-2">
+                <span class="material-symbols-outlined">call</span>
+                +1 (520) 666-4699
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}

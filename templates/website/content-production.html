@@ -1,0 +1,396 @@
+{% extends 'base.html' %}
+
+{% block title %}Content Production Services | Blog Writing, Video & Design{% endblock %}
+
+{% block meta_description %}Professional content production delivering 385% engagement boost. Expert blog writing, video production, graphic design, and social media content. SEO-optimized content that converts. 50+ pieces of content monthly packages. Starting from $1,200/month. Free content strategy session!{% endblock %}
+
+{% block meta_keywords %}content production, blog writing, video production, graphic design, content creation, social media content, SEO content, copywriting, content marketing, creative agency{% endblock %}
+
+{% block og_title %}Content Production Services | 385% Engagement Boost{% endblock %}
+
+{% block og_description %}Professional content: blog, video, design. 385% engagement boost. SEO-optimized packages from $1.2K/month. Free strategy session!{% endblock %}
+
+{% block content %}
+<main>
+<!-- Hero Section -->
+<section class="relative overflow-hidden pt-16 pb-20 lg:pt-24 lg:pb-32 bg-background-light dark:bg-background-dark">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="lg:grid lg:grid-cols-2 lg:gap-16 items-center">
+            <div>
+                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-primary/10 text-primary mb-6 uppercase tracking-wider">
+                    <span class="material-symbols-outlined text-sm">movie_creation</span> Professional Content Creation
+                </span>
+                <h1 class="text-4xl md:text-6xl font-black text-slate-900 dark:text-white leading-[1.1] mb-6">
+                    <span class="text-primary">Content That Converts</span> and Captivates
+                </h1>
+                <p class="text-lg md:text-xl text-slate-600 dark:text-slate-400 mb-8 leading-relaxed">
+                    From compelling blog posts to engaging video content, we create high-quality content that tells your story, builds your brand, and drives results across all channels.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a href="{% url 'contact' %}" class="px-8 py-4 bg-primary text-white rounded-lg font-bold text-lg hover:shadow-lg hover:shadow-primary/30 transition-all flex items-center gap-2 justify-center group">
+                        Start Your Project <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                    </a>
+                    <a href="{% url 'case_studies' %}" class="px-8 py-4 border border-[#cfd9e7] dark:border-slate-700 rounded-lg font-bold text-lg hover:bg-white dark:hover:bg-slate-800 transition-all">
+                        View Portfolio
+                    </a>
+                </div>
+            </div>
+            <div class="mt-12 lg:mt-0 relative">
+                <div class="absolute -top-12 -left-12 w-64 h-64 bg-primary/10 rounded-full blur-3xl"></div>
+                <div class="absolute -bottom-12 -right-12 w-64 h-64 bg-primary/20 rounded-full blur-3xl"></div>
+                <div class="relative bg-white dark:bg-slate-900 border border-[#e7ecf3] dark:border-slate-800 p-6 rounded-3xl shadow-xl">
+                    <!-- Content Performance Metrics -->
+                    <div class="mb-6">
+                        <p class="text-xs text-slate-500 uppercase font-bold tracking-widest mb-2">Engagement Boost</p>
+                        <div class="flex items-end gap-2 mb-4">
+                            <h3 class="text-4xl font-black text-primary">385%</h3>
+                            <span class="text-green-500 font-bold text-sm mb-1">Avg Increase</span>
+                        </div>
+                        <p class="text-xs text-slate-500 mb-3">Social media & blog engagement</p>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div class="p-3 bg-slate-50 dark:bg-slate-800 rounded-xl">
+                                <p class="text-xs text-slate-500 mb-1">Content Pieces</p>
+                                <p class="text-xl font-bold text-primary">2,500+</p>
+                            </div>
+                            <div class="p-3 bg-slate-50 dark:bg-slate-800 rounded-xl">
+                                <p class="text-xs text-slate-500 mb-1">Client Rating</p>
+                                <p class="text-xl font-bold text-green-500">4.9★</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-4 bg-primary/5 rounded-xl border border-primary/20">
+                        <div class="flex items-center gap-2 mb-2">
+                            <span class="material-symbols-outlined text-primary text-sm">eco</span>
+                            <p class="text-xs font-bold text-primary">SEO-Optimized Content</p>
+                        </div>
+                        <p class="text-xs text-slate-500">Every piece ranks and converts</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Content Services -->
+<section class="py-24 bg-white dark:bg-background-dark">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold mb-4">Full-Spectrum Content Production</h2>
+            <p class="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">Professional content creation that elevates your brand across every platform and format.</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- Blog & Article Writing -->
+            <div class="group p-6 rounded-xl border border-[#cfd9e7] dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-primary transition-all duration-300">
+                <div class="size-12 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                    <span class="material-symbols-outlined text-2xl">article</span>
+                </div>
+                <h3 class="text-lg font-bold mb-2">Blog & Article Writing</h3>
+                <p class="text-sm text-slate-600 dark:text-slate-400 mb-4">SEO-optimized blog posts, thought leadership articles, and long-form content that ranks.</p>
+                <ul class="text-xs space-y-2 text-slate-500">
+                    <li class="flex items-center gap-2"><span class="material-symbols-outlined text-xs text-green-500">check_circle</span> SEO Content Strategy</li>
+                    <li class="flex items-center gap-2"><span class="material-symbols-outlined text-xs text-green-500">check_circle</span> Keyword Research</li>
+                </ul>
+            </div>
+            
+            <!-- Video Production -->
+            <div class="group p-6 rounded-xl border border-[#cfd9e7] dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-primary transition-all duration-300">
+                <div class="size-12 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                    <span class="material-symbols-outlined text-2xl">videocam</span>
+                </div>
+                <h3 class="text-lg font-bold mb-2">Video Production</h3>
+                <p class="text-sm text-slate-600 dark:text-slate-400 mb-4">Explainer videos, product demos, testimonials, and social video content optimized for engagement.</p>
+                <ul class="text-xs space-y-2 text-slate-500">
+                    <li class="flex items-center gap-2"><span class="material-symbols-outlined text-xs text-green-500">check_circle</span> Scriptwriting</li>
+                    <li class="flex items-center gap-2"><span class="material-symbols-outlined text-xs text-green-500">check_circle</span> Video Editing</li>
+                </ul>
+            </div>
+            
+            <!-- Graphic Design -->
+            <div class="group p-6 rounded-xl border border-[#cfd9e7] dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-primary transition-all duration-300">
+                <div class="size-12 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                    <span class="material-symbols-outlined text-2xl">palette</span>
+                </div>
+                <h3 class="text-lg font-bold mb-2">Graphic Design</h3>
+                <p class="text-sm text-slate-600 dark:text-slate-400 mb-4">Eye-catching infographics, social media graphics, banners, and visual assets that stand out.</p>
+                <ul class="text-xs space-y-2 text-slate-500">
+                    <li class="flex items-center gap-2"><span class="material-symbols-outlined text-xs text-green-500">check_circle</span> Infographics</li>
+                    <li class="flex items-center gap-2"><span class="material-symbols-outlined text-xs text-green-500">check_circle</span> Social Graphics</li>
+                </ul>
+            </div>
+            
+            <!-- Social Media Content -->
+            <div class="group p-6 rounded-xl border border-[#cfd9e7] dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-primary transition-all duration-300">
+                <div class="size-12 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                    <span class="material-symbols-outlined text-2xl">campaign</span>
+                </div>
+                <h3 class="text-lg font-bold mb-2">Social Media Content</h3>
+                <p class="text-sm text-slate-600 dark:text-slate-400 mb-4">Platform-specific content calendars, posts, stories, and reels that drive engagement.</p>
+                <ul class="text-xs space-y-2 text-slate-500">
+                    <li class="flex items-center gap-2"><span class="material-symbols-outlined text-xs text-green-500">check_circle</span> Content Calendars</li>
+                    <li class="flex items-center gap-2"><span class="material-symbols-outlined text-xs text-green-500">check_circle</span> Copywriting</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Content Tools -->
+<section class="py-24 bg-slate-50 dark:bg-slate-900/30">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid lg:grid-cols-2 gap-16 items-center">
+            <div>
+                <h2 class="text-3xl font-bold text-slate-900 dark:text-white mb-6">Professional Creative Tools</h2>
+                <p class="text-slate-600 dark:text-slate-400 mb-8">We use industry-leading software and platforms to create, edit, and optimize content that delivers measurable results.</p>
+                <div class="space-y-6">
+                    <div class="flex gap-4">
+                        <div class="flex-shrink-0 bg-white dark:bg-slate-800 p-3 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700 h-fit">
+                            <span class="material-symbols-outlined text-primary text-3xl">draw</span>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-slate-900 dark:text-white">Design Suite</h4>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">Adobe Creative Cloud, Figma, and Canva for stunning visual content.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4">
+                        <div class="flex-shrink-0 bg-white dark:bg-slate-800 p-3 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700 h-fit">
+                            <span class="material-symbols-outlined text-primary text-3xl">movie_edit</span>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-slate-900 dark:text-white">Video Editing</h4>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">Adobe Premiere Pro, Final Cut Pro, and DaVinci Resolve for professional videos.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4">
+                        <div class="flex-shrink-0 bg-white dark:bg-slate-800 p-3 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700 h-fit">
+                            <span class="material-symbols-outlined text-primary text-3xl">edit_note</span>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-slate-900 dark:text-white">Content Management</h4>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">WordPress, HubSpot, and ContentStack for seamless publishing.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="grid grid-cols-3 gap-4">
+                <div class="aspect-square bg-white dark:bg-slate-800 rounded-xl flex flex-col items-center justify-center p-4 border border-slate-200 dark:border-slate-700 shadow-sm">
+                    <div class="text-slate-900 dark:text-white font-bold">Adobe CC</div>
+                </div>
+                <div class="aspect-square bg-white dark:bg-slate-800 rounded-xl flex flex-col items-center justify-center p-4 border border-slate-200 dark:border-slate-700 shadow-sm">
+                    <div class="text-slate-900 dark:text-white font-bold">Figma</div>
+                </div>
+                <div class="aspect-square bg-white dark:bg-slate-800 rounded-xl flex flex-col items-center justify-center p-4 border border-slate-200 dark:border-slate-700 shadow-sm">
+                    <div class="text-slate-900 dark:text-white font-bold">Premiere</div>
+                </div>
+                <div class="aspect-square bg-white dark:bg-slate-800 rounded-xl flex flex-col items-center justify-center p-4 border border-slate-200 dark:border-slate-700 shadow-sm">
+                    <div class="text-slate-900 dark:text-white font-bold">Canva</div>
+                </div>
+                <div class="aspect-square bg-white dark:bg-slate-800 rounded-xl flex flex-col items-center justify-center p-4 border border-slate-200 dark:border-slate-700 shadow-sm">
+                    <div class="text-slate-900 dark:text-white font-bold">WordPress</div>
+                </div>
+                <div class="aspect-square bg-white dark:bg-slate-800 rounded-xl flex flex-col items-center justify-center p-4 border border-slate-200 dark:border-slate-700 shadow-sm">
+                    <div class="text-slate-900 dark:text-white font-bold">HubSpot</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Content Process -->
+<section class="py-24 bg-white dark:bg-background-dark">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-3xl mx-auto mb-20">
+            <h2 class="text-3xl font-bold text-slate-900 dark:text-white mb-4">Our Content Creation Process</h2>
+            <p class="text-slate-600 dark:text-slate-400">Strategic approach to content that aligns with your brand voice and business goals.</p>
+        </div>
+        <div class="relative">
+            <div class="hidden lg:block absolute top-1/2 left-0 right-0 h-0.5 bg-slate-200 dark:bg-slate-800 -translate-y-1/2"></div>
+            <div class="grid lg:grid-cols-4 gap-12 lg:gap-8">
+                <!-- Step 1 -->
+                <div class="relative bg-white dark:bg-background-dark px-4">
+                    <div class="w-12 h-12 bg-primary text-white font-black rounded-full flex items-center justify-center mb-6 relative z-10 shadow-lg shadow-primary/30 mx-auto lg:mx-0">01</div>
+                    <h4 class="text-xl font-bold text-slate-900 dark:text-white mb-2 text-center lg:text-left">Strategy & Planning</h4>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 text-center lg:text-left leading-relaxed">
+                        Audience research, content topics, keyword analysis, and editorial calendar.
+                    </p>
+                </div>
+                <!-- Step 2 -->
+                <div class="relative bg-white dark:bg-background-dark px-4">
+                    <div class="w-12 h-12 bg-primary text-white font-black rounded-full flex items-center justify-center mb-6 relative z-10 shadow-lg shadow-primary/30 mx-auto lg:mx-0">02</div>
+                    <h4 class="text-xl font-bold text-slate-900 dark:text-white mb-2 text-center lg:text-left">Content Creation</h4>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 text-center lg:text-left leading-relaxed">
+                        Writing, design, video production, and asset creation by expert creators.
+                    </p>
+                </div>
+                <!-- Step 3 -->
+                <div class="relative bg-white dark:bg-background-dark px-4">
+                    <div class="w-12 h-12 bg-primary text-white font-black rounded-full flex items-center justify-center mb-6 relative z-10 shadow-lg shadow-primary/30 mx-auto lg:mx-0">03</div>
+                    <h4 class="text-xl font-bold text-slate-900 dark:text-white mb-2 text-center lg:text-left">Review & Optimize</h4>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 text-center lg:text-left leading-relaxed">
+                        Quality assurance, SEO optimization, and revisions based on feedback.
+                    </p>
+                </div>
+                <!-- Step 4 -->
+                <div class="relative bg-white dark:bg-background-dark px-4">
+                    <div class="w-12 h-12 bg-primary text-white font-black rounded-full flex items-center justify-center mb-6 relative z-10 shadow-lg shadow-primary/30 mx-auto lg:mx-0">04</div>
+                    <h4 class="text-xl font-bold text-slate-900 dark:text-white mb-2 text-center lg:text-left">Publish & Track</h4>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 text-center lg:text-left leading-relaxed">
+                        Content distribution, performance monitoring, and continuous improvement.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Results Section -->
+<section class="py-24 bg-primary text-white overflow-hidden relative">
+    <div class="absolute top-0 right-0 -mt-20 -mr-20 w-96 h-96 bg-white/10 rounded-full blur-3xl"></div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="lg:grid lg:grid-cols-2 lg:gap-16 items-center">
+            <div class="mb-12 lg:mb-0">
+                <h2 class="text-3xl md:text-4xl font-black mb-6">Content That Drives Real Results</h2>
+                <p class="text-blue-100 text-lg mb-8 leading-relaxed">
+                    Our content doesn't just look good—it performs. Every piece is optimized for engagement, conversions, and search rankings.
+                </p>
+                <div class="grid sm:grid-cols-2 gap-6">
+                    <div class="flex gap-3">
+                        <span class="material-symbols-outlined text-white">trending_up</span>
+                        <div>
+                            <h5 class="font-bold">385% Engagement Boost</h5>
+                            <p class="text-sm opacity-80">Average increase across social and blog content.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-3">
+                        <span class="material-symbols-outlined text-white">search</span>
+                        <div>
+                            <h5 class="font-bold">Page 1 Rankings</h5>
+                            <p class="text-sm opacity-80">92% of blog posts rank on Google's first page.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-3">
+                        <span class="material-symbols-outlined text-white">share</span>
+                        <div>
+                            <h5 class="font-bold">3.2x More Shares</h5>
+                            <p class="text-sm opacity-80">Content gets shared 3x more than industry average.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-3">
+                        <span class="material-symbols-outlined text-white">conversion_path</span>
+                        <div>
+                            <h5 class="font-bold">Higher Conversions</h5>
+                            <p class="text-sm opacity-80">Content-driven leads convert at 2.8x better rates.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white/10 backdrop-blur-lg p-8 rounded-2xl border border-white/20">
+                <h4 class="text-xl font-bold mb-6 flex items-center gap-2">
+                    <span class="material-symbols-outlined">monitoring</span>
+                    Content Performance Metrics
+                </h4>
+                <div class="space-y-6">
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-sm font-bold">Engagement Rate</span>
+                            <span class="text-green-400 font-bold">8.7%</span>
+                        </div>
+                        <div class="w-full bg-white/10 h-2 rounded-full">
+                            <div class="bg-green-400 h-2 rounded-full w-[87%]"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-sm font-bold">SEO Score</span>
+                            <span class="text-green-400 font-bold">94/100</span>
+                        </div>
+                        <div class="w-full bg-white/10 h-2 rounded-full">
+                            <div class="bg-green-400 h-2 rounded-full w-[94%]"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-sm font-bold">Content Velocity</span>
+                            <span class="text-green-400 font-bold">45/month</span>
+                        </div>
+                        <div class="w-full bg-white/10 h-2 rounded-full">
+                            <div class="bg-green-400 h-2 rounded-full w-[90%]"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-sm font-bold">Client Satisfaction</span>
+                            <span class="text-green-400 font-bold">4.9/5.0</span>
+                        </div>
+                        <div class="w-full bg-white/10 h-2 rounded-full">
+                            <div class="bg-green-400 h-2 rounded-full w-[98%]"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials -->
+<section class="py-24 bg-white dark:bg-background-dark">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl font-bold mb-4">Loved by Brands Worldwide</h2>
+            <p class="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">Our content production services help businesses tell compelling stories that resonate.</p>
+        </div>
+        <div class="grid md:grid-cols-2 gap-8">
+            <div class="bg-white dark:bg-slate-900 border border-[#e7ecf3] dark:border-slate-800 p-8 rounded-xl">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="size-16 rounded-full overflow-hidden bg-slate-100 flex-shrink-0">
+                        <img class="w-full h-full object-cover" alt="Marketing Director" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCSOi_qlLJG0cA7bB7AJTaMW-k_iOXB8SjLZhyp_QwjpXpzWSGZQ81VInZw9-OGALxY51S3iHWNco6afjwiFyrkJ15m9LvprbpkUlSdCx7S0T3EjgRG6Woxry81B2_GWODy6eLJPtjKTbFE5HYk1SnMjDb-7eo1KeBggdqne1jqk1A8SjsD80bWI72x2z9OA6B1bxaB6kNm7vpN7DCm__NfYj7ksaE7mgFJ86PtCWEgVetE7IqtF4CAKHeCgAI3mhnaEO8MBdFBiwzX" />
+                    </div>
+                    <div>
+                        <p class="font-bold text-slate-900 dark:text-white">Sarah Thompson</p>
+                        <p class="text-sm text-slate-500">Marketing Director, GreenLife</p>
+                    </div>
+                </div>
+                <p class="text-slate-600 dark:text-slate-400 italic leading-relaxed">
+                    "Their blog content increased our organic traffic by 320% in 6 months. Every post ranks on page 1. Absolutely phenomenal quality and strategy."
+                </p>
+            </div>
+            <div class="bg-white dark:bg-slate-900 border border-[#e7ecf3] dark:border-slate-800 p-8 rounded-xl">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="size-16 rounded-full overflow-hidden bg-slate-100 flex-shrink-0">
+                        <img class="w-full h-full object-cover" alt="Brand Manager" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA8pDDzP6BfevE_JnONcZ529Z_YB1pMIupHHa3rmte_LACgxKO5ewO678gNiI4-5-uoGJ6Aa4DwaAhfsjxvxAeA8WmE27XXqJmgKtMVIdHv4VqwKQmEwklfkjPYYA3E8A6WfeO3LY2l0-OxlSnKvI4xWL5W-DHhb0D3iWsrRi-CsIVm4LwfoZA4ovW1ehUZ5a7r1IWGiU-RBLfJtm3bbvHj7Q9NtrSWDIV-g6PMgMHIsZZv89Doq0oVI_X8YMbZl_lga2YBHQIlAaF3" />
+                    </div>
+                    <div>
+                        <p class="font-bold text-slate-900 dark:text-white">Marcus Bennett</p>
+                        <p class="text-sm text-slate-500">Brand Manager, TechWave</p>
+                    </div>
+                </div>
+                <p class="text-slate-600 dark:text-slate-400 italic leading-relaxed">
+                    "The video content they produced for our product launch went viral—2.5M views in the first week. Creative, professional, and on-brand."
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Final CTA -->
+<section class="py-24 bg-slate-50 dark:bg-slate-900/30">
+    <div class="max-w-5xl mx-auto px-4 text-center">
+        <h2 class="text-4xl md:text-5xl font-black text-slate-900 dark:text-white mb-6">Ready to Create Content That Converts?</h2>
+        <p class="text-xl text-slate-600 dark:text-slate-400 mb-10 max-w-2xl mx-auto">
+            Let our content experts create compelling stories that engage your audience, build your brand, and drive measurable business results.
+        </p>
+        <div class="flex flex-col sm:flex-row justify-center gap-4">
+            <a href="{% url 'contact' %}" class="bg-primary hover:bg-primary/90 text-white px-10 py-5 rounded-lg font-black text-lg transition-all shadow-xl shadow-primary/25">
+                Get Content Strategy
+            </a>
+            <a href="{% url 'contact' %}" class="bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white px-10 py-5 rounded-lg font-black text-lg transition-all hover:bg-slate-200 dark:hover:bg-slate-700">
+                View Pricing Packages
+            </a>
+        </div>
+        <p class="mt-8 text-sm text-slate-500 flex items-center justify-center gap-2">
+            <span class="material-symbols-outlined text-green-500 text-lg">verified_user</span> 
+            Professional writers, designers, and video editors with 10+ years experience.
+        </p>
+    </div>
+</section>
+</main>
+{% endblock %}
