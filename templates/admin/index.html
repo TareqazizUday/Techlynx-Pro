@@ -1,0 +1,436 @@
+{% extends "admin/index.html" %}
+{% load i18n static %}
+
+{% block content %}
+<div id="content-main">
+    <div class="app-website module">
+        <table>
+            <caption>
+                <a href="#" class="section-title" onclick="toggleSection('home-page-section'); return false;" style="display: flex; align-items: center; justify-content: space-between; padding: 10px; background: linear-gradient(to right, #417690, #4a8db8); color: white; text-decoration: none; border-radius: 4px; font-weight: bold; font-size: 14px;">
+                    <span style="display: flex; align-items: center; gap: 8px;">
+                        <span style="font-size: 18px;">🏠</span>
+                        <span>Home Page Content</span>
+                    </span>
+                    <span id="home-page-toggle" style="font-size: 12px;">▶</span>
+                </a>
+            </caption>
+            <tbody id="home-page-section" style="display: none;">
+                {% for model in app_list %}
+                    {% if model.app_label == 'website' %}
+                        {% for model_item in model.models %}
+                            {% if model_item.object_name == 'HeroSection' or model_item.object_name == 'HeroBenefit' or model_item.object_name == 'Partner' or model_item.object_name == 'CompanyStat' or model_item.object_name == 'Benefit' or model_item.object_name == 'Guarantee' or model_item.object_name == 'Testimonial' or model_item.object_name == 'CTASection' %}
+                                <tr class="model-{{ model_item.object_name|lower }}">
+                                    {% if model_item.admin_url %}
+                                        <th scope="row">
+                                            <a href="{{ model_item.admin_url }}" style="color: #447e9b;">
+                                                {{ model_item.name }}
+                                            </a>
+                                        </th>
+                                    {% else %}
+                                        <th scope="row">{{ model_item.name }}</th>
+                                    {% endif %}
+
+                                    {% if model_item.add_url %}
+                                        <td><a href="{{ model_item.add_url }}" class="addlink" style="color: #5b80b2;">➕ Add</a></td>
+                                    {% else %}
+                                        <td>&nbsp;</td>
+                                    {% endif %}
+
+                                    {% if model_item.admin_url %}
+                                        <td><a href="{{ model_item.admin_url }}" class="changelink" style="color: #5b80b2;">✏️ Change</a></td>
+                                    {% else %}
+                                        <td>&nbsp;</td>
+                                    {% endif %}
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="app-website module" style="margin-top: 20px;">
+        <table>
+            <caption>
+                <a href="#" class="section-title" onclick="toggleSection('services-page-section'); return false;" style="display: flex; align-items: center; justify-content: space-between; padding: 10px; background: linear-gradient(to right, #6a1b9a, #8e24aa); color: white; text-decoration: none; border-radius: 4px; font-weight: bold; font-size: 14px;">
+                    <span style="display: flex; align-items: center; gap: 8px;">
+                        <span style="font-size: 18px;">📋</span>
+                        <span>Services Page Content</span>
+                    </span>
+                    <span id="services-page-toggle" style="font-size: 12px;">▶</span>
+                </a>
+            </caption>
+            <tbody id="services-page-section" style="display: none;">
+                {% for model in app_list %}
+                    {% if model.app_label == 'website' %}
+                        {% for model_item in model.models %}
+                            {% if model_item.object_name == 'Service' or model_item.object_name == 'ServicesPageHero' or model_item.object_name == 'ServiceDetail' or model_item.object_name == 'ServiceFeature' or model_item.object_name == 'WhyChooseItem' or model_item.object_name == 'WhyChooseImage' or model_item.object_name == 'ServicesPageCTA' or model_item.object_name == 'CTAChecklist' %}
+                                <tr class="model-{{ model_item.object_name|lower }}">
+                                    {% if model_item.admin_url %}
+                                        <th scope="row">
+                                            <a href="{{ model_item.admin_url }}" style="color: #447e9b;">
+                                                {{ model_item.name }}
+                                            </a>
+                                        </th>
+                                    {% else %}
+                                        <th scope="row">{{ model_item.name }}</th>
+                                    {% endif %}
+
+                                    {% if model_item.add_url %}
+                                        <td><a href="{{ model_item.add_url }}" class="addlink" style="color: #5b80b2;">➕ Add</a></td>
+                                    {% else %}
+                                        <td>&nbsp;</td>
+                                    {% endif %}
+
+                                    {% if model_item.admin_url %}
+                                        <td><a href="{{ model_item.admin_url }}" class="changelink" style="color: #5b80b2;">✏️ Change</a></td>
+                                    {% else %}
+                                        <td>&nbsp;</td>
+                                    {% endif %}
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="app-website module" style="margin-top: 20px;">
+        <table>
+            <caption>
+                <a href="#" class="section-title" onclick="toggleSection('case-studies-section'); return false;" style="display: flex; align-items: center; justify-content: space-between; padding: 10px; background: linear-gradient(to right, #0891b2, #06b6d4); color: white; text-decoration: none; border-radius: 4px; font-weight: bold; font-size: 14px;">
+                    <span style="display: flex; align-items: center; gap: 8px;">
+                        <span style="font-size: 18px;">📊</span>
+                        <span>Case Studies Page</span>
+                    </span>
+                    <span id="case-studies-toggle" style="font-size: 12px;">▶</span>
+                </a>
+            </caption>
+            <tbody id="case-studies-section" style="display: none;">
+                {% for model in app_list %}
+                    {% if model.app_label == 'website' %}
+                        {% for model_item in model.models %}
+                            {% if model_item.object_name == 'CaseStudy' or model_item.object_name == 'CaseStudyMetric' or model_item.object_name == 'CaseStudiesPageCTA' %}
+                                <tr class="model-{{ model_item.object_name|lower }}">
+                                    {% if model_item.admin_url %}
+                                        <th scope="row">
+                                            <a href="{{ model_item.admin_url }}" style="color: #447e9b;">
+                                                {{ model_item.name }}
+                                            </a>
+                                        </th>
+                                    {% else %}
+                                        <th scope="row">{{ model_item.name }}</th>
+                                    {% endif %}
+
+                                    {% if model_item.add_url %}
+                                        <td><a href="{{ model_item.add_url }}" class="addlink" style="color: #5b80b2;">➕ Add</a></td>
+                                    {% else %}
+                                        <td>&nbsp;</td>
+                                    {% endif %}
+
+                                    {% if model_item.admin_url %}
+                                        <td><a href="{{ model_item.admin_url }}" class="changelink" style="color: #5b80b2;">✏️ Change</a></td>
+                                    {% else %}
+                                        <td>&nbsp;</td>
+                                    {% endif %}
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="app-website module" style="margin-top: 20px;">
+        <table>
+            <caption>
+                <a href="#" class="section-title" onclick="toggleSection('blog-content-section'); return false;" style="display: flex; align-items: center; justify-content: space-between; padding: 10px; background: linear-gradient(to right, #f97316, #fb923c); color: white; text-decoration: none; border-radius: 4px; font-weight: bold; font-size: 14px;">
+                    <span style="display: flex; align-items: center; gap: 8px;">
+                        <span style="font-size: 18px;">�</span>
+                        <span>Blog Content</span>
+                    </span>
+                    <span id="blog-content-toggle" style="font-size: 12px;">▶</span>
+                </a>
+            </caption>
+            <tbody id="blog-content-section" style="display: none;">
+                {% for model in app_list %}
+                    {% if model.app_label == 'website' %}
+                        {% for model_item in model.models %}
+                            {% if model_item.object_name == 'BlogCategory' or model_item.object_name == 'BlogPost' %}
+                                <tr class="model-{{ model_item.object_name|lower }}">
+                                    {% if model_item.admin_url %}
+                                        <th scope="row">
+                                            <a href="{{ model_item.admin_url }}" style="color: #447e9b;">
+                                                {{ model_item.name }}
+                                            </a>
+                                        </th>
+                                    {% else %}
+                                        <th scope="row">{{ model_item.name }}</th>
+                                    {% endif %}
+
+                                    {% if model_item.add_url %}
+                                        <td><a href="{{ model_item.add_url }}" class="addlink" style="color: #5b80b2;">➕ Add</a></td>
+                                    {% else %}
+                                        <td>&nbsp;</td>
+                                    {% endif %}
+
+                                    {% if model_item.admin_url %}
+                                        <td><a href="{{ model_item.admin_url }}" class="changelink" style="color: #5b80b2;">✏️ Change</a></td>
+                                    {% else %}
+                                        <td>&nbsp;</td>
+                                    {% endif %}
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="app-website module" style="margin-top: 20px;">
+        <table>
+            <caption>
+                <a href="#" class="section-title" onclick="toggleSection('careers-section'); return false;" style="display: flex; align-items: center; justify-content: space-between; padding: 10px; background: linear-gradient(to right, #10b981, #34d399); color: white; text-decoration: none; border-radius: 4px; font-weight: bold; font-size: 14px;">
+                    <span style="display: flex; align-items: center; gap: 8px;">
+                        <span style="font-size: 18px;">💼</span>
+                        <span>Careers Page</span>
+                    </span>
+                    <span id="careers-toggle" style="font-size: 12px;">▶</span>
+                </a>
+            </caption>
+            <tbody id="careers-section" style="display: none;">
+                {% for model in app_list %}
+                    {% if model.app_label == 'website' %}
+                        {% for model_item in model.models %}
+                            {% if model_item.object_name == 'CareersHero' or model_item.object_name == 'CareersStat' or model_item.object_name == 'JobDepartment' or model_item.object_name == 'JobLocation' or model_item.object_name == 'JobOpening' or model_item.object_name == 'TalentManagement' or model_item.object_name == 'TalentFeature' or model_item.object_name == 'CareerApplication' %}
+                                <tr class="model-{{ model_item.object_name|lower }}">
+                                    {% if model_item.admin_url %}
+                                        <th scope="row">
+                                            <a href="{{ model_item.admin_url }}" style="color: #447e9b;">
+                                                {{ model_item.name }}
+                                            </a>
+                                        </th>
+                                    {% else %}
+                                        <th scope="row">{{ model_item.name }}</th>
+                                    {% endif %}
+
+                                    {% if model_item.add_url %}
+                                        <td><a href="{{ model_item.add_url }}" class="addlink" style="color: #5b80b2;">➕ Add</a></td>
+                                    {% else %}
+                                        <td>&nbsp;</td>
+                                    {% endif %}
+
+                                    {% if model_item.admin_url %}
+                                        <td><a href="{{ model_item.admin_url }}" class="changelink" style="color: #5b80b2;">✏️ Change</a></td>
+                                    {% else %}
+                                        <td>&nbsp;</td>
+                                    {% endif %}
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="app-website module" style="margin-top: 20px;">
+        <table>
+            <caption>
+                <a href="#" class="section-title" onclick="toggleSection('testimonials-section'); return false;" style="display: flex; align-items: center; justify-content: space-between; padding: 10px; background: linear-gradient(to right, #8b5cf6, #a78bfa); color: white; text-decoration: none; border-radius: 4px; font-weight: bold; font-size: 14px;">
+                    <span style="display: flex; align-items: center; gap: 8px;">
+                        <span style="font-size: 18px;">⭐</span>
+                        <span>Testimonials Page</span>
+                    </span>
+                    <span id="testimonials-toggle" style="font-size: 12px;">▶</span>
+                </a>
+            </caption>
+            <tbody id="testimonials-section" style="display: none;">
+                {% for model in app_list %}
+                    {% if model.app_label == 'website' %}
+                        {% for model_item in model.models %}
+                            {% if model_item.object_name == 'TestimonialsPageSEO' or model_item.object_name == 'TestimonialsPageHero' or model_item.object_name == 'TestimonialsPageWhyChoose' or model_item.object_name == 'TestimonialsPageWhyChooseReason' or model_item.object_name == 'TestimonialsPageCTA' %}
+                                <tr class="model-{{ model_item.object_name|lower }}">
+                                    {% if model_item.admin_url %}
+                                        <th scope="row">
+                                            <a href="{{ model_item.admin_url }}" style="color: #447e9b;">
+                                                {{ model_item.name }}
+                                            </a>
+                                        </th>
+                                    {% else %}
+                                        <th scope="row">{{ model_item.name }}</th>
+                                    {% endif %}
+
+                                    {% if model_item.add_url %}
+                                        <td><a href="{{ model_item.add_url }}" class="addlink" style="color: #5b80b2;">➕ Add</a></td>
+                                    {% else %}
+                                        <td>&nbsp;</td>
+                                    {% endif %}
+
+                                    {% if model_item.admin_url %}
+                                        <td><a href="{{ model_item.admin_url }}" class="changelink" style="color: #5b80b2;">✏️ Change</a></td>
+                                    {% else %}
+                                        <td>&nbsp;</td>
+                                    {% endif %}
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="app-website module" style="margin-top: 20px;">
+        <table>
+            <caption>
+                <a href="#" class="section-title" onclick="toggleSection('website-management-section'); return false;" style="display: flex; align-items: center; justify-content: space-between; padding: 10px; background: linear-gradient(to right, #6c757d, #868e96); color: white; text-decoration: none; border-radius: 4px; font-weight: bold; font-size: 14px;">
+                    <span style="display: flex; align-items: center; gap: 8px;">
+                        <span style="font-size: 18px;">📧</span>
+                        <span>Website Management</span>
+                    </span>
+                    <span id="website-management-toggle" style="font-size: 12px;">▶</span>
+                </a>
+            </caption>
+            <tbody id="website-management-section" style="display: none;">
+                {% for model in app_list %}
+                    {% if model.app_label == 'website' %}
+                        {% for model_item in model.models %}
+                            {% if '📧' in model_item.name %}
+                                <tr class="model-{{ model_item.object_name|lower }}">
+                                    {% if model_item.admin_url %}
+                                        <th scope="row">
+                                            <a href="{{ model_item.admin_url }}" style="color: #447e9b;">
+                                                {{ model_item.name }}
+                                            </a>
+                                        </th>
+                                    {% else %}
+                                        <th scope="row">{{ model_item.name }}</th>
+                                    {% endif %}
+
+                                    {% if model_item.add_url %}
+                                        <td><a href="{{ model_item.add_url }}" class="addlink" style="color: #5b80b2;">➕ Add</a></td>
+                                    {% else %}
+                                        <td>&nbsp;</td>
+                                    {% endif %}
+
+                                    {% if model_item.admin_url %}
+                                        <td><a href="{{ model_item.admin_url }}" class="changelink" style="color: #5b80b2;">✏️ Change</a></td>
+                                    {% else %}
+                                        <td>&nbsp;</td>
+                                    {% endif %}
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    {% for app in app_list %}
+        {% if app.app_label != 'website' %}
+        <div class="app-{{ app.app_label }} module" style="margin-top: 20px;">
+            <table>
+                <caption>
+                    <a href="#" class="section-title" onclick="toggleSection('{{ app.app_label }}-section'); return false;" style="display: flex; align-items: center; justify-content: space-between; padding: 10px; background: linear-gradient(to right, #2c5f75, #3a7a93); color: white; text-decoration: none; border-radius: 4px; font-weight: bold; font-size: 14px;">
+                        <span style="display: flex; align-items: center; gap: 8px;">
+                            <span style="font-size: 18px;">🔐</span>
+                            <span>{{ app.name }}</span>
+                        </span>
+                        <span id="{{ app.app_label }}-toggle" style="font-size: 12px;">▶</span>
+                    </a>
+                </caption>
+                <tbody id="{{ app.app_label }}-section" style="display: none;">
+                {% for model in app.models %}
+                    <tr class="model-{{ model.object_name|lower }}">
+                        {% if model.admin_url %}
+                            <th scope="row"><a href="{{ model.admin_url }}" style="color: #447e9b;">{{ model.name }}</a></th>
+                        {% else %}
+                            <th scope="row">{{ model.name }}</th>
+                        {% endif %}
+
+                        {% if model.add_url %}
+                            <td><a href="{{ model.add_url }}" class="addlink" style="color: #5b80b2;">➕ Add</a></td>
+                        {% else %}
+                            <td>&nbsp;</td>
+                        {% endif %}
+
+                        {% if model.admin_url %}
+                            {% if model.view_only %}
+                                <td><a href="{{ model.admin_url }}" class="viewlink" style="color: #5b80b2;">👁️ View</a></td>
+                            {% else %}
+                                <td><a href="{{ model.admin_url }}" class="changelink" style="color: #5b80b2;">✏️ Change</a></td>
+                            {% endif %}
+                        {% else %}
+                            <td>&nbsp;</td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% endif %}
+    {% endfor %}
+</div>
+
+<script>
+function toggleSection(sectionId) {
+    var section = document.getElementById(sectionId);
+    var toggle = document.getElementById(sectionId.replace('-section', '-toggle'));
+    
+    if (section.style.display === 'none') {
+        section.style.display = '';
+        toggle.textContent = '▼';
+    } else {
+        section.style.display = 'none';
+        toggle.textContent = '▶';
+    }
+}
+</script>
+
+<style>
+    .app-website.module, .module {
+        border: 1px solid #e1e4e8;
+        border-radius: 6px;
+        overflow: hidden;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    
+    .app-website.module table, .module table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    
+    .app-website.module tbody tr, .module tbody tr {
+        border-bottom: 1px solid #f0f0f0;
+        transition: background-color 0.2s;
+    }
+    
+    .app-website.module tbody tr:hover, .module tbody tr:hover {
+        background-color: #f8f9fa;
+    }
+    
+    .app-website.module tbody tr th, .module tbody tr th {
+        padding: 12px 16px;
+        text-align: left;
+        font-weight: 500;
+        width: 60%;
+    }
+    
+    .app-website.module tbody tr td, .module tbody tr td {
+        padding: 12px 16px;
+        text-align: center;
+        width: 20%;
+    }
+    
+    .section-title:hover {
+        opacity: 0.9;
+        cursor: pointer;
+    }
+</style>
+{% endblock %}

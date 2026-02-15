@@ -31,178 +31,89 @@
 <section class="sticky top-[80px] z-40 bg-white/95 dark:bg-background-dark/95 backdrop-blur-sm border-y border-slate-200 dark:border-slate-800 py-4 shadow-sm">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
         <div class="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1 md:pb-0">
-            <button class="whitespace-nowrap flex h-9 items-center justify-center rounded-full bg-primary px-5 text-sm font-bold text-white shadow-md shadow-primary/20">All Projects</button>
-            <button class="whitespace-nowrap flex h-9 items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800 px-5 text-sm font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">E-commerce</button>
-            <button class="whitespace-nowrap flex h-9 items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800 px-5 text-sm font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">Healthcare</button>
-            <button class="whitespace-nowrap flex h-9 items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800 px-5 text-sm font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">SaaS</button>
-            <button class="whitespace-nowrap flex h-9 items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800 px-5 text-sm font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">Real Estate</button>
-            <button class="whitespace-nowrap flex h-9 items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800 px-5 text-sm font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">FinTech</button>
+            <button onclick="filterCategory('all')" class="whitespace-nowrap flex h-9 items-center justify-center rounded-full {% if active_category == 'all' or not active_category %}bg-primary text-white shadow-md shadow-primary/20{% else %}bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700{% endif %} px-5 text-sm font-bold transition-colors">All Projects</button>
+            {% for category in categories %}
+            <button onclick="filterCategory('{{ category }}')" class="whitespace-nowrap flex h-9 items-center justify-center rounded-full {% if active_category == category %}bg-primary text-white shadow-md shadow-primary/20{% else %}bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700{% endif %} px-5 text-sm font-semibold transition-colors">{{ category }}</button>
+            {% endfor %}
         </div>
         <div class="hidden lg:flex items-center gap-2">
             <span class="text-xs font-bold text-slate-400 uppercase tracking-widest mr-2">Sort by:</span>
-            <select class="bg-transparent border-none text-sm font-bold text-slate-900 dark:text-white focus:ring-0 cursor-pointer">
-                <option>Latest Results</option>
-                <option>Highest Impact</option>
-                <option>Industry</option>
+            <select id="sortSelect" onchange="changeSort(this.value)" class="bg-transparent border-none text-sm font-bold text-slate-900 dark:text-white focus:ring-0 cursor-pointer">
+                <option value="latest" {% if active_sort == 'latest' %}selected{% endif %}>Latest Results</option>
+                <option value="impact" {% if active_sort == 'impact' %}selected{% endif %}>Highest Impact</option>
+                <option value="industry" {% if active_sort == 'industry' %}selected{% endif %}>Industry</option>
             </select>
         </div>
     </div>
 </section>
 
+<script>
+function filterCategory(category) {
+    const urlParams = new URLSearchParams(window.location.search);
+    urlParams.set('category', category);
+    window.location.href = window.location.pathname + '?' + urlParams.toString();
+}
+
+function changeSort(sortValue) {
+    const urlParams = new URLSearchParams(window.location.search);
+    urlParams.set('sort', sortValue);
+    window.location.href = window.location.pathname + '?' + urlParams.toString();
+}
+</script>
+
 <!-- Case Studies Grid -->
 <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    {% if case_studies %}
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <!-- Card 1 -->
-        <article class="group flex flex-col bg-white dark:bg-slate-900 rounded-xl overflow-hidden border border-slate-100 dark:border-slate-800 hover:shadow-2xl hover:shadow-primary/5 hover:-translate-y-1 transition-all duration-300">
+        {% for case_study in case_studies %}
+        <!-- Card {{ forloop.counter }} -->
+        <a href="{% url 'case_study_detail' case_study.slug %}" class="group flex flex-col bg-white dark:bg-slate-900 rounded-xl overflow-hidden border border-slate-100 dark:border-slate-800 hover:shadow-2xl hover:shadow-primary/5 hover:-translate-y-1 transition-all duration-300">
             <div class="relative aspect-[16/10] overflow-hidden">
                 <div class="absolute inset-0 bg-primary/10 group-hover:bg-transparent transition-colors z-10"></div>
-                <img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="Modern logistics center with digital tracking systems dashboard" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA_TS6XVpbQM7RuVr8TkBeTQFfIGbKXGav2vjGeZ2IbtfWHIZTyuVePH6VW2AlKTZdWSsYQYS5niwsEuJvPGIzmI0sVjw99ppYrhJX_bBIxWT32-p0Y7tfWUxvyt_1Ua6-HbTDkvBg2QLRYaL7YGX-Rv9nofCIR8pzkm5kBe33jTJ25A0d9HgkEaUgOv-Jom8mpLxd7Fk_5mMnqDOXFlalsIaJjj-YC78Y5U_Don5qRh35Lzh1VHwGc8fpMR757dcMwJ0PEb-ItSG7y"/>
+                {% if case_study.background_image %}
+                <img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" 
+                     alt="{{ case_study.image_alt_text|default:case_study.title }}" 
+                     src="{{ case_study.background_image.url }}" />
+                {% else %}
+                <div class="w-full h-full bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
+                    <span class="material-symbols-outlined text-6xl text-primary/30">business</span>
+                </div>
+                {% endif %}
                 <div class="absolute top-4 left-4 z-20">
-                    <span class="px-3 py-1 bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm text-[10px] font-bold uppercase tracking-widest rounded text-primary">Logistics</span>
+                    <span class="px-3 py-1 bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm text-[10px] font-bold uppercase tracking-widest rounded text-primary">{{ case_study.category }}</span>
                 </div>
             </div>
             <div class="p-6 flex flex-col flex-grow">
-                <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2 group-hover:text-primary transition-colors">Global Logistics Co.</h3>
-                <p class="text-sm text-slate-500 dark:text-slate-400 mb-6 line-clamp-2">Complete cloud migration and automated dispatch engine development for a fleet of 5,000+ vehicles.</p>
+                <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2 group-hover:text-primary transition-colors">{{ case_study.title }}</h3>
+                <p class="text-sm text-slate-500 dark:text-slate-400 mb-6 line-clamp-2">{{ case_study.description }}</p>
                 <div class="mt-auto border-t border-slate-100 dark:border-slate-800 pt-6">
                     <div class="flex items-center justify-between">
                         <div>
-                            <p class="text-xs font-bold text-slate-400 uppercase tracking-tight">Key Result</p>
-                            <p class="text-2xl font-black text-primary">45% <span class="text-sm font-bold">Ops Reduction</span></p>
+                            <p class="text-xs font-bold text-slate-400 uppercase tracking-tight">{{ case_study.key_result_label }}</p>
+                            <p class="text-2xl font-black text-primary">{{ case_study.key_result_value }}</p>
                         </div>
                         <span class="material-symbols-outlined text-slate-300 group-hover:text-primary group-hover:translate-x-1 transition-all">arrow_forward</span>
                     </div>
                 </div>
             </div>
-        </article>
-
-        <!-- Card 2 -->
-        <article class="group flex flex-col bg-white dark:bg-slate-900 rounded-xl overflow-hidden border border-slate-100 dark:border-slate-800 hover:shadow-2xl hover:shadow-primary/5 hover:-translate-y-1 transition-all duration-300">
-            <div class="relative aspect-[16/10] overflow-hidden">
-                <div class="absolute inset-0 bg-primary/10 group-hover:bg-transparent transition-colors z-10"></div>
-                <img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="Mobile healthcare app interface on a smartphone screen" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCxkSRQkUAl30NDCzhRv_eHmRv2_yQoMPcWdrSs_40ABtuW3kpdAt2RcGGaz1aTjMu60rmfXsdRWVsITjUn837nKzvsx4bNtlUjcb7O446XH8xdC3U7VUdtN9aAXBfxQTNxbxFVC0--qEC_W839Y1AcOryseUl79HrDkCDmYKHbxTejiPFHrqfRti0FrGp0lv_3wa84YXoCth69AecvMa96IMMiOyoMvhVxCksqkZ9BYed_qe0TlwI7QUfLJEqtxiPmHQSThnUWPqDN"/>
-                <div class="absolute top-4 left-4 z-20">
-                    <span class="px-3 py-1 bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm text-[10px] font-bold uppercase tracking-widest rounded text-primary">Healthcare</span>
-                </div>
-            </div>
-            <div class="p-6 flex flex-col flex-grow">
-                <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2 group-hover:text-primary transition-colors">HealthTrack Systems</h3>
-                <p class="text-sm text-slate-500 dark:text-slate-400 mb-6 line-clamp-2">Scalable patient portal integration with HIPAA-compliant secure messaging and telehealth features.</p>
-                <div class="mt-auto border-t border-slate-100 dark:border-slate-800 pt-6">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-xs font-bold text-slate-400 uppercase tracking-tight">User Engagement</p>
-                            <p class="text-2xl font-black text-primary">+150% <span class="text-sm font-bold">Growth</span></p>
-                        </div>
-                        <span class="material-symbols-outlined text-slate-300 group-hover:text-primary group-hover:translate-x-1 transition-all">arrow_forward</span>
-                    </div>
-                </div>
-            </div>
-        </article>
-
-        <!-- Card 3 -->
-        <article class="group flex flex-col bg-white dark:bg-slate-900 rounded-xl overflow-hidden border border-slate-100 dark:border-slate-800 hover:shadow-2xl hover:shadow-primary/5 hover:-translate-y-1 transition-all duration-300">
-            <div class="relative aspect-[16/10] overflow-hidden">
-                <div class="absolute inset-0 bg-primary/10 group-hover:bg-transparent transition-colors z-10"></div>
-                <img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="Financial data analytics dashboard on a desktop computer" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC0Afx_vZOV-tjb84veaFPrtKZGFvn3nztYJac1znGOkcuAMzEVxubVT0Kgdw6fwTPHlYOcwnXvevXTQAHDuQTH6LcSsQYhAqOWqgPQr7xGqWjR7KHORKIouRLa64iMCV2MG36CqNX5-X1QCjmIGBH4rVfj9ZASPvLy-0C9TXeH6yOElJ76NRVcS7j9KcaCnJbCZkLLc08XJ5nDvyPqKYeH0T0iOEncpBCZZaXMUfGHHXuxCPOsjWnzxT7QnFm173V82rgswfbFQRDZ"/>
-                <div class="absolute top-4 left-4 z-20">
-                    <span class="px-3 py-1 bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm text-[10px] font-bold uppercase tracking-widest rounded text-primary">FinTech</span>
-                </div>
-            </div>
-            <div class="p-6 flex flex-col flex-grow">
-                <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2 group-hover:text-primary transition-colors">Financier App</h3>
-                <p class="text-sm text-slate-500 dark:text-slate-400 mb-6 line-clamp-2">Aggressive paid media campaign and funnel optimization for a leading investment management platform.</p>
-                <div class="mt-auto border-t border-slate-100 dark:border-slate-800 pt-6">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-xs font-bold text-slate-400 uppercase tracking-tight">Ad Spend</p>
-                            <p class="text-2xl font-black text-primary">3.5x <span class="text-sm font-bold">ROI</span></p>
-                        </div>
-                        <span class="material-symbols-outlined text-slate-300 group-hover:text-primary group-hover:translate-x-1 transition-all">arrow_forward</span>
-                    </div>
-                </div>
-            </div>
-        </article>
-
-        <!-- Card 4 -->
-        <article class="group flex flex-col bg-white dark:bg-slate-900 rounded-xl overflow-hidden border border-slate-100 dark:border-slate-800 hover:shadow-2xl hover:shadow-primary/5 hover:-translate-y-1 transition-all duration-300">
-            <div class="relative aspect-[16/10] overflow-hidden">
-                <div class="absolute inset-0 bg-primary/10 group-hover:bg-transparent transition-colors z-10"></div>
-                <img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="High-end modern apartment building under a clear blue sky" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAP9IRTBCAL_SViElbrlgo6Axm-IhlJ2PjqrF_rzQ6Vm-pkLcp36asogYwC7PQJl3hMW916PNtr0v-7dXe_MEmKoXdguBi3hyOGV0LqMA3KoFbIUumRscHaR1bvcv77uXczjlKv0SpCrPmlY2YMx1nTB5WShhX5vnknY7IGAFwZHAqRlNjEVMft17CkcrxEHrTaiF4d_9SzmPG85im4Y52FmUgH1N1RnZ4ddju4ofavL-JWfIYABUANIc00jqDk3ydxzQSQ6uIfkK__"/>
-                <div class="absolute top-4 left-4 z-20">
-                    <span class="px-3 py-1 bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm text-[10px] font-bold uppercase tracking-widest rounded text-primary">Real Estate</span>
-                </div>
-            </div>
-            <div class="p-6 flex flex-col flex-grow">
-                <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2 group-hover:text-primary transition-colors">Urban Realty</h3>
-                <p class="text-sm text-slate-500 dark:text-slate-400 mb-6 line-clamp-2">Comprehensive SEO strategy and content marketing for a multi-city luxury real estate agency.</p>
-                <div class="mt-auto border-t border-slate-100 dark:border-slate-800 pt-6">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-xs font-bold text-slate-400 uppercase tracking-tight">Organic Traffic</p>
-                            <p class="text-2xl font-black text-primary">+200% <span class="text-sm font-bold">Growth</span></p>
-                        </div>
-                        <span class="material-symbols-outlined text-slate-300 group-hover:text-primary group-hover:translate-x-1 transition-all">arrow_forward</span>
-                    </div>
-                </div>
-            </div>
-        </article>
-
-        <!-- Card 5 -->
-        <article class="group flex flex-col bg-white dark:bg-slate-900 rounded-xl overflow-hidden border border-slate-100 dark:border-slate-800 hover:shadow-2xl hover:shadow-primary/5 hover:-translate-y-1 transition-all duration-300">
-            <div class="relative aspect-[16/10] overflow-hidden">
-                <div class="absolute inset-0 bg-primary/10 group-hover:bg-transparent transition-colors z-10"></div>
-                <img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="Data visualization charts showing upward business trends" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAFbpJj3R8hJ3d-ah4BY5kglOeqIM1oNY7OD-fQrCfSoW5v6M1A-eWLxwrThpcONvTicI79w4GOAN1Yq9rduYHRPyZUCUfDxVQ84OjAcOkNMYuKL8ICjwtTaWHYsCHUFp8B9gAWP9O9Yi1c2yWVh6npSAThxQTZ4FvPjJ4wm9xycAcoMgnmSgHAxGPAqd_if3rQY3YOoeI7BrfCdkupRIf8irbId-mF8ghekrKJUcz_g4edkdqYaesZPRDW_G67daUPoHHfGZXyuQw0"/>
-                <div class="absolute top-4 left-4 z-20">
-                    <span class="px-3 py-1 bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm text-[10px] font-bold uppercase tracking-widest rounded text-primary">SaaS</span>
-                </div>
-            </div>
-            <div class="p-6 flex flex-col flex-grow">
-                <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2 group-hover:text-primary transition-colors">CloudFlow SaaS</h3>
-                <p class="text-sm text-slate-500 dark:text-slate-400 mb-6 line-clamp-2">Architecting a high-availability infrastructure for a real-time collaborative workspace application.</p>
-                <div class="mt-auto border-t border-slate-100 dark:border-slate-800 pt-6">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-xs font-bold text-slate-400 uppercase tracking-tight">Deployment Speed</p>
-                            <p class="text-2xl font-black text-primary">60% <span class="text-sm font-bold">Faster</span></p>
-                        </div>
-                        <span class="material-symbols-outlined text-slate-300 group-hover:text-primary group-hover:translate-x-1 transition-all">arrow_forward</span>
-                    </div>
-                </div>
-            </div>
-        </article>
-
-        <!-- Card 6 -->
-        <article class="group flex flex-col bg-white dark:bg-slate-900 rounded-xl overflow-hidden border border-slate-100 dark:border-slate-800 hover:shadow-2xl hover:shadow-primary/5 hover:-translate-y-1 transition-all duration-300">
-            <div class="relative aspect-[16/10] overflow-hidden">
-                <div class="absolute inset-0 bg-primary/10 group-hover:bg-transparent transition-colors z-10"></div>
-                <img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="Team of digital marketers collaborating around a large table" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCnKyQA698Dq0d2zLvPrggt3CzUXfKgAU9WG4b6IWNiWWoiQjKCLAeTXGGQ59rMXLy719qs7T0qKL9TZOJ8iZ77_-cbZZpm9OhPZ2KxpC7p2ub_zSElsjukoko1askOkG0F_JFRu6wzbrwh6aD0JjHTydGfpH0Gn6hFr3NIF-Cd-bKFukc25dI8xrck_5IkUjHnhVnhsnlBqFnRzpONIdg8jnZoXCWbtPFneaA3oAbgzn3sooLmvrvnqBfFYaLptLSI-KLOatcKwaA2"/>
-                <div class="absolute top-4 left-4 z-20">
-                    <span class="px-3 py-1 bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm text-[10px] font-bold uppercase tracking-widest rounded text-primary">E-commerce</span>
-                </div>
-            </div>
-            <div class="p-6 flex flex-col flex-grow">
-                <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2 group-hover:text-primary transition-colors">EcoRetail Store</h3>
-                <p class="text-sm text-slate-500 dark:text-slate-400 mb-6 line-clamp-2">Optimizing checkout flow and implementing AI personalization for an organic lifestyle brand.</p>
-                <div class="mt-auto border-t border-slate-100 dark:border-slate-800 pt-6">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-xs font-bold text-slate-400 uppercase tracking-tight">Conversion Rate</p>
-                            <p class="text-2xl font-black text-primary">80% <span class="text-sm font-bold">Higher</span></p>
-                        </div>
-                        <span class="material-symbols-outlined text-slate-300 group-hover:text-primary group-hover:translate-x-1 transition-all">arrow_forward</span>
-                    </div>
-                </div>
-            </div>
-        </article>
+        </a>
+        {% endfor %}
     </div>
+    {% else %}
+    <div class="text-center py-16">
+        <span class="material-symbols-outlined text-6xl text-slate-300 dark:text-slate-700 mb-4">folder_open</span>
+        <p class="text-lg text-slate-500 dark:text-slate-400">No case studies available at the moment.</p>
+    </div>
+    {% endif %}
 
     <!-- Load More Button -->
+    {% if case_studies|length > 6 %}
     <div class="mt-16 flex justify-center">
         <button class="px-8 py-3 rounded-lg border-2 border-slate-200 dark:border-slate-800 text-sm font-bold text-slate-600 dark:text-slate-300 hover:border-primary hover:text-primary transition-all">
             Load More Case Studies
         </button>
     </div>
+    {% endif %}
 </section>
 
 <!-- CTA Section -->

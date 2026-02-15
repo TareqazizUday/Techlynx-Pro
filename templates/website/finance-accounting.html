@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Finance & Accounting Services | Bookkeeping, CFO & Tax Services{% endblock %}
 
@@ -17,6 +18,24 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="lg:grid lg:grid-cols-2 lg:gap-16 items-center">
             <div>
+                {% if hero %}
+                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-primary/10 text-primary mb-6 uppercase tracking-wider">
+                    <span class="material-symbols-outlined text-sm">{{ hero.badge_icon }}</span> {{ hero.badge_text }}
+                </span>
+                <div class="text-4xl md:text-6xl font-black text-slate-900 dark:text-white leading-[1.1] mb-6">{{ hero.headline|safe }}</div>
+                <p class="text-lg md:text-xl text-slate-600 dark:text-slate-400 mb-8 leading-relaxed">
+                    {{ hero.description }}
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a href="{{ hero.cta_primary_url }}" class="px-8 py-4 bg-primary text-white rounded-lg font-bold text-lg hover:shadow-lg hover:shadow-primary/30 transition-all flex items-center gap-2 justify-center group">
+                        {{ hero.cta_primary_text }} <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                    </a>
+                    <a href="{{ hero.cta_secondary_url }}" class="px-8 py-4 border border-[#cfd9e7] dark:border-slate-700 rounded-lg font-bold text-lg hover:bg-white dark:hover:bg-slate-800 transition-all">
+                        {{ hero.cta_secondary_text }}
+                    </a>
+                </div>
+                {% else %}
+                <!-- Fallback content if no hero data -->
                 <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-primary/10 text-primary mb-6 uppercase tracking-wider">
                     <span class="material-symbols-outlined text-sm">account_balance</span> Strategic Financial Management
                 </span>
@@ -34,6 +53,7 @@
                         View Case Studies
                     </a>
                 </div>
+                {% endif %}
             </div>
             <div class="mt-12 lg:mt-0 relative">
                 <div class="absolute -top-12 -left-12 w-64 h-64 bg-primary/10 rounded-full blur-3xl"></div>
@@ -43,25 +63,41 @@
                     <div class="mb-6">
                         <p class="text-xs text-slate-500 uppercase font-bold tracking-widest mb-2">Average Cost Savings</p>
                         <div class="flex items-end gap-2 mb-4">
+                            {% if hero %}
+                            <h3 class="text-4xl font-black text-green-500">{{ hero.cost_savings_percentage }}%</h3>
+                            {% else %}
                             <h3 class="text-4xl font-black text-green-500">42%</h3>
+                            {% endif %}
                             <span class="text-primary font-bold text-sm mb-1">vs In-House Team</span>
                         </div>
                         <p class="text-xs text-slate-500 mb-3">Monthly overhead reduction</p>
                         <div class="grid grid-cols-2 gap-3">
                             <div class="p-3 bg-slate-50 dark:bg-slate-800 rounded-xl">
                                 <p class="text-xs text-slate-500 mb-1">Time Saved</p>
+                                {% if hero %}
+                                <p class="text-xl font-bold text-primary">{{ hero.time_saved_monthly }}h/mo</p>
+                                {% else %}
                                 <p class="text-xl font-bold text-primary">280h/mo</p>
+                                {% endif %}
                             </div>
                             <div class="p-3 bg-slate-50 dark:bg-slate-800 rounded-xl">
                                 <p class="text-xs text-slate-500 mb-1">Error Rate</p>
+                                {% if hero %}
+                                <p class="text-xl font-bold text-green-500">{{ hero.error_rate }}%</p>
+                                {% else %}
                                 <p class="text-xl font-bold text-green-500">0.02%</p>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
                     <div class="p-4 bg-primary/5 rounded-xl border border-primary/20">
                         <div class="flex items-center gap-2 mb-2">
                             <span class="material-symbols-outlined text-primary text-sm">verified</span>
+                            {% if hero %}
+                            <p class="text-xs font-bold text-primary">{{ hero.compliance_guarantee }}</p>
+                            {% else %}
                             <p class="text-xs font-bold text-primary">100% Compliance Guarantee</p>
+                            {% endif %}
                         </div>
                         <p class="text-xs text-slate-500">IRS, GAAP, and industry standards</p>
                     </div>
@@ -79,9 +115,34 @@
             <p class="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">Full-spectrum accounting and finance solutions tailored to your business needs.</p>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <!-- Bookkeeping & Accounting -->
+            {% for service in services %}
             <div class="group p-6 rounded-xl border border-[#cfd9e7] dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-primary transition-all duration-300">
-                <div class="size-12 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                <div class="w-20 h-20 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                    {% if service.icon_image %}
+                        <div class="w-16 h-16 flex items-center justify-center">
+                            <img src="{{ service.icon_image.url }}" alt="{{ service.title }}" class="w-full h-full" />
+                        </div>
+                    {% else %}
+                        <span class="material-symbols-outlined text-2xl">{{ service.icon }}</span>
+                    {% endif %}
+                </div>
+                <h3 class="text-lg font-bold mb-2">{{ service.title }}</h3>
+                <p class="text-sm text-slate-600 dark:text-slate-400 mb-4">{{ service.description }}</p>
+                <ul class="text-xs space-y-2 text-slate-500">
+                    <li class="flex items-center gap-2"><span class="material-symbols-outlined text-xs text-green-500">check_circle</span> {{ service.feature_1 }}</li>
+                    <li class="flex items-center gap-2"><span class="material-symbols-outlined text-xs text-green-500">check_circle</span> {{ service.feature_2 }}</li>
+                    {% if service.feature_3 %}
+                    <li class="flex items-center gap-2"><span class="material-symbols-outlined text-xs text-green-500">check_circle</span> {{ service.feature_3 }}</li>
+                    {% endif %}
+                    {% if service.feature_4 %}
+                    <li class="flex items-center gap-2"><span class="material-symbols-outlined text-xs text-green-500">check_circle</span> {{ service.feature_4 }}</li>
+                    {% endif %}
+                </ul>
+            </div>
+            {% empty %}
+            <!-- Fallback static content -->
+            <div class="group p-6 rounded-xl border border-[#cfd9e7] dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-primary transition-all duration-300">
+                <div class="w-20 h-20 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                     <span class="material-symbols-outlined text-2xl">receipt_long</span>
                 </div>
                 <h3 class="text-lg font-bold mb-2">Bookkeeping & Accounting</h3>
@@ -91,45 +152,7 @@
                     <li class="flex items-center gap-2"><span class="material-symbols-outlined text-xs text-green-500">check_circle</span> Bank Reconciliation</li>
                 </ul>
             </div>
-            
-            <!-- Financial Reporting -->
-            <div class="group p-6 rounded-xl border border-[#cfd9e7] dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-primary transition-all duration-300">
-                <div class="size-12 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                    <span class="material-symbols-outlined text-2xl">assessment</span>
-                </div>
-                <h3 class="text-lg font-bold mb-2">Financial Reporting</h3>
-                <p class="text-sm text-slate-600 dark:text-slate-400 mb-4">Comprehensive financial statements, P&L, balance sheets, and cash flow analysis.</p>
-                <ul class="text-xs space-y-2 text-slate-500">
-                    <li class="flex items-center gap-2"><span class="material-symbols-outlined text-xs text-green-500">check_circle</span> Monthly Statements</li>
-                    <li class="flex items-center gap-2"><span class="material-symbols-outlined text-xs text-green-500">check_circle</span> KPI Dashboards</li>
-                </ul>
-            </div>
-            
-            <!-- Tax Preparation -->
-            <div class="group p-6 rounded-xl border border-[#cfd9e7] dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-primary transition-all duration-300">
-                <div class="size-12 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                    <span class="material-symbols-outlined text-2xl">gavel</span>
-                </div>
-                <h3 class="text-lg font-bold mb-2">Tax Preparation & Planning</h3>
-                <p class="text-sm text-slate-600 dark:text-slate-400 mb-4">Strategic tax planning, preparation, filing, and compliance with IRS regulations.</p>
-                <ul class="text-xs space-y-2 text-slate-500">
-                    <li class="flex items-center gap-2"><span class="material-symbols-outlined text-xs text-green-500">check_circle</span> Tax Optimization</li>
-                    <li class="flex items-center gap-2"><span class="material-symbols-outlined text-xs text-green-500">check_circle</span> IRS Compliance</li>
-                </ul>
-            </div>
-            
-            <!-- CFO Services -->
-            <div class="group p-6 rounded-xl border border-[#cfd9e7] dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-primary transition-all duration-300">
-                <div class="size-12 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                    <span class="material-symbols-outlined text-2xl">business_center</span>
-                </div>
-                <h3 class="text-lg font-bold mb-2">Virtual CFO Services</h3>
-                <p class="text-sm text-slate-600 dark:text-slate-400 mb-4">Strategic financial leadership, forecasting, budgeting, and business advisory.</p>
-                <ul class="text-xs space-y-2 text-slate-500">
-                    <li class="flex items-center gap-2"><span class="material-symbols-outlined text-xs text-green-500">check_circle</span> Financial Strategy</li>
-                    <li class="flex items-center gap-2"><span class="material-symbols-outlined text-xs text-green-500">check_circle</span> Budget Planning</li>
-                </ul>
-            </div>
+            {% endfor %}
         </div>
     </div>
 </section>
@@ -142,27 +165,38 @@
                 <h2 class="text-3xl font-bold text-slate-900 dark:text-white mb-6">Professional Accounting Software</h2>
                 <p class="text-slate-600 dark:text-slate-400 mb-8">We work with leading accounting platforms to provide accurate, real-time financial insights and reporting.</p>
                 <div class="space-y-6">
+                    <!-- QuickBooks -->
                     <div class="flex gap-4">
-                        <div class="flex-shrink-0 bg-white dark:bg-slate-800 p-3 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700 h-fit">
-                            <span class="material-symbols-outlined text-primary text-3xl">calculate</span>
+                        <div class="flex-shrink-0 bg-white dark:bg-slate-800 p-4 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700 h-fit">
+                            <div class="w-16 h-16 flex items-center justify-center">
+                                <img src="/media/services/finance_accounting/tool_icons/quickbooks.svg?v=2" alt="QuickBooks" class="w-full h-full object-contain" />
+                            </div>
                         </div>
                         <div>
                             <h4 class="font-bold text-slate-900 dark:text-white">Cloud Accounting Platforms</h4>
                             <p class="text-sm text-slate-500 dark:text-slate-400">QuickBooks Online, Xero, and FreshBooks for seamless financial management.</p>
                         </div>
                     </div>
+                    
+                    <!-- ADP -->
                     <div class="flex gap-4">
-                        <div class="flex-shrink-0 bg-white dark:bg-slate-800 p-3 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700 h-fit">
-                            <span class="material-symbols-outlined text-primary text-3xl">paid</span>
+                        <div class="flex-shrink-0 bg-white dark:bg-slate-800 p-4 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700 h-fit">
+                            <div class="w-16 h-16 flex items-center justify-center">
+                                <img src="/media/services/finance_accounting/tool_icons/adp.svg?v=2" alt="ADP" class="w-full h-full object-contain" />
+                            </div>
                         </div>
                         <div>
                             <h4 class="font-bold text-slate-900 dark:text-white">Payroll & HR Integration</h4>
                             <p class="text-sm text-slate-500 dark:text-slate-400">ADP, Gusto, and Paychex for comprehensive payroll processing.</p>
                         </div>
                     </div>
+                    
+                    <!-- NetSuite -->
                     <div class="flex gap-4">
-                        <div class="flex-shrink-0 bg-white dark:bg-slate-800 p-3 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700 h-fit">
-                            <span class="material-symbols-outlined text-primary text-3xl">currency_exchange</span>
+                        <div class="flex-shrink-0 bg-white dark:bg-slate-800 p-4 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700 h-fit">
+                            <div class="w-16 h-16 flex items-center justify-center">
+                                <img src="/media/services/finance_accounting/tool_icons/netsuite.svg?v=2" alt="NetSuite" class="w-full h-full object-contain" />
+                            </div>
                         </div>
                         <div>
                             <h4 class="font-bold text-slate-900 dark:text-white">ERP & Financial Systems</h4>
@@ -172,24 +206,58 @@
                 </div>
             </div>
             <div class="grid grid-cols-3 gap-4">
-                <div class="aspect-square bg-white dark:bg-slate-800 rounded-xl flex flex-col items-center justify-center p-4 border border-slate-200 dark:border-slate-700 shadow-sm">
-                    <div class="text-slate-900 dark:text-white font-bold">QuickBooks</div>
+                {% for tool in tools %}
+                <div class="aspect-square bg-white dark:bg-slate-800 rounded-xl flex flex-col items-center justify-center p-6 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-lg transition-shadow">
+                    {% if tool.icon_image %}
+                        <div class="w-20 h-20 mb-4 flex items-center justify-center">
+                            <img src="{{ tool.icon_image.url }}" alt="{{ tool.name }}" class="w-full h-full object-contain" />
+                        </div>
+                    {% else %}
+                        <div class="w-20 h-20 mb-4 flex items-center justify-center bg-primary/10 rounded-xl">
+                            <span class="material-symbols-outlined text-primary text-4xl">{{ tool.icon|default:'account_balance' }}</span>
+                        </div>
+                    {% endif %}
+                    <div class="text-slate-900 dark:text-white font-bold text-center">{{ tool.name }}</div>
                 </div>
-                <div class="aspect-square bg-white dark:bg-slate-800 rounded-xl flex flex-col items-center justify-center p-4 border border-slate-200 dark:border-slate-700 shadow-sm">
-                    <div class="text-slate-900 dark:text-white font-bold">Xero</div>
+                {% empty %}
+                <!-- Fallback logos -->
+                <div class="aspect-square bg-white dark:bg-slate-800 rounded-xl flex flex-col items-center justify-center p-6 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-lg transition-shadow">
+                    <div class="w-20 h-20 mb-4 flex items-center justify-center">
+                        <img src="/media/services/finance_accounting/tool_icons/quickbooks.svg?v=2" alt="QuickBooks" class="w-full h-full object-contain" />
+                    </div>
+                    <div class="text-slate-900 dark:text-white font-bold text-center">QuickBooks</div>
                 </div>
-                <div class="aspect-square bg-white dark:bg-slate-800 rounded-xl flex flex-col items-center justify-center p-4 border border-slate-200 dark:border-slate-700 shadow-sm">
-                    <div class="text-slate-900 dark:text-white font-bold">NetSuite</div>
+                <div class="aspect-square bg-white dark:bg-slate-800 rounded-xl flex flex-col items-center justify-center p-6 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-lg transition-shadow">
+                    <div class="w-20 h-20 mb-4 flex items-center justify-center">
+                        <img src="/media/services/finance_accounting/tool_icons/adp.svg?v=2" alt="ADP" class="w-full h-full object-contain" />
+                    </div>
+                    <div class="text-slate-900 dark:text-white font-bold text-center">ADP</div>
                 </div>
-                <div class="aspect-square bg-white dark:bg-slate-800 rounded-xl flex flex-col items-center justify-center p-4 border border-slate-200 dark:border-slate-700 shadow-sm">
-                    <div class="text-slate-900 dark:text-white font-bold">Sage</div>
+                <div class="aspect-square bg-white dark:bg-slate-800 rounded-xl flex flex-col items-center justify-center p-6 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-lg transition-shadow">
+                    <div class="w-20 h-20 mb-4 flex items-center justify-center">
+                        <img src="/media/services/finance_accounting/tool_icons/netsuite.svg?v=2" alt="NetSuite" class="w-full h-full object-contain" />
+                    </div>
+                    <div class="text-slate-900 dark:text-white font-bold text-center">NetSuite</div>
                 </div>
-                <div class="aspect-square bg-white dark:bg-slate-800 rounded-xl flex flex-col items-center justify-center p-4 border border-slate-200 dark:border-slate-700 shadow-sm">
-                    <div class="text-slate-900 dark:text-white font-bold">ADP</div>
+                <div class="aspect-square bg-white dark:bg-slate-800 rounded-xl flex flex-col items-center justify-center p-6 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-lg transition-shadow">
+                    <div class="w-20 h-20 mb-4 flex items-center justify-center">
+                        <img src="/media/services/finance_accounting/tool_icons/xero.svg?v=2" alt="Xero" class="w-full h-full object-contain" />
+                    </div>
+                    <div class="text-slate-900 dark:text-white font-bold text-center">Xero</div>
                 </div>
-                <div class="aspect-square bg-white dark:bg-slate-800 rounded-xl flex flex-col items-center justify-center p-4 border border-slate-200 dark:border-slate-700 shadow-sm">
-                    <div class="text-slate-900 dark:text-white font-bold">Gusto</div>
+                <div class="aspect-square bg-white dark:bg-slate-800 rounded-xl flex flex-col items-center justify-center p-6 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-lg transition-shadow">
+                    <div class="w-20 h-20 mb-4 flex items-center justify-center">
+                        <img src="/media/services/finance_accounting/tool_icons/sage.svg?v=2" alt="Sage" class="w-full h-full object-contain" />
+                    </div>
+                    <div class="text-slate-900 dark:text-white font-bold text-center">Sage</div>
                 </div>
+                <div class="aspect-square bg-white dark:bg-slate-800 rounded-xl flex flex-col items-center justify-center p-6 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-lg transition-shadow">
+                    <div class="w-20 h-20 mb-4 flex items-center justify-center">
+                        <img src="/media/services/finance_accounting/tool_icons/gusto.svg?v=2" alt="Gusto" class="w-full h-full object-contain" />
+                    </div>
+                    <div class="text-slate-900 dark:text-white font-bold text-center">Gusto</div>
+                </div>
+                {% endfor %}
             </div>
         </div>
     </div>
@@ -205,7 +273,16 @@
         <div class="relative">
             <div class="hidden lg:block absolute top-1/2 left-0 right-0 h-0.5 bg-slate-200 dark:bg-slate-800 -translate-y-1/2"></div>
             <div class="grid lg:grid-cols-4 gap-12 lg:gap-8">
-                <!-- Step 1 -->
+                {% for step in process_steps %}
+                <div class="relative bg-white dark:bg-background-dark px-4">
+                    <div class="w-12 h-12 bg-primary text-white font-black rounded-full flex items-center justify-center mb-6 relative z-10 shadow-lg shadow-primary/30 mx-auto lg:mx-0">{{ step.step_number|stringformat:"02d" }}</div>
+                    <h4 class="text-xl font-bold text-slate-900 dark:text-white mb-2 text-center lg:text-left">{{ step.title }}</h4>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 text-center lg:text-left leading-relaxed">
+                        {{ step.description }}
+                    </p>
+                </div>
+                {% empty %}
+                <!-- Fallback static steps -->
                 <div class="relative bg-white dark:bg-background-dark px-4">
                     <div class="w-12 h-12 bg-primary text-white font-black rounded-full flex items-center justify-center mb-6 relative z-10 shadow-lg shadow-primary/30 mx-auto lg:mx-0">01</div>
                     <h4 class="text-xl font-bold text-slate-900 dark:text-white mb-2 text-center lg:text-left">Account Setup</h4>
@@ -213,7 +290,6 @@
                         Chart of accounts creation, system integration, and clean historical data migration.
                     </p>
                 </div>
-                <!-- Step 2 -->
                 <div class="relative bg-white dark:bg-background-dark px-4">
                     <div class="w-12 h-12 bg-primary text-white font-black rounded-full flex items-center justify-center mb-6 relative z-10 shadow-lg shadow-primary/30 mx-auto lg:mx-0">02</div>
                     <h4 class="text-xl font-bold text-slate-900 dark:text-white mb-2 text-center lg:text-left">Daily Operations</h4>
@@ -221,7 +297,6 @@
                         Transaction recording, invoice processing, expense tracking, and payroll management.
                     </p>
                 </div>
-                <!-- Step 3 -->
                 <div class="relative bg-white dark:bg-background-dark px-4">
                     <div class="w-12 h-12 bg-primary text-white font-black rounded-full flex items-center justify-center mb-6 relative z-10 shadow-lg shadow-primary/30 mx-auto lg:mx-0">03</div>
                     <h4 class="text-xl font-bold text-slate-900 dark:text-white mb-2 text-center lg:text-left">Monthly Close</h4>
@@ -229,7 +304,6 @@
                         Account reconciliation, financial statements, variance analysis, and reporting.
                     </p>
                 </div>
-                <!-- Step 4 -->
                 <div class="relative bg-white dark:bg-background-dark px-4">
                     <div class="w-12 h-12 bg-primary text-white font-black rounded-full flex items-center justify-center mb-6 relative z-10 shadow-lg shadow-primary/30 mx-auto lg:mx-0">04</div>
                     <h4 class="text-xl font-bold text-slate-900 dark:text-white mb-2 text-center lg:text-left">Strategic Advisory</h4>
@@ -237,6 +311,7 @@
                         Business insights, forecasting, tax planning, and growth strategy recommendations.
                     </p>
                 </div>
+                {% endfor %}
             </div>
         </div>
     </div>
@@ -253,6 +328,22 @@
                     Save time and money while gaining access to expert financial professionals and enterprise-grade accounting systems.
                 </p>
                 <div class="grid sm:grid-cols-2 gap-6">
+                    {% for benefit in benefits %}
+                    <div class="flex gap-3">
+                        <div class="w-6 h-6 flex items-center justify-center flex-shrink-0">
+                            {% if benefit.icon_image %}
+                                <img src="{{ benefit.icon_image.url }}" alt="{{ benefit.title }}" class="w-full h-full" />
+                            {% else %}
+                                <span class="material-symbols-outlined text-white">{{ benefit.icon }}</span>
+                            {% endif %}
+                        </div>
+                        <div>
+                            <h5 class="font-bold">{{ benefit.metric }}</h5>
+                            <p class="text-sm opacity-80">{{ benefit.description }}</p>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <!-- Fallback static benefits -->
                     <div class="flex gap-3">
                         <span class="material-symbols-outlined text-white">trending_down</span>
                         <div>
@@ -281,6 +372,7 @@
                             <p class="text-sm opacity-80">Error-free bookkeeping with certified professionals.</p>
                         </div>
                     </div>
+                    {% endfor %}
                 </div>
             </div>
             <div class="bg-white/10 backdrop-blur-lg p-8 rounded-2xl border border-white/20">
@@ -339,6 +431,29 @@
             <p class="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">Our finance and accounting services help businesses make better financial decisions.</p>
         </div>
         <div class="grid md:grid-cols-2 gap-8">
+            {% for testimonial in testimonials %}
+            <div class="bg-white dark:bg-slate-900 border border-[#e7ecf3] dark:border-slate-800 p-8 rounded-xl">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="size-16 rounded-full overflow-hidden bg-slate-100 flex-shrink-0">
+                        {% if testimonial.client_photo %}
+                        <img class="w-full h-full object-cover" alt="{{ testimonial.client_name }}" src="{{ testimonial.client_photo.url }}" />
+                        {% else %}
+                        <div class="w-full h-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center">
+                            <span class="material-symbols-outlined text-slate-400">person</span>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div>
+                        <p class="font-bold text-slate-900 dark:text-white">{{ testimonial.client_name }}</p>
+                        <p class="text-sm text-slate-500">{{ testimonial.client_position }}, {{ testimonial.client_company }}</p>
+                    </div>
+                </div>
+                <p class="text-slate-600 dark:text-slate-400 italic leading-relaxed">
+                    "{{ testimonial.testimonial_text }}"
+                </p>
+            </div>
+            {% empty %}
+            <!-- Fallback testimonials -->
             <div class="bg-white dark:bg-slate-900 border border-[#e7ecf3] dark:border-slate-800 p-8 rounded-xl">
                 <div class="flex items-center gap-4 mb-6">
                     <div class="size-16 rounded-full overflow-hidden bg-slate-100 flex-shrink-0">
@@ -367,6 +482,7 @@
                     "Their virtual CFO service provided strategic financial guidance that helped us secure $2M in funding. Absolutely professional team."
                 </p>
             </div>
+            {% endfor %}
         </div>
     </div>
 </section>
@@ -374,6 +490,25 @@
 <!-- Final CTA -->
 <section class="py-24 bg-slate-50 dark:bg-slate-900/30">
     <div class="max-w-5xl mx-auto px-4 text-center">
+        {% if cta %}
+        <h2 class="text-4xl md:text-5xl font-black text-slate-900 dark:text-white mb-6">{{ cta.headline }}</h2>
+        <p class="text-xl text-slate-600 dark:text-slate-400 mb-10 max-w-2xl mx-auto">
+            {{ cta.description }}
+        </p>
+        <div class="flex flex-col sm:flex-row justify-center gap-4">
+            <a href="{{ cta.cta_primary_url }}" class="bg-primary hover:bg-primary/90 text-white px-10 py-5 rounded-lg font-black text-lg transition-all shadow-xl shadow-primary/25">
+                {{ cta.cta_primary_text }}
+            </a>
+            <a href="{{ cta.cta_secondary_url }}" class="bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white px-10 py-5 rounded-lg font-black text-lg transition-all hover:bg-slate-200 dark:hover:bg-slate-700">
+                {{ cta.cta_secondary_text }}
+            </a>
+        </div>
+        <p class="mt-8 text-sm text-slate-500 flex items-center justify-center gap-2">
+            <span class="material-symbols-outlined text-green-500 text-lg">verified_user</span> 
+            {{ cta.guarantee_text }}
+        </p>
+        {% else %}
+        <!-- Fallback CTA -->
         <h2 class="text-4xl md:text-5xl font-black text-slate-900 dark:text-white mb-6">Ready to Optimize Your Finances?</h2>
         <p class="text-xl text-slate-600 dark:text-slate-400 mb-10 max-w-2xl mx-auto">
             Get expert financial management that saves time, reduces costs, and provides the insights you need to grow your business confidently.
@@ -390,6 +525,7 @@
             <span class="material-symbols-outlined text-green-500 text-lg">verified_user</span> 
             CPA-certified accountants with 20+ years of experience.
         </p>
+        {% endif %}
     </div>
 </section>
 </main>

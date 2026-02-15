@@ -13,26 +13,27 @@
 {% block content %}
 <main>
 <!-- Hero Section -->
+{% if hero %}
 <section class="relative overflow-hidden pt-16 pb-20 lg:pt-24 lg:pb-32 bg-background-light dark:bg-background-dark">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="lg:grid lg:grid-cols-2 lg:gap-16 items-center">
             <div>
                 <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-primary/10 text-primary mb-6 uppercase tracking-widest">
-                    US-Based Enterprise Agency
+                    {{ hero.badge_text }}
                 </span>
                 <h1 class="text-4xl md:text-6xl font-black text-slate-900 dark:text-white leading-[1.1] mb-6">
-                    Scalable, <span class="text-primary">SEO-First</span> Web Development
+                    {{ hero.headline|safe }}
                 </h1>
                 <p class="text-lg md:text-xl text-slate-600 dark:text-slate-400 mb-8 leading-relaxed">
-                    High-performance websites built with Next.js and WordPress to drive ROI. Get a future-proof digital presence that converts visitors into loyal customers.
+                    {{ hero.description }}
                 </p>
                 <div class="flex flex-col sm:flex-row gap-4">
-                    <a href="{% url 'contact' %}" class="bg-primary hover:bg-primary/90 text-white px-8 py-4 rounded-lg font-bold text-base transition-all flex items-center justify-center gap-2 group">
-                        Book a Free Consultation
+                    <a href="{{ hero.cta_primary_url }}" class="bg-primary hover:bg-primary/90 text-white px-8 py-4 rounded-lg font-bold text-base transition-all flex items-center justify-center gap-2 group">
+                        {{ hero.cta_primary_text }}
                         <span class="material-symbols-outlined text-xl group-hover:translate-x-1 transition-transform">arrow_forward</span>
                     </a>
-                    <a href="{% url 'case_studies' %}" class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-primary text-slate-700 dark:text-slate-200 px-8 py-4 rounded-lg font-bold text-base transition-all flex items-center justify-center gap-2">
-                        View Case Studies
+                    <a href="{{ hero.cta_secondary_url }}" class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-primary text-slate-700 dark:text-slate-200 px-8 py-4 rounded-lg font-bold text-base transition-all flex items-center justify-center gap-2">
+                        {{ hero.cta_secondary_text }}
                     </a>
                 </div>
             </div>
@@ -46,6 +47,7 @@
         </div>
     </div>
 </section>
+{% endif %}
 
 <!-- Partners / Trust -->
 <div class="bg-white dark:bg-slate-900/50 py-10 border-y border-slate-100 dark:border-slate-800">
@@ -66,48 +68,32 @@
             <p class="text-slate-600 dark:text-slate-400">We don't just build websites; we build scalable digital infrastructure optimized for search engines and user conversion.</p>
         </div>
         <div class="grid md:grid-cols-2 gap-8">
-            <!-- Service Card 1 -->
+            {% for service in services %}
             <div class="group bg-slate-50 dark:bg-slate-800/50 p-8 rounded-xl border border-slate-200 dark:border-slate-700 hover:border-primary dark:hover:border-primary transition-all">
-                <div class="bg-primary/10 w-14 h-14 rounded-lg flex items-center justify-center text-primary mb-6 group-hover:bg-primary group-hover:text-white transition-all">
-                    <span class="material-symbols-outlined text-3xl">terminal</span>
+                <div class="bg-primary/10 w-14 h-14 rounded-lg flex items-center justify-center text-primary mb-6 group-hover:bg-primary group-hover:text-white transition-all web-service-icon">
+                    {% if service.icon_image %}
+                    <img src="{{ service.icon_image.url }}" alt="{{ service.title }}" class="w-8 h-8 object-contain" />
+                    {% else %}
+                    <span class="material-symbols-outlined text-3xl">{{ service.icon }}</span>
+                    {% endif %}
                 </div>
-                <h3 class="text-2xl font-bold text-slate-900 dark:text-white mb-4">Custom Full-Stack Development</h3>
+                <h3 class="text-2xl font-bold text-slate-900 dark:text-white mb-4">{{ service.title }}</h3>
                 <p class="text-slate-600 dark:text-slate-400 mb-6 leading-relaxed">
-                    Bespoke web applications built for performance, security, and extreme scalability. We leverage Next.js, Node.js, and modern databases to deliver enterprise-grade software.
+                    {{ service.description }}
                 </p>
                 <ul class="space-y-3 mb-8">
                     <li class="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-300">
-                        <span class="material-symbols-outlined text-primary text-lg">check_circle</span> API Integration & Microservices
+                        <span class="material-symbols-outlined text-primary text-lg">check_circle</span> {{ service.feature_1 }}
                     </li>
                     <li class="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-300">
-                        <span class="material-symbols-outlined text-primary text-lg">check_circle</span> Server-Side Rendering (SSR)
+                        <span class="material-symbols-outlined text-primary text-lg">check_circle</span> {{ service.feature_2 }}
                     </li>
                 </ul>
                 <a href="{% url 'contact' %}" class="text-primary font-bold inline-flex items-center gap-1 group-hover:gap-2 transition-all">
                     Learn More <span class="material-symbols-outlined text-lg">chevron_right</span>
                 </a>
             </div>
-            <!-- Service Card 2 -->
-            <div class="group bg-slate-50 dark:bg-slate-800/50 p-8 rounded-xl border border-slate-200 dark:border-slate-700 hover:border-primary dark:hover:border-primary transition-all">
-                <div class="bg-primary/10 w-14 h-14 rounded-lg flex items-center justify-center text-primary mb-6 group-hover:bg-primary group-hover:text-white transition-all">
-                    <span class="material-symbols-outlined text-3xl">shopping_cart</span>
-                </div>
-                <h3 class="text-2xl font-bold text-slate-900 dark:text-white mb-4">Scalable E-commerce Solutions</h3>
-                <p class="text-slate-600 dark:text-slate-400 mb-6 leading-relaxed">
-                    Conversion-optimized online stores designed to handle high traffic and provide seamless shopping experiences. From headless Shopify to custom WooCommerce architectures.
-                </p>
-                <ul class="space-y-3 mb-8">
-                    <li class="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-300">
-                        <span class="material-symbols-outlined text-primary text-lg">check_circle</span> Multi-currency & Localization
-                    </li>
-                    <li class="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-300">
-                        <span class="material-symbols-outlined text-primary text-lg">check_circle</span> Advanced Analytics Integration
-                    </li>
-                </ul>
-                <a href="{% url 'contact' %}" class="text-primary font-bold inline-flex items-center gap-1 group-hover:gap-2 transition-all">
-                    Learn More <span class="material-symbols-outlined text-lg">chevron_right</span>
-                </a>
-            </div>
+            {% endfor %}
         </div>
     </div>
 </section>
@@ -120,54 +106,32 @@
                 <h2 class="text-3xl font-bold text-slate-900 dark:text-white mb-6">Our Core Tech Stack</h2>
                 <p class="text-slate-600 dark:text-slate-400 mb-8">We select the best tools for the job, ensuring your site is fast, maintainable, and highly visible to search engines.</p>
                 <div class="space-y-6">
+                    {% for feature in stack_features %}
                     <div class="flex gap-4">
-                        <div class="flex-shrink-0 bg-white dark:bg-slate-800 p-3 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700 h-fit">
-                            <span class="material-symbols-outlined text-primary text-3xl">bolt</span>
+                        <div class="flex-shrink-0 bg-white dark:bg-slate-800 p-3 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700 h-fit web-stack-icon">
+                            {% if feature.icon_image %}
+                            <img src="{{ feature.icon_image.url }}" alt="{{ feature.title }}" class="w-8 h-8 object-contain" />
+                            {% else %}
+                            <span class="material-symbols-outlined text-primary text-3xl">{{ feature.icon }}</span>
+                            {% endif %}
                         </div>
                         <div>
-                            <h4 class="font-bold text-slate-900 dark:text-white">Next.js for Performance</h4>
-                            <p class="text-sm text-slate-500 dark:text-slate-400">Lightning-fast page loads and automatic SEO optimization out of the box.</p>
+                            <h4 class="font-bold text-slate-900 dark:text-white">{{ feature.title }}</h4>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">{{ feature.description }}</p>
                         </div>
                     </div>
-                    <div class="flex gap-4">
-                        <div class="flex-shrink-0 bg-white dark:bg-slate-800 p-3 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700 h-fit">
-                            <span class="material-symbols-outlined text-primary text-3xl">edit_note</span>
-                        </div>
-                        <div>
-                            <h4 class="font-bold text-slate-900 dark:text-white">Headless WordPress</h4>
-                            <p class="text-sm text-slate-500 dark:text-slate-400">Familiar content management with a decoupled frontend for superior speed.</p>
-                        </div>
-                    </div>
-                    <div class="flex gap-4">
-                        <div class="flex-shrink-0 bg-white dark:bg-slate-800 p-3 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700 h-fit">
-                            <span class="material-symbols-outlined text-primary text-3xl">database</span>
-                        </div>
-                        <div>
-                            <h4 class="font-bold text-slate-900 dark:text-white">Modern Data Architecture</h4>
-                            <p class="text-sm text-slate-500 dark:text-slate-400">PostgreSQL, MongoDB, and Redis for high-availability data handling.</p>
-                        </div>
-                    </div>
+                    {% endfor %}
                 </div>
             </div>
             <div class="grid grid-cols-3 gap-4">
-                <div class="aspect-square bg-white dark:bg-slate-800 rounded-xl flex flex-col items-center justify-center p-4 border border-slate-200 dark:border-slate-700 shadow-sm">
-                    <div class="text-slate-900 dark:text-white font-bold">Next.js</div>
+                {% for tech in technologies %}
+                <div class="aspect-square bg-white dark:bg-slate-800 rounded-xl flex flex-col items-center justify-center p-4 border border-slate-200 dark:border-slate-700 shadow-sm hover:border-primary transition-all group web-tech-logo">
+                    {% if tech.logo %}
+                    <img src="{{ tech.logo.url }}" alt="{{ tech.name }}" class="w-16 h-16 object-contain mb-2 group-hover:scale-110 transition-transform" />
+                    {% endif %}
+                    <div class="text-slate-900 dark:text-white font-bold text-sm">{{ tech.name }}</div>
                 </div>
-                <div class="aspect-square bg-white dark:bg-slate-800 rounded-xl flex flex-col items-center justify-center p-4 border border-slate-200 dark:border-slate-700 shadow-sm">
-                    <div class="text-slate-900 dark:text-white font-bold">React</div>
-                </div>
-                <div class="aspect-square bg-white dark:bg-slate-800 rounded-xl flex flex-col items-center justify-center p-4 border border-slate-200 dark:border-slate-700 shadow-sm">
-                    <div class="text-slate-900 dark:text-white font-bold">Tailwind</div>
-                </div>
-                <div class="aspect-square bg-white dark:bg-slate-800 rounded-xl flex flex-col items-center justify-center p-4 border border-slate-200 dark:border-slate-700 shadow-sm">
-                    <div class="text-slate-900 dark:text-white font-bold">Node.js</div>
-                </div>
-                <div class="aspect-square bg-white dark:bg-slate-800 rounded-xl flex flex-col items-center justify-center p-4 border border-slate-200 dark:border-slate-700 shadow-sm">
-                    <div class="text-slate-900 dark:text-white font-bold">Postgres</div>
-                </div>
-                <div class="aspect-square bg-white dark:bg-slate-800 rounded-xl flex flex-col items-center justify-center p-4 border border-slate-200 dark:border-slate-700 shadow-sm">
-                    <div class="text-slate-900 dark:text-white font-bold">AWS</div>
-                </div>
+                {% endfor %}
             </div>
         </div>
     </div>
@@ -183,38 +147,15 @@
         <div class="relative">
             <div class="hidden lg:block absolute top-1/2 left-0 right-0 h-0.5 bg-slate-200 dark:bg-slate-800 -translate-y-1/2"></div>
             <div class="grid lg:grid-cols-4 gap-12 lg:gap-8">
-                <!-- Step 1 -->
+                {% for step in process_steps %}
                 <div class="relative bg-white dark:bg-background-dark px-4">
-                    <div class="w-12 h-12 bg-primary text-white font-black rounded-full flex items-center justify-center mb-6 relative z-10 shadow-lg shadow-primary/30 mx-auto lg:mx-0">01</div>
-                    <h4 class="text-xl font-bold text-slate-900 dark:text-white mb-2 text-center lg:text-left">Discovery</h4>
+                    <div class="w-12 h-12 bg-primary text-white font-black rounded-full flex items-center justify-center mb-6 relative z-10 shadow-lg shadow-primary/30 mx-auto lg:mx-0">{{ step.step_number|stringformat:"02d" }}</div>
+                    <h4 class="text-xl font-bold text-slate-900 dark:text-white mb-2 text-center lg:text-left">{{ step.title }}</h4>
                     <p class="text-sm text-slate-500 dark:text-slate-400 text-center lg:text-left leading-relaxed">
-                        Deep dive into your business goals, target audience, and technical requirements to build a roadmap.
+                        {{ step.description }}
                     </p>
                 </div>
-                <!-- Step 2 -->
-                <div class="relative bg-white dark:bg-background-dark px-4">
-                    <div class="w-12 h-12 bg-primary text-white font-black rounded-full flex items-center justify-center mb-6 relative z-10 shadow-lg shadow-primary/30 mx-auto lg:mx-0">02</div>
-                    <h4 class="text-xl font-bold text-slate-900 dark:text-white mb-2 text-center lg:text-left">Design</h4>
-                    <p class="text-sm text-slate-500 dark:text-slate-400 text-center lg:text-left leading-relaxed">
-                        UI/UX design focused on conversion rate optimization and brand alignment across all devices.
-                    </p>
-                </div>
-                <!-- Step 3 -->
-                <div class="relative bg-white dark:bg-background-dark px-4">
-                    <div class="w-12 h-12 bg-primary text-white font-black rounded-full flex items-center justify-center mb-6 relative z-10 shadow-lg shadow-primary/30 mx-auto lg:mx-0">03</div>
-                    <h4 class="text-xl font-bold text-slate-900 dark:text-white mb-2 text-center lg:text-left">Build</h4>
-                    <p class="text-sm text-slate-500 dark:text-slate-400 text-center lg:text-left leading-relaxed">
-                        Agile development using our high-performance tech stack with continuous integration and testing.
-                    </p>
-                </div>
-                <!-- Step 4 -->
-                <div class="relative bg-white dark:bg-background-dark px-4">
-                    <div class="w-12 h-12 bg-primary text-white font-black rounded-full flex items-center justify-center mb-6 relative z-10 shadow-lg shadow-primary/30 mx-auto lg:mx-0">04</div>
-                    <h4 class="text-xl font-bold text-slate-900 dark:text-white mb-2 text-center lg:text-left">Launch</h4>
-                    <p class="text-sm text-slate-500 dark:text-slate-400 text-center lg:text-left leading-relaxed">
-                        Meticulous QA, deployment to production, and long-term performance monitoring and support.
-                    </p>
-                </div>
+                {% endfor %}
             </div>
         </div>
     </div>
@@ -231,34 +172,21 @@
                     While other agencies treat SEO as an afterthought, we bake it into the very foundation of your site. Every line of code is written to satisfy Google's most stringent requirements.
                 </p>
                 <div class="grid sm:grid-cols-2 gap-6">
-                    <div class="flex gap-3">
-                        <span class="material-symbols-outlined text-white">speed</span>
+                    {% for benefit in seo_benefits %}
+                    <div class="flex gap-3 items-start">
+                        <div class="w-14 h-14 flex-shrink-0 web-seo-icon bg-white/10 backdrop-blur-sm rounded-xl flex items-center justify-center p-3 border border-white/20">
+                            {% if benefit.icon_image %}
+                            <img src="{{ benefit.icon_image.url }}" alt="{{ benefit.title }}" class="w-full h-full object-contain" />
+                            {% else %}
+                            <span class="material-symbols-outlined text-white text-3xl">{{ benefit.icon }}</span>
+                            {% endif %}
+                        </div>
                         <div>
-                            <h5 class="font-bold">Core Web Vitals</h5>
-                            <p class="text-sm opacity-80">90+ Lighthouse scores across all devices.</p>
+                            <h5 class="font-bold">{{ benefit.title }}</h5>
+                            <p class="text-sm opacity-80">{{ benefit.description }}</p>
                         </div>
                     </div>
-                    <div class="flex gap-3">
-                        <span class="material-symbols-outlined text-white">schema</span>
-                        <div>
-                            <h5 class="font-bold">Rich Schema</h5>
-                            <p class="text-sm opacity-80">Automated JSON-LD for rich search results.</p>
-                        </div>
-                    </div>
-                    <div class="flex gap-3">
-                        <span class="material-symbols-outlined text-white">responsive_layout</span>
-                        <div>
-                            <h5 class="font-bold">Mobile-First</h5>
-                            <p class="text-sm opacity-80">Pixel-perfect performance on any screen size.</p>
-                        </div>
-                    </div>
-                    <div class="flex gap-3">
-                        <span class="material-symbols-outlined text-white">security</span>
-                        <div>
-                            <h5 class="font-bold">Secure by Design</h5>
-                            <p class="text-sm opacity-80">SSL, WAF, and best-in-class security headers.</p>
-                        </div>
-                    </div>
+                    {% endfor %}
                 </div>
             </div>
             <div class="bg-white/10 backdrop-blur-lg p-8 rounded-2xl border border-white/20">
@@ -269,42 +197,17 @@
                     <h4 class="text-xl font-bold">SEO Audit Results</h4>
                 </div>
                 <div class="space-y-4">
+                    {% for metric in seo_metrics %}
                     <div>
                         <div class="flex justify-between items-center text-sm font-bold mb-2">
-                            <span>Performance</span>
-                            <span class="text-green-400">100/100</span>
+                            <span>{{ metric.metric_name }}</span>
+                            <span class="text-{{ metric.color }}">{{ metric.score }}/100</span>
                         </div>
                         <div class="w-full bg-white/10 h-2 rounded-full">
-                            <div class="bg-green-400 h-2 rounded-full w-[100%]"></div>
+                            <div class="bg-{{ metric.color }} h-2 rounded-full" style="width: {{ metric.score }}%"></div>
                         </div>
                     </div>
-                    <div>
-                        <div class="flex justify-between items-center text-sm font-bold mb-2">
-                            <span>Accessibility</span>
-                            <span class="text-green-400">98/100</span>
-                        </div>
-                        <div class="w-full bg-white/10 h-2 rounded-full">
-                            <div class="bg-green-400 h-2 rounded-full w-[98%]"></div>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="flex justify-between items-center text-sm font-bold mb-2">
-                            <span>Best Practices</span>
-                            <span class="text-green-400">100/100</span>
-                        </div>
-                        <div class="w-full bg-white/10 h-2 rounded-full">
-                            <div class="bg-green-400 h-2 rounded-full w-[100%]"></div>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="flex justify-between items-center text-sm font-bold mb-2">
-                            <span>SEO</span>
-                            <span class="text-green-400">100/100</span>
-                        </div>
-                        <div class="w-full bg-white/10 h-2 rounded-full">
-                            <div class="bg-green-400 h-2 rounded-full w-[100%]"></div>
-                        </div>
-                    </div>
+                    {% endfor %}
                 </div>
             </div>
         </div>
@@ -312,25 +215,29 @@
 </section>
 
 <!-- Final CTA -->
+{% if cta %}
 <section class="py-24 bg-white dark:bg-background-dark">
     <div class="max-w-5xl mx-auto px-4 text-center">
-        <h2 class="text-4xl md:text-5xl font-black text-slate-900 dark:text-white mb-6">Ready to Scale Your Online Presence?</h2>
+        <h2 class="text-4xl md:text-5xl font-black text-slate-900 dark:text-white mb-6">{{ cta.headline }}</h2>
         <p class="text-xl text-slate-600 dark:text-slate-400 mb-10 max-w-2xl mx-auto">
-            Join dozens of US enterprises who have transformed their digital ROI with our SEO-first development approach.
+            {{ cta.description }}
         </p>
         <div class="flex flex-col sm:flex-row justify-center gap-4">
-            <a href="{% url 'contact' %}" class="bg-primary hover:bg-primary/90 text-white px-10 py-5 rounded-lg font-black text-lg transition-all shadow-xl shadow-primary/25">
-                Book Free Consultation
+            <a href="{{ cta.cta_primary_url }}" class="bg-primary hover:bg-primary/90 text-white px-10 py-5 rounded-lg font-black text-lg transition-all shadow-xl shadow-primary/25">
+                {{ cta.cta_primary_text }}
             </a>
-            <a href="{% url 'contact' %}" class="bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white px-10 py-5 rounded-lg font-black text-lg transition-all hover:bg-slate-200 dark:hover:bg-slate-700">
-                Contact Sales
+            <a href="{{ cta.cta_secondary_url }}" class="bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white px-10 py-5 rounded-lg font-black text-lg transition-all hover:bg-slate-200 dark:hover:bg-slate-700">
+                {{ cta.cta_secondary_text }}
             </a>
         </div>
+        {% if cta.footer_text %}
         <p class="mt-8 text-sm text-slate-500 flex items-center justify-center gap-2">
             <span class="material-symbols-outlined text-green-500 text-lg">verified_user</span> 
-            No credit card required. Initial consult is 100% free.
+            {{ cta.footer_text }}
         </p>
+        {% endif %}
     </div>
 </section>
+{% endif %}
 </main>
 {% endblock %}

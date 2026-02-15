@@ -79,57 +79,26 @@
             <p class="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">Professional content creation that elevates your brand across every platform and format.</p>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <!-- Blog & Article Writing -->
+            {% for service in services %}
             <div class="group p-6 rounded-xl border border-[#cfd9e7] dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-primary transition-all duration-300">
-                <div class="size-12 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                    <span class="material-symbols-outlined text-2xl">article</span>
+                <div class="w-16 h-16 mb-6 group-hover:scale-110 transition-transform">
+                    {% if service.icon_image %}
+                        <img src="{{ service.icon_image.url }}" alt="{{ service.title }}" class="w-full h-full object-contain" />
+                    {% else %}
+                        <div class="size-12 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+                            <span class="material-symbols-outlined text-2xl">{{ service.icon }}</span>
+                        </div>
+                    {% endif %}
                 </div>
-                <h3 class="text-lg font-bold mb-2">Blog & Article Writing</h3>
-                <p class="text-sm text-slate-600 dark:text-slate-400 mb-4">SEO-optimized blog posts, thought leadership articles, and long-form content that ranks.</p>
+                <h3 class="text-lg font-bold mb-2">{{ service.title }}</h3>
+                <p class="text-sm text-slate-600 dark:text-slate-400 mb-4">{{ service.description }}</p>
                 <ul class="text-xs space-y-2 text-slate-500">
-                    <li class="flex items-center gap-2"><span class="material-symbols-outlined text-xs text-green-500">check_circle</span> SEO Content Strategy</li>
-                    <li class="flex items-center gap-2"><span class="material-symbols-outlined text-xs text-green-500">check_circle</span> Keyword Research</li>
+                    {% for feature in service.features %}
+                    <li class="flex items-center gap-2"><span class="material-symbols-outlined text-xs text-green-500">check_circle</span> {{ feature }}</li>
+                    {% endfor %}
                 </ul>
             </div>
-            
-            <!-- Video Production -->
-            <div class="group p-6 rounded-xl border border-[#cfd9e7] dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-primary transition-all duration-300">
-                <div class="size-12 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                    <span class="material-symbols-outlined text-2xl">videocam</span>
-                </div>
-                <h3 class="text-lg font-bold mb-2">Video Production</h3>
-                <p class="text-sm text-slate-600 dark:text-slate-400 mb-4">Explainer videos, product demos, testimonials, and social video content optimized for engagement.</p>
-                <ul class="text-xs space-y-2 text-slate-500">
-                    <li class="flex items-center gap-2"><span class="material-symbols-outlined text-xs text-green-500">check_circle</span> Scriptwriting</li>
-                    <li class="flex items-center gap-2"><span class="material-symbols-outlined text-xs text-green-500">check_circle</span> Video Editing</li>
-                </ul>
-            </div>
-            
-            <!-- Graphic Design -->
-            <div class="group p-6 rounded-xl border border-[#cfd9e7] dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-primary transition-all duration-300">
-                <div class="size-12 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                    <span class="material-symbols-outlined text-2xl">palette</span>
-                </div>
-                <h3 class="text-lg font-bold mb-2">Graphic Design</h3>
-                <p class="text-sm text-slate-600 dark:text-slate-400 mb-4">Eye-catching infographics, social media graphics, banners, and visual assets that stand out.</p>
-                <ul class="text-xs space-y-2 text-slate-500">
-                    <li class="flex items-center gap-2"><span class="material-symbols-outlined text-xs text-green-500">check_circle</span> Infographics</li>
-                    <li class="flex items-center gap-2"><span class="material-symbols-outlined text-xs text-green-500">check_circle</span> Social Graphics</li>
-                </ul>
-            </div>
-            
-            <!-- Social Media Content -->
-            <div class="group p-6 rounded-xl border border-[#cfd9e7] dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-primary transition-all duration-300">
-                <div class="size-12 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                    <span class="material-symbols-outlined text-2xl">campaign</span>
-                </div>
-                <h3 class="text-lg font-bold mb-2">Social Media Content</h3>
-                <p class="text-sm text-slate-600 dark:text-slate-400 mb-4">Platform-specific content calendars, posts, stories, and reels that drive engagement.</p>
-                <ul class="text-xs space-y-2 text-slate-500">
-                    <li class="flex items-center gap-2"><span class="material-symbols-outlined text-xs text-green-500">check_circle</span> Content Calendars</li>
-                    <li class="flex items-center gap-2"><span class="material-symbols-outlined text-xs text-green-500">check_circle</span> Copywriting</li>
-                </ul>
-            </div>
+            {% endfor %}
         </div>
     </div>
 </section>
@@ -142,54 +111,34 @@
                 <h2 class="text-3xl font-bold text-slate-900 dark:text-white mb-6">Professional Creative Tools</h2>
                 <p class="text-slate-600 dark:text-slate-400 mb-8">We use industry-leading software and platforms to create, edit, and optimize content that delivers measurable results.</p>
                 <div class="space-y-6">
+                    {% for tech in technologies %}
                     <div class="flex gap-4">
                         <div class="flex-shrink-0 bg-white dark:bg-slate-800 p-3 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700 h-fit">
-                            <span class="material-symbols-outlined text-primary text-3xl">draw</span>
+                            {% if tech.icon_image %}
+                                <img src="{{ tech.icon_image.url }}" alt="{{ tech.title }}" class="w-12 h-12 object-contain" />
+                            {% else %}
+                                <span class="material-symbols-outlined text-primary text-3xl">{{ tech.icon }}</span>
+                            {% endif %}
                         </div>
                         <div>
-                            <h4 class="font-bold text-slate-900 dark:text-white">Design Suite</h4>
-                            <p class="text-sm text-slate-500 dark:text-slate-400">Adobe Creative Cloud, Figma, and Canva for stunning visual content.</p>
+                            <h4 class="font-bold text-slate-900 dark:text-white">{{ tech.title }}</h4>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">{{ tech.description }}</p>
                         </div>
                     </div>
-                    <div class="flex gap-4">
-                        <div class="flex-shrink-0 bg-white dark:bg-slate-800 p-3 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700 h-fit">
-                            <span class="material-symbols-outlined text-primary text-3xl">movie_edit</span>
-                        </div>
-                        <div>
-                            <h4 class="font-bold text-slate-900 dark:text-white">Video Editing</h4>
-                            <p class="text-sm text-slate-500 dark:text-slate-400">Adobe Premiere Pro, Final Cut Pro, and DaVinci Resolve for professional videos.</p>
-                        </div>
-                    </div>
-                    <div class="flex gap-4">
-                        <div class="flex-shrink-0 bg-white dark:bg-slate-800 p-3 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700 h-fit">
-                            <span class="material-symbols-outlined text-primary text-3xl">edit_note</span>
-                        </div>
-                        <div>
-                            <h4 class="font-bold text-slate-900 dark:text-white">Content Management</h4>
-                            <p class="text-sm text-slate-500 dark:text-slate-400">WordPress, HubSpot, and ContentStack for seamless publishing.</p>
-                        </div>
-                    </div>
+                    {% endfor %}
                 </div>
             </div>
             <div class="grid grid-cols-3 gap-4">
-                <div class="aspect-square bg-white dark:bg-slate-800 rounded-xl flex flex-col items-center justify-center p-4 border border-slate-200 dark:border-slate-700 shadow-sm">
-                    <div class="text-slate-900 dark:text-white font-bold">Adobe CC</div>
+                {% for tool in tools %}
+                <div class="aspect-square bg-white dark:bg-slate-800 rounded-xl flex flex-col items-center justify-center p-4 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-lg transition-shadow">
+                    {% if tool.icon_image %}
+                        <div class="w-16 h-16 mb-2 flex items-center justify-center">
+                            <img src="{{ tool.icon_image.url }}" alt="{{ tool.name }}" class="w-full h-full object-contain" />
+                        </div>
+                    {% endif %}
+                    <div class="text-slate-900 dark:text-white font-bold text-sm text-center">{{ tool.name }}</div>
                 </div>
-                <div class="aspect-square bg-white dark:bg-slate-800 rounded-xl flex flex-col items-center justify-center p-4 border border-slate-200 dark:border-slate-700 shadow-sm">
-                    <div class="text-slate-900 dark:text-white font-bold">Figma</div>
-                </div>
-                <div class="aspect-square bg-white dark:bg-slate-800 rounded-xl flex flex-col items-center justify-center p-4 border border-slate-200 dark:border-slate-700 shadow-sm">
-                    <div class="text-slate-900 dark:text-white font-bold">Premiere</div>
-                </div>
-                <div class="aspect-square bg-white dark:bg-slate-800 rounded-xl flex flex-col items-center justify-center p-4 border border-slate-200 dark:border-slate-700 shadow-sm">
-                    <div class="text-slate-900 dark:text-white font-bold">Canva</div>
-                </div>
-                <div class="aspect-square bg-white dark:bg-slate-800 rounded-xl flex flex-col items-center justify-center p-4 border border-slate-200 dark:border-slate-700 shadow-sm">
-                    <div class="text-slate-900 dark:text-white font-bold">WordPress</div>
-                </div>
-                <div class="aspect-square bg-white dark:bg-slate-800 rounded-xl flex flex-col items-center justify-center p-4 border border-slate-200 dark:border-slate-700 shadow-sm">
-                    <div class="text-slate-900 dark:text-white font-bold">HubSpot</div>
-                </div>
+                {% endfor %}
             </div>
         </div>
     </div>
@@ -205,38 +154,15 @@
         <div class="relative">
             <div class="hidden lg:block absolute top-1/2 left-0 right-0 h-0.5 bg-slate-200 dark:bg-slate-800 -translate-y-1/2"></div>
             <div class="grid lg:grid-cols-4 gap-12 lg:gap-8">
-                <!-- Step 1 -->
+                {% for step in process_steps %}
                 <div class="relative bg-white dark:bg-background-dark px-4">
-                    <div class="w-12 h-12 bg-primary text-white font-black rounded-full flex items-center justify-center mb-6 relative z-10 shadow-lg shadow-primary/30 mx-auto lg:mx-0">01</div>
-                    <h4 class="text-xl font-bold text-slate-900 dark:text-white mb-2 text-center lg:text-left">Strategy & Planning</h4>
+                    <div class="w-12 h-12 bg-primary text-white font-black rounded-full flex items-center justify-center mb-6 relative z-10 shadow-lg shadow-primary/30 mx-auto lg:mx-0">{{ step.step_number|stringformat:"02d" }}</div>
+                    <h4 class="text-xl font-bold text-slate-900 dark:text-white mb-2 text-center lg:text-left">{{ step.title }}</h4>
                     <p class="text-sm text-slate-500 dark:text-slate-400 text-center lg:text-left leading-relaxed">
-                        Audience research, content topics, keyword analysis, and editorial calendar.
+                        {{ step.description }}
                     </p>
                 </div>
-                <!-- Step 2 -->
-                <div class="relative bg-white dark:bg-background-dark px-4">
-                    <div class="w-12 h-12 bg-primary text-white font-black rounded-full flex items-center justify-center mb-6 relative z-10 shadow-lg shadow-primary/30 mx-auto lg:mx-0">02</div>
-                    <h4 class="text-xl font-bold text-slate-900 dark:text-white mb-2 text-center lg:text-left">Content Creation</h4>
-                    <p class="text-sm text-slate-500 dark:text-slate-400 text-center lg:text-left leading-relaxed">
-                        Writing, design, video production, and asset creation by expert creators.
-                    </p>
-                </div>
-                <!-- Step 3 -->
-                <div class="relative bg-white dark:bg-background-dark px-4">
-                    <div class="w-12 h-12 bg-primary text-white font-black rounded-full flex items-center justify-center mb-6 relative z-10 shadow-lg shadow-primary/30 mx-auto lg:mx-0">03</div>
-                    <h4 class="text-xl font-bold text-slate-900 dark:text-white mb-2 text-center lg:text-left">Review & Optimize</h4>
-                    <p class="text-sm text-slate-500 dark:text-slate-400 text-center lg:text-left leading-relaxed">
-                        Quality assurance, SEO optimization, and revisions based on feedback.
-                    </p>
-                </div>
-                <!-- Step 4 -->
-                <div class="relative bg-white dark:bg-background-dark px-4">
-                    <div class="w-12 h-12 bg-primary text-white font-black rounded-full flex items-center justify-center mb-6 relative z-10 shadow-lg shadow-primary/30 mx-auto lg:mx-0">04</div>
-                    <h4 class="text-xl font-bold text-slate-900 dark:text-white mb-2 text-center lg:text-left">Publish & Track</h4>
-                    <p class="text-sm text-slate-500 dark:text-slate-400 text-center lg:text-left leading-relaxed">
-                        Content distribution, performance monitoring, and continuous improvement.
-                    </p>
-                </div>
+                {% endfor %}
             </div>
         </div>
     </div>
@@ -253,34 +179,21 @@
                     Our content doesn't just look good—it performs. Every piece is optimized for engagement, conversions, and search rankings.
                 </p>
                 <div class="grid sm:grid-cols-2 gap-6">
+                    {% for benefit in benefits %}
                     <div class="flex gap-3">
-                        <span class="material-symbols-outlined text-white">trending_up</span>
+                        {% if benefit.icon_image %}
+                            <div class="w-12 h-12 flex-shrink-0">
+                                <img src="{{ benefit.icon_image.url }}" alt="{{ benefit.title }}" class="w-full h-full object-contain" />
+                            </div>
+                        {% else %}
+                            <span class="material-symbols-outlined text-white">{{ benefit.icon }}</span>
+                        {% endif %}
                         <div>
-                            <h5 class="font-bold">385% Engagement Boost</h5>
-                            <p class="text-sm opacity-80">Average increase across social and blog content.</p>
+                            <h5 class="font-bold">{{ benefit.title }}</h5>
+                            <p class="text-sm opacity-80">{{ benefit.description }}</p>
                         </div>
                     </div>
-                    <div class="flex gap-3">
-                        <span class="material-symbols-outlined text-white">search</span>
-                        <div>
-                            <h5 class="font-bold">Page 1 Rankings</h5>
-                            <p class="text-sm opacity-80">92% of blog posts rank on Google's first page.</p>
-                        </div>
-                    </div>
-                    <div class="flex gap-3">
-                        <span class="material-symbols-outlined text-white">share</span>
-                        <div>
-                            <h5 class="font-bold">3.2x More Shares</h5>
-                            <p class="text-sm opacity-80">Content gets shared 3x more than industry average.</p>
-                        </div>
-                    </div>
-                    <div class="flex gap-3">
-                        <span class="material-symbols-outlined text-white">conversion_path</span>
-                        <div>
-                            <h5 class="font-bold">Higher Conversions</h5>
-                            <p class="text-sm opacity-80">Content-driven leads convert at 2.8x better rates.</p>
-                        </div>
-                    </div>
+                    {% endfor %}
                 </div>
             </div>
             <div class="bg-white/10 backdrop-blur-lg p-8 rounded-2xl border border-white/20">
@@ -289,42 +202,17 @@
                     Content Performance Metrics
                 </h4>
                 <div class="space-y-6">
+                    {% for metric in metrics %}
                     <div>
                         <div class="flex justify-between items-center mb-2">
-                            <span class="text-sm font-bold">Engagement Rate</span>
-                            <span class="text-green-400 font-bold">8.7%</span>
+                            <span class="text-sm font-bold">{{ metric.name }}</span>
+                            <span class="text-{{ metric.color_class }} font-bold">{{ metric.value }}</span>
                         </div>
                         <div class="w-full bg-white/10 h-2 rounded-full">
-                            <div class="bg-green-400 h-2 rounded-full w-[87%]"></div>
+                            <div class="bg-{{ metric.color_class }} h-2 rounded-full" style="width: {{ metric.percentage }}%"></div>
                         </div>
                     </div>
-                    <div>
-                        <div class="flex justify-between items-center mb-2">
-                            <span class="text-sm font-bold">SEO Score</span>
-                            <span class="text-green-400 font-bold">94/100</span>
-                        </div>
-                        <div class="w-full bg-white/10 h-2 rounded-full">
-                            <div class="bg-green-400 h-2 rounded-full w-[94%]"></div>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="flex justify-between items-center mb-2">
-                            <span class="text-sm font-bold">Content Velocity</span>
-                            <span class="text-green-400 font-bold">45/month</span>
-                        </div>
-                        <div class="w-full bg-white/10 h-2 rounded-full">
-                            <div class="bg-green-400 h-2 rounded-full w-[90%]"></div>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="flex justify-between items-center mb-2">
-                            <span class="text-sm font-bold">Client Satisfaction</span>
-                            <span class="text-green-400 font-bold">4.9/5.0</span>
-                        </div>
-                        <div class="w-full bg-white/10 h-2 rounded-full">
-                            <div class="bg-green-400 h-2 rounded-full w-[98%]"></div>
-                        </div>
-                    </div>
+                    {% endfor %}
                 </div>
             </div>
         </div>
@@ -339,34 +227,22 @@
             <p class="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">Our content production services help businesses tell compelling stories that resonate.</p>
         </div>
         <div class="grid md:grid-cols-2 gap-8">
+            {% for testimonial in testimonials %}
             <div class="bg-white dark:bg-slate-900 border border-[#e7ecf3] dark:border-slate-800 p-8 rounded-xl">
                 <div class="flex items-center gap-4 mb-6">
                     <div class="size-16 rounded-full overflow-hidden bg-slate-100 flex-shrink-0">
-                        <img class="w-full h-full object-cover" alt="Marketing Director" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCSOi_qlLJG0cA7bB7AJTaMW-k_iOXB8SjLZhyp_QwjpXpzWSGZQ81VInZw9-OGALxY51S3iHWNco6afjwiFyrkJ15m9LvprbpkUlSdCx7S0T3EjgRG6Woxry81B2_GWODy6eLJPtjKTbFE5HYk1SnMjDb-7eo1KeBggdqne1jqk1A8SjsD80bWI72x2z9OA6B1bxaB6kNm7vpN7DCm__NfYj7ksaE7mgFJ86PtCWEgVetE7IqtF4CAKHeCgAI3mhnaEO8MBdFBiwzX" />
+                        <img class="w-full h-full object-cover" alt="{{ testimonial.client_position }}" src="{{ testimonial.client_photo }}" />
                     </div>
                     <div>
-                        <p class="font-bold text-slate-900 dark:text-white">Sarah Thompson</p>
-                        <p class="text-sm text-slate-500">Marketing Director, GreenLife</p>
+                        <p class="font-bold text-slate-900 dark:text-white">{{ testimonial.client_name }}</p>
+                        <p class="text-sm text-slate-500">{{ testimonial.client_position }}, {{ testimonial.client_company }}</p>
                     </div>
                 </div>
                 <p class="text-slate-600 dark:text-slate-400 italic leading-relaxed">
-                    "Their blog content increased our organic traffic by 320% in 6 months. Every post ranks on page 1. Absolutely phenomenal quality and strategy."
+                    "{{ testimonial.testimonial_text }}"
                 </p>
             </div>
-            <div class="bg-white dark:bg-slate-900 border border-[#e7ecf3] dark:border-slate-800 p-8 rounded-xl">
-                <div class="flex items-center gap-4 mb-6">
-                    <div class="size-16 rounded-full overflow-hidden bg-slate-100 flex-shrink-0">
-                        <img class="w-full h-full object-cover" alt="Brand Manager" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA8pDDzP6BfevE_JnONcZ529Z_YB1pMIupHHa3rmte_LACgxKO5ewO678gNiI4-5-uoGJ6Aa4DwaAhfsjxvxAeA8WmE27XXqJmgKtMVIdHv4VqwKQmEwklfkjPYYA3E8A6WfeO3LY2l0-OxlSnKvI4xWL5W-DHhb0D3iWsrRi-CsIVm4LwfoZA4ovW1ehUZ5a7r1IWGiU-RBLfJtm3bbvHj7Q9NtrSWDIV-g6PMgMHIsZZv89Doq0oVI_X8YMbZl_lga2YBHQIlAaF3" />
-                    </div>
-                    <div>
-                        <p class="font-bold text-slate-900 dark:text-white">Marcus Bennett</p>
-                        <p class="text-sm text-slate-500">Brand Manager, TechWave</p>
-                    </div>
-                </div>
-                <p class="text-slate-600 dark:text-slate-400 italic leading-relaxed">
-                    "The video content they produced for our product launch went viral—2.5M views in the first week. Creative, professional, and on-brand."
-                </p>
-            </div>
+            {% endfor %}
         </div>
     </div>
 </section>

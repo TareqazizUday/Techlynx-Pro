@@ -25,6 +25,12 @@
     <meta name="twitter:description" content="{% block twitter_description %}Professional IT and digital marketing services for businesses. Custom web development, AI solutions, SEO, and app development by expert US-based team.{% endblock %}">
     <meta name="twitter:image" content="{% block twitter_image %}{% static 'images/twitter-card.jpg' %}{% endblock %}">
     
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://techlynxpro.com{% block canonical_url %}/{% endblock %}">
+    
+    <!-- Additional Meta Tags -->
+    {% block additional_meta %}{% endblock %}
+    
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     
@@ -81,6 +87,7 @@
                 <nav class="hidden md:flex items-center gap-10">
                     <a class="text-sm font-semibold text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors" href="{% url 'services' %}">Services</a>
                     <a class="text-sm font-semibold text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors" href="{% url 'case_studies' %}">Case Studies</a>
+                    <a class="text-sm font-semibold text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors" href="{% url 'testimonials' %}">Testimonials</a>
                     <a class="text-sm font-semibold text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors" href="{% url 'about' %}">About Us</a>
                     <a class="text-sm font-semibold text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors" href="{% url 'careers' %}">Careers</a>
                     <a class="text-sm font-semibold text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors" href="{% url 'blog' %}">Blog</a>
@@ -125,6 +132,10 @@
                 <a class="flex items-center gap-3 px-6 py-3 text-base font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-primary dark:hover:text-primary transition-colors" href="{% url 'case_studies' %}">
                     <span class="material-symbols-outlined">folder_open</span>
                     Case Studies
+                </a>
+                <a class="flex items-center gap-3 px-6 py-3 text-base font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-primary dark:hover:text-primary transition-colors" href="{% url 'testimonials' %}">
+                    <span class="material-symbols-outlined">rate_review</span>
+                    Testimonials
                 </a>
                 <a class="flex items-center gap-3 px-6 py-3 text-base font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-primary dark:hover:text-primary transition-colors" href="{% url 'about' %}">
                     <span class="material-symbols-outlined">info</span>

@@ -1,0 +1,224 @@
+{% extends 'base.html' %}
+
+{% block title %}Virtual Assistant Services | Professional VA Support | Techlynx Pro{% endblock %}
+
+{% block meta_description %}Hire professional virtual assistants for admin support, customer service, data entry & business operations. Cost-effective VA solutions with 98% satisfaction rate. 24/7 remote support available.{% endblock %}
+
+{% block meta_keywords %}virtual assistant, VA services, remote assistant, admin support, customer service outsourcing, data entry services, virtual receptionist, online assistant, remote admin, business process outsourcing, BPO, virtual office assistant, freelance assistant{% endblock %}
+
+{% block og_title %}Professional Virtual Assistant Services | Remote Business Support{% endblock %}
+
+{% block og_description %}Scale your business with skilled virtual assistants. Professional admin support, customer service & business operations. Save up to 60% on operational costs with certified VAs.{% endblock %}
+
+{% block canonical_url %}{% url 'virtual_assistance' %}{% endblock %}
+
+{% block additional_meta %}
+<meta name="robots" content="index, follow">
+<meta name="author" content="Techlynx Pro">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta property="og:type" content="service">
+<meta property="og:url" content="{{ request.build_absolute_uri }}">
+<meta property="og:site_name" content="Techlynx Pro">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@TechlynxPro">
+<meta name="twitter:title" content="Professional Virtual Assistant Services | Techlynx Pro">
+<meta name="twitter:description" content="Hire skilled virtual assistants for admin support, customer service & business operations. 98% satisfaction rate, 24/7 support available.">
+<link rel="alternate" type="application/rss+xml" title="Techlynx Pro Blog" href="{% url 'blog' %}">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "Virtual Assistant Services",
+  "description": "Professional virtual assistant services for businesses including admin support, customer service, data entry, and business operations.",
+  "provider": {
+    "@type": "Organization",
+    "name": "Techlynx Pro",
+    "url": "{{ request.build_absolute_uri }}"
+  },
+  "serviceType": "Virtual Assistant Services",
+  "areaServed": "Worldwide",
+  "availableChannel": {
+    "@type": "ServiceChannel",
+    "serviceUrl": "{{ request.build_absolute_uri }}",
+    "availableLanguage": "English"
+  },
+  "offers": {
+    "@type": "Offer",
+    "description": "Professional virtual assistant services with 98% satisfaction rate",
+    "availability": "https://schema.org/InStock",
+    "validFrom": "2024-01-01"
+  }
+}
+</script>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="relative py-20 lg:py-32 overflow-hidden bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10">
+        <div class="grid lg:grid-cols-2 gap-16 items-center">
+            <div class="flex flex-col gap-8">
+                {% if hero %}
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-300 text-xs font-bold uppercase tracking-wider w-fit">
+                    <span class="material-symbols-outlined text-sm">{{ hero.badge_icon }}</span>
+                    {{ hero.badge_text }}
+                </div>
+                
+                <h1 class="text-5xl lg:text-7xl font-black leading-tight tracking-tight text-slate-900 dark:text-white">
+                    Professional
+                    <span class="bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">Virtual</span>
+                    Assistance
+                </h1>
+                
+                <p class="text-lg lg:text-xl text-slate-600 dark:text-slate-400 leading-relaxed max-w-xl">
+                    {{ hero.description }}
+                </p>
+                
+                <div class="flex flex-wrap gap-4">
+                    <a href="{{ hero.cta_primary_url }}" class="bg-purple-600 text-white px-8 py-4 rounded-lg text-base font-bold shadow-lg shadow-purple-600/20 hover:scale-[1.02] transition-transform">
+                        {{ hero.cta_primary_text }}
+                    </a>
+                    <a href="{{ hero.cta_secondary_url }}" class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-8 py-4 rounded-lg text-base font-bold hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors text-slate-900 dark:text-white">
+                        {{ hero.cta_secondary_text }}
+                    </a>
+                </div>
+                
+                <!-- Stats -->
+                <div class="flex items-center gap-8 pt-4">
+                    <div class="text-center">
+                        <div class="text-3xl font-black text-purple-600">{{ hero.tasks_completed }}+</div>
+                        <div class="text-sm text-slate-600 dark:text-slate-400">Tasks Completed</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl font-black text-purple-600">{{ hero.support_availability }}</div>
+                        <div class="text-sm text-slate-600 dark:text-slate-400">Support Available</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl font-black text-purple-600">{{ hero.satisfaction_rate }}%</div>
+                        <div class="text-sm text-slate-600 dark:text-slate-400">Satisfaction Rate</div>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+            
+            <!-- Hero Image -->
+            <div class="relative">
+                <div class="aspect-square rounded-3xl overflow-hidden shadow-2xl border-8 border-white dark:border-slate-900" style="background-image: url('/media/services/virtual-assistance.jpg'); background-size: cover; background-position: center;">
+                </div>
+                
+                <!-- Floating element -->
+                <div class="absolute -bottom-6 -right-6 bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-xl flex items-center gap-4 border border-slate-100 dark:border-slate-800">
+                    <div class="p-3 bg-green-100 dark:bg-green-900/30 rounded-full text-green-600">
+                        <span class="material-symbols-outlined text-2xl">verified</span>
+                    </div>
+                    <div>
+                        <div class="font-black text-slate-900 dark:text-white">Certified VAs</div>
+                        <div class="text-sm text-slate-600 dark:text-slate-400">Expert Support Team</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Services Section -->
+<section id="services" class="py-20 lg:py-32 bg-white dark:bg-slate-900">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl lg:text-5xl font-black text-slate-900 dark:text-white mb-6">
+                Virtual Assistance Services
+            </h2>
+            <p class="text-lg text-slate-600 dark:text-slate-400 max-w-3xl mx-auto">
+                Professional support across various business functions to help you focus on growth
+            </p>
+        </div>
+        
+        <div class="grid lg:grid-cols-3 gap-8">
+            {% for service in services %}
+            <div class="bg-slate-50 dark:bg-slate-800 p-8 rounded-2xl">
+                <div class="w-20 h-20 bg-{{ service.color_scheme }}-100 dark:bg-{{ service.color_scheme }}-900/30 rounded-xl flex items-center justify-center mb-6">
+                    {% if service.icon_image %}
+                        <img src="{{ service.icon_image.url }}" alt="{{ service.title }} icon" class="w-16 h-16">
+                    {% else %}
+                        <span class="material-symbols-outlined text-4xl text-{{ service.color_scheme }}-600">{{ service.icon }}</span>
+                    {% endif %}
+                </div>
+                <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-4">{{ service.title }}</h3>
+                <p class="text-slate-600 dark:text-slate-400 mb-4">{{ service.description }}</p>
+                <ul class="space-y-3 text-slate-600 dark:text-slate-400">
+                    <li class="flex items-center gap-3">
+                        <span class="material-symbols-outlined text-{{ service.color_scheme }}-600 text-sm">check_circle</span>
+                        {{ service.feature_1 }}
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <span class="material-symbols-outlined text-{{ service.color_scheme }}-600 text-sm">check_circle</span>
+                        {{ service.feature_2 }}
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <span class="material-symbols-outlined text-{{ service.color_scheme }}-600 text-sm">check_circle</span>
+                        {{ service.feature_3 }}
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <span class="material-symbols-outlined text-{{ service.color_scheme }}-600 text-sm">check_circle</span>
+                        {{ service.feature_4 }}
+                    </li>
+                </ul>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Why Choose Us -->
+<section class="py-20 lg:py-32 bg-slate-50 dark:bg-slate-800">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl lg:text-5xl font-black text-slate-900 dark:text-white mb-6">
+                Why Choose Our VAs
+            </h2>
+            <p class="text-lg text-slate-600 dark:text-slate-400 max-w-3xl mx-auto">
+                Experienced professionals dedicated to your business success
+            </p>
+        </div>
+        
+        <div class="grid lg:grid-cols-4 gap-8">
+            {% for benefit in benefits %}
+            <div class="text-center">
+                <div class="w-24 h-24 bg-{{ benefit.color_scheme }}-100 dark:bg-{{ benefit.color_scheme }}-900/30 rounded-full flex items-center justify-center mx-auto mb-6">
+                    {% if benefit.icon_image %}
+                        <img src="{{ benefit.icon_image.url }}" alt="{{ benefit.title }} icon" class="w-14 h-14">
+                    {% else %}
+                        <span class="material-symbols-outlined text-4xl text-{{ benefit.color_scheme }}-600">{{ benefit.icon }}</span>
+                    {% endif %}
+                </div>
+                <h3 class="font-bold text-slate-900 dark:text-white mb-2">{{ benefit.title }}</h3>
+                <p class="text-slate-600 dark:text-slate-400">{{ benefit.description }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-20 lg:py-32 bg-gradient-to-r from-purple-600 to-blue-600 text-white">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10 text-center">
+        {% if cta %}
+        <h2 class="text-4xl lg:text-5xl font-black mb-6">
+            {{ cta.headline }}
+        </h2>
+        <p class="text-xl text-purple-100 mb-10 max-w-3xl mx-auto">
+            {{ cta.description }}
+        </p>
+        <div class="flex flex-wrap gap-4 justify-center">
+            <a href="{{ cta.cta_primary_url }}" class="bg-white text-purple-600 px-8 py-4 rounded-lg text-base font-bold shadow-lg hover:scale-[1.02] transition-transform">
+                {{ cta.cta_primary_text }}
+            </a>
+            <a href="{{ cta.cta_secondary_url }}" class="border-2 border-white text-white px-8 py-4 rounded-lg text-base font-bold hover:bg-white hover:text-purple-600 transition-colors">
+                {{ cta.cta_secondary_text }}
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

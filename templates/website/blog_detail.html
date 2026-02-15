@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ post.title }} | Techlynx Pro Blog{% endblock %}
+
+{% block meta_description %}{{ post.excerpt }}{% endblock %}
+
+{% block og_title %}{{ post.title }} | Techlynx Pro{% endblock %}
+
+{% block og_description %}{{ post.excerpt }}{% endblock %}
+
+{% block content %}
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- Two Column Layout -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <!-- Main Content (Left) -->
+        <div class="lg:col-span-8">
+            <!-- Article Header -->
+            <article class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-lg">
+                <!-- Featured Image -->
+                {% if post.featured_image %}
+                <div class="aspect-[21/9] overflow-hidden">
+                    <img class="w-full h-full object-cover" alt="{{ post.title }}" src="{{ post.featured_image.url }}"/>
+                </div>
+                {% endif %}
+
+                <!-- Article Content -->
+                <div class="p-8 lg:p-12">
+                    <!-- Category Badge -->
+                    <div class="mb-6">
+                        <span class="px-4 py-2 bg-primary/10 text-primary rounded-full text-xs font-black uppercase tracking-wider">{{ post.category.name }}</span>
+                    </div>
+
+                    <!-- Title -->
+                    <h1 class="text-4xl lg:text-5xl font-black text-slate-900 dark:text-white mb-6 leading-tight">
+                        {{ post.title }}
+                    </h1>
+
+                    <!-- Meta Information -->
+                    <div class="flex flex-wrap items-center gap-6 pb-8 mb-8 border-b border-slate-200 dark:border-slate-800">
+                        <div class="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400">
+                            <span class="material-symbols-outlined text-lg text-primary">person</span>
+                            <span class="font-semibold">{{ post.author }}</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400">
+                            <span class="material-symbols-outlined text-lg text-primary">calendar_today</span>
+                            <span>{{ post.published_date|date:"F d, Y" }}</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400">
+                            <span class="material-symbols-outlined text-lg text-primary">schedule</span>
+                            <span>{{ post.read_time }} min read</span>
+                        </div>
+                    </div>
+
+                    <!-- Article Content -->
+                    <div class="prose prose-lg dark:prose-invert max-w-none">
+                        <div class="text-slate-700 dark:text-slate-300 leading-relaxed space-y-6">
+                            {{ post.content|safe }}
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </div>
+
+        <!-- Sidebar (Right) -->
+        <aside class="lg:col-span-4">
+            <div class="sticky top-8 space-y-8">
+                <!-- Related Posts -->
+                {% if related_posts %}
+                <section class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 shadow-lg">
+                    <h2 class="text-2xl font-black text-slate-900 dark:text-white mb-6 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary">article</span>
+                        Related Articles
+                    </h2>
+                    <div class="space-y-6">
+                        {% for related in related_posts %}
+                        <article class="group">
+                            <a href="{% url 'blog_detail' related.slug %}" class="block rounded-xl overflow-hidden border border-slate-200 dark:border-slate-800 hover:shadow-xl hover:border-primary/50 transition-all duration-300 hover:-translate-y-1">
+                                <div class="aspect-video overflow-hidden relative">
+                                    <div class="absolute top-2 left-2 z-10">
+                                        <span class="px-2 py-1 bg-primary text-white rounded-full text-[9px] font-black uppercase tracking-wider shadow-lg">{{ related.category.name }}</span>
+                                    </div>
+                                    {% if related.featured_image %}
+                                    <img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="{{ related.title }}" src="{{ related.featured_image.url }}"/>
+                                    {% else %}
+                                    <div class="w-full h-full bg-gradient-to-br from-slate-200 to-slate-300 dark:from-slate-700 dark:to-slate-800 flex items-center justify-center">
+                                        <span class="material-symbols-outlined text-4xl text-slate-400">image</span>
+                                    </div>
+                                    {% endif %}
+                                    <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                </div>
+                                <div class="p-4">
+                                    <div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400 mb-2 font-medium">
+                                        <span class="material-symbols-outlined text-xs">schedule</span>
+                                        <span>{{ related.read_time }} min</span>
+                                    </div>
+                                    <h3 class="text-base font-bold text-slate-900 dark:text-white mb-2 group-hover:text-primary transition-colors leading-tight line-clamp-2">
+                                        {{ related.title }}
+                                    </h3>
+                                    <p class="text-slate-600 dark:text-slate-400 text-xs line-clamp-2 leading-relaxed">
+                                        {{ related.excerpt }}
+                                    </p>
+                                </div>
+                            </a>
+                        </article>
+                        {% endfor %}
+                    </div>
+                </section>
+                {% endif %}
+            </div>
+        </aside>
+    </div>
+</main>
+{% endblock %}

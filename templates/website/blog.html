@@ -1,206 +1,133 @@
 {% extends 'base.html' %}
 
-{% block title %}Tech Blog & Industry Insights | Web Development, AI & Marketing Tips{% endblock %}
+{% block title %}{% if page_title %}{{ page_title }}{% else %}Tech Blog & Industry Insights | Web Development, AI & Marketing Tips{% endif %}{% endblock %}
 
-{% block meta_description %}Expert insights on web development, AI automation, SEO strategies, and digital marketing trends. Learn from 10+ years of experience with actionable tutorials, case studies, and industry best practices. Updated weekly with practical guides.{% endblock %}
+{% block meta_description %}{% if meta_description %}{{ meta_description }}{% else %}Expert insights on web development, AI automation, SEO strategies, and digital marketing trends. Learn from 10+ years of experience with actionable tutorials, case studies, and industry best practices. Updated weekly with practical guides.{% endif %}{% endblock %}
 
 {% block meta_keywords %}tech blog, web development blog, AI insights, SEO tips, digital marketing blog, programming tutorials, technology trends, industry insights, developer resources, marketing strategies{% endblock %}
 
-{% block og_title %}Techlynx Blog | Expert IT Insights & Digital Marketing Tips{% endblock %}
+{% block og_title %}{% if show_all %}All Blog Articles & Tech Insights | Techlynx{% else %}Techlynx Blog | Expert IT Insights & Digital Marketing Tips{% endif %}{% endblock %}
 
-{% block og_description %}Expert tutorials on web dev, AI, SEO & marketing. 10+ years of insights, case studies, and actionable guides. Updated weekly.{% endblock %}
+{% block og_description %}{% if meta_description %}{{ meta_description }}{% else %}Expert tutorials on web dev, AI, SEO & marketing. 10+ years of insights, case studies, and actionable guides. Updated weekly.{% endif %}{% endblock %}
 
 {% block content %}
 <!-- Main Content Container -->
 <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-    <!-- Breadcrumbs -->
-    <div class="flex items-center gap-2 mb-8 text-sm font-medium text-slate-500 dark:text-slate-400">
-        <a class="hover:text-primary transition-colors" href="{% url 'home' %}">Home</a>
-        <span class="material-symbols-outlined text-xs">chevron_right</span>
-        <span class="text-slate-900 dark:text-white">Insights</span>
-    </div>
-
     <!-- Featured Article Hero -->
-    <section class="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-16 bg-white dark:bg-slate-900 rounded-xl overflow-hidden shadow-sm border border-slate-200 dark:border-slate-800">
-        <div class="lg:col-span-7 aspect-video lg:aspect-auto">
-            <img class="w-full h-full object-cover" alt="Futuristic digital network data visualization and clouds" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAiHBlqgBQ1W1OoCHqmJOC5RgPl0l7bp7NeiDY4kjDRylQlEi8coxGUssa1Y0uXFzIPHEJDtHuQUlK1X6UERMNqalYm9fLnnbg9rl8CIzS_m60z0NIWRpO6KGbH6UcuufgxE5Uh7OzPnrp2juW2gOcNSYOMosAUqAcr3BJpqxsZffRfZ6f2HLnwKQCIt2CXHfQOgoFJ4kK2DOSGOVsV5DQzLRRQbZ99l0dAJpJRBtJDg9bpCM1mgsEaRj_zb1S6tRs9sNAAdc4kyhCs"/>
-        </div>
-        <div class="lg:col-span-5 p-8 lg:p-12 flex flex-col justify-center">
-            <div class="inline-block px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider mb-6 w-fit">Featured Story</div>
-            <h1 class="text-slate-900 dark:text-white text-3xl lg:text-4xl font-black leading-tight mb-4">
-                Optimizing Cloud Infrastructure for 2024 Scalability
-            </h1>
-            <p class="text-slate-600 dark:text-slate-400 text-lg leading-relaxed mb-8">
-                Discover how Techlynx Pro is revolutionizing enterprise scalability through next-gen cloud architecture, serverless optimization, and DevOps excellence.
-            </p>
-            <div class="flex items-center gap-4 mb-8 text-sm text-slate-500 dark:text-slate-500 font-medium">
-                <span class="flex items-center gap-1">
-                    <span class="material-symbols-outlined text-sm">person</span> By Alex Sterling
-                </span>
-                <span class="flex items-center gap-1">
-                    <span class="material-symbols-outlined text-sm">schedule</span> 12 min read
-                </span>
+    {% if featured_post and not show_all %}
+    <a href="{% url 'blog_detail' featured_post.slug %}" class="block group">
+        <section class="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-16 bg-white dark:bg-slate-900 rounded-xl overflow-hidden shadow-lg border border-slate-200 dark:border-slate-800 hover:shadow-2xl hover:border-primary/50 transition-all duration-300">
+            <div class="lg:col-span-7 aspect-video lg:aspect-auto relative overflow-hidden">
+                {% if featured_post.featured_image %}
+                <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt="{{ featured_post.title }}" src="{{ featured_post.featured_image.url }}"/>
+                {% else %}
+                <div class="w-full h-full bg-gradient-to-br from-slate-200 to-slate-300 dark:from-slate-700 dark:to-slate-800 flex items-center justify-center">
+                    <span class="material-symbols-outlined text-6xl text-slate-400">image</span>
+                </div>
+                {% endif %}
+                <div class="absolute inset-0 bg-gradient-to-r from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             </div>
-            <button class="flex items-center justify-center gap-2 w-full lg:w-fit rounded-lg h-12 px-8 bg-primary text-white font-bold hover:bg-blue-700 transition-all group">
-                Read Full Article
-                <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
-            </button>
-        </div>
-    </section>
+            <div class="lg:col-span-5 p-8 lg:p-12 flex flex-col justify-center">
+                <div class="inline-block px-4 py-2 rounded-full bg-gradient-to-r from-primary to-blue-600 text-white text-xs font-black uppercase tracking-wider mb-6 w-fit shadow-lg">Featured Story</div>
+                <h1 class="text-slate-900 dark:text-white text-3xl lg:text-4xl font-black leading-tight mb-4 group-hover:text-primary transition-colors">
+                    {{ featured_post.title }}
+                </h1>
+                <p class="text-slate-600 dark:text-slate-400 text-lg leading-relaxed mb-8">
+                    {{ featured_post.excerpt }}
+                </p>
+                <div class="flex items-center gap-4 mb-8 text-sm text-slate-500 dark:text-slate-400 font-medium">
+                    <span class="flex items-center gap-1">
+                        <span class="material-symbols-outlined text-sm">person</span> By {{ featured_post.author }}
+                    </span>
+                    <span class="flex items-center gap-1">
+                        <span class="material-symbols-outlined text-sm">schedule</span> {{ featured_post.read_time }} min read
+                    </span>
+                </div>
+                <div class="flex items-center gap-2 w-full lg:w-fit rounded-lg h-12 px-8 bg-gradient-to-r from-primary to-blue-600 text-white font-bold group-hover:shadow-lg transition-all justify-center">
+                    <span>Read Full Article</span>
+                    <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                </div>
+            </div>
+        </section>
+    </a>
+    {% endif %}
 
     <!-- Navigation & Filter Bar -->
     <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12 border-b border-slate-200 dark:border-slate-800 pb-8">
-        <div class="flex flex-wrap gap-2">
-            <button class="px-5 py-2 rounded-full bg-primary text-white text-sm font-bold shadow-sm">All Insights</button>
-            <button class="px-5 py-2 rounded-full bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-sm font-semibold hover:bg-slate-300 dark:hover:bg-slate-700 transition-colors">IT Solutions</button>
-            <button class="px-5 py-2 rounded-full bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-sm font-semibold hover:bg-slate-300 dark:hover:bg-slate-700 transition-colors">Digital Marketing</button>
-            <button class="px-5 py-2 rounded-full bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-sm font-semibold hover:bg-slate-300 dark:hover:bg-slate-700 transition-colors">Talent Trends</button>
+        <div class="flex flex-wrap gap-2" id="category-filters">
+            {% for category in categories %}
+            <button onclick="filterByCategory('{{ category.slug }}')" data-category="{{ category.slug }}" class="category-btn px-5 py-2 rounded-full {% if forloop.first %}bg-primary text-white{% else %}bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300{% endif %} text-sm font-{% if forloop.first %}bold{% else %}semibold{% endif %} hover:bg-slate-300 dark:hover:bg-slate-700 transition-colors">
+                {{ category.name }}
+            </button>
+            {% endfor %}
         </div>
         <div class="relative w-full md:max-w-xs">
             <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
                 <span class="material-symbols-outlined text-lg">search</span>
             </span>
-            <input class="block w-full pl-10 pr-3 py-2 border border-slate-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-900 text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all" placeholder="Search insights..." type="text"/>
+            <input id="search-input" oninput="searchBlogs()" class="block w-full pl-10 pr-3 py-2 border border-slate-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-900 text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all" placeholder="Search insights..." type="text"/>
         </div>
     </div>
 
     <!-- Main Grid Area -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+    <div class="grid grid-cols-1 {% if not show_all %}lg:grid-cols-12{% endif %} gap-10">
         <!-- Articles Grid -->
-        <div class="lg:col-span-8 space-y-12">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <!-- Article Card 1 -->
-                <article class="group">
-                    <div class="aspect-video rounded-xl overflow-hidden mb-4 border border-slate-200 dark:border-slate-800 relative">
-                        <div class="absolute top-4 left-4 z-10">
-                            <span class="px-3 py-1 bg-white/90 dark:bg-slate-900/90 backdrop-blur rounded text-[10px] font-black uppercase text-primary border border-primary/20">Digital Marketing</span>
+        <div class="{% if not show_all %}lg:col-span-8{% endif %} space-y-12">
+            <div class="grid grid-cols-1 {% if show_all %}md:grid-cols-2 lg:grid-cols-3{% else %}md:grid-cols-2{% endif %} gap-8" id="blog-grid">
+                {% for post in posts %}
+                <!-- Article Card {{ forloop.counter }} -->
+                <article class="group blog-post h-full" data-category="{{ post.category.slug }}" data-title="{{ post.title|lower }}" data-excerpt="{{ post.excerpt|lower }}" data-author="{{ post.author|lower }}">
+                    <a href="{% url 'blog_detail' post.slug %}" class="flex flex-col h-full bg-white dark:bg-slate-900 rounded-xl overflow-hidden border border-slate-200 dark:border-slate-800 hover:shadow-2xl hover:border-primary/50 transition-all duration-300 hover:-translate-y-1">
+                        <div class="aspect-video rounded-t-xl overflow-hidden relative flex-shrink-0">
+                            <div class="absolute top-4 left-4 z-10">
+                                <span class="px-3 py-1.5 bg-primary text-white rounded-full text-[10px] font-black uppercase tracking-wider shadow-lg">{{ post.category.name }}</span>
+                            </div>
+                            {% if post.featured_image %}
+                            <img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="{{ post.title }}" src="{{ post.featured_image.url }}"/>
+                            {% else %}
+                            <div class="w-full h-full bg-gradient-to-br from-slate-200 to-slate-300 dark:from-slate-700 dark:to-slate-800 flex items-center justify-center">
+                                <span class="material-symbols-outlined text-6xl text-slate-400">image</span>
+                            </div>
+                            {% endif %}
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                         </div>
-                        <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Modern office desk with graphs and laptop screen" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCj5Mv8rSGnylAxfhNObROo4ErvavlxY0nupqqzlubbZVJV-Fjf1IYEWA77jPvuUkFRvbObWcLTd95BFKdJKmbNm1s4GkxeGVntNZ2foxKvGSKzxtoHspxuBW0dK6Yfc_BU_pPEU1vpHvvPidPaDpmyDwcpmjWCcWrool_Gq6J5XazAgCAL7liPTP4E_WEqhnpkjneNVOFFormvLgLtjRkNAMeksDZES-gvHUIcgElhMXpceZgcJrEcxJS3NA-fPlLQJONwYt494MmE"/>
-                    </div>
-                    <div class="flex items-center gap-3 text-xs text-slate-500 dark:text-slate-400 mb-2 font-medium">
-                        <span>May 12, 2024</span>
-                        <span class="w-1 h-1 bg-slate-300 dark:bg-slate-700 rounded-full"></span>
-                        <span>8 min read</span>
-                    </div>
-                    <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2 group-hover:text-primary transition-colors leading-tight">
-                        The ROI of Omnichannel Marketing in B2B Tech
-                    </h3>
-                    <p class="text-slate-600 dark:text-slate-400 text-sm line-clamp-2 leading-relaxed mb-4">
-                        Why a fragmented marketing strategy is costing your agency leads and how to unify your brand voice across touchpoints.
-                    </p>
-                    <a class="text-primary text-sm font-bold flex items-center gap-1 group/link" href="#">
-                        Read More
-                        <span class="material-symbols-outlined text-sm group-hover/link:translate-x-1 transition-transform">chevron_right</span>
+                        <div class="flex flex-col flex-1 p-6">
+                            <div class="flex items-center gap-3 text-xs text-slate-500 dark:text-slate-400 mb-3 font-medium">
+                                <span class="flex items-center gap-1">
+                                    <span class="material-symbols-outlined text-sm">calendar_today</span>
+                                    {{ post.published_date|date:"M d, Y" }}
+                                </span>
+                                <span class="w-1 h-1 bg-slate-300 dark:bg-slate-700 rounded-full"></span>
+                                <span class="flex items-center gap-1">
+                                    <span class="material-symbols-outlined text-sm">schedule</span>
+                                    {{ post.read_time }} min
+                                </span>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-3 group-hover:text-primary transition-colors leading-tight line-clamp-2">
+                                {{ post.title }}
+                            </h3>
+                            <p class="text-slate-600 dark:text-slate-400 text-sm line-clamp-3 leading-relaxed mb-4 flex-1">
+                                {{ post.excerpt }}
+                            </p>
+                            <div class="flex items-center justify-between pt-4 border-t border-slate-100 dark:border-slate-800 mt-auto">
+                                <div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
+                                    <span class="material-symbols-outlined text-sm">person</span>
+                                    <span class="font-medium">{{ post.author }}</span>
+                                </div>
+                                <div class="flex items-center gap-1 text-primary text-sm font-bold group-hover:gap-2 transition-all">
+                                    <span>Read More</span>
+                                    <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                                </div>
+                            </div>
+                        </div>
                     </a>
                 </article>
-
-                <!-- Article Card 2 -->
-                <article class="group">
-                    <div class="aspect-video rounded-xl overflow-hidden mb-4 border border-slate-200 dark:border-slate-800 relative">
-                        <div class="absolute top-4 left-4 z-10">
-                            <span class="px-3 py-1 bg-white/90 dark:bg-slate-900/90 backdrop-blur rounded text-[10px] font-black uppercase text-primary border border-primary/20">Talent Acquisition</span>
-                        </div>
-                        <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Colleagues collaborating in a bright modern tech office" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAs7kpZ-p6UqTJe4o0yqs5WUVhm9vLz2X0dnSMgeou8xFU5K1nIGsITJW1-E-g0lhtMeG5Nwpb1IX0VAJxzMI5jn0dtvhnalO2Q_y5vg2iSdPb6QFf_Ne2_F41aBioER1S5Jp1X0YBgzt8l9r1xMZcMX7tfUOB8aIMtiGizeG47M3_sZGRJTurRrIjdvVdbrDMVrNPe1ROlvaS3d4hlCrwgi2bRdX-Mwa4XULAZlwI6wKTHtH82iZPo_OEdHzRS8buUWDjWeM3o78vG"/>
-                    </div>
-                    <div class="flex items-center gap-3 text-xs text-slate-500 dark:text-slate-400 mb-2 font-medium">
-                        <span>May 10, 2024</span>
-                        <span class="w-1 h-1 bg-slate-300 dark:bg-slate-700 rounded-full"></span>
-                        <span>5 min read</span>
-                    </div>
-                    <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2 group-hover:text-primary transition-colors leading-tight">
-                        Closing the Tech Skills Gap in Remote Teams
-                    </h3>
-                    <p class="text-slate-600 dark:text-slate-400 text-sm line-clamp-2 leading-relaxed mb-4">
-                        Strategies for continuous upskilling and why your company culture is your biggest recruitment asset.
-                    </p>
-                    <a class="text-primary text-sm font-bold flex items-center gap-1 group/link" href="#">
-                        Read More
-                        <span class="material-symbols-outlined text-sm group-hover/link:translate-x-1 transition-transform">chevron_right</span>
-                    </a>
-                </article>
-
-                <!-- Article Card 3 -->
-                <article class="group">
-                    <div class="aspect-video rounded-xl overflow-hidden mb-4 border border-slate-200 dark:border-slate-800 relative">
-                        <div class="absolute top-4 left-4 z-10">
-                            <span class="px-3 py-1 bg-white/90 dark:bg-slate-900/90 backdrop-blur rounded text-[10px] font-black uppercase text-primary border border-primary/20">IT Solutions</span>
-                        </div>
-                        <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Security code and digital interface representing cybersecurity" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAsAjmLOovLggHPoNAYLuz-nEVm1kUrkRlJE25Dmd2caNASH13oALbN2LnhW35WhfvF1h199LfUXbrO1EHu8HygwfznAOWRw_FYUshkHyAw-0RxHQqSuj9QZzRqK5qCyjvgNm4SMekCRVUyHd3XHu8xek7VnUznZI872ydImzspFtLOx8U2HZX7cMz7Ku8Zvook2GOP9vJrg3T0JAdw_cPnusOBNdrJNAl0oQmEqcpoSfdo2_n-8jsq0f1I7QfsdoO2xfJRklZbv0lB"/>
-                    </div>
-                    <div class="flex items-center gap-3 text-xs text-slate-500 dark:text-slate-400 mb-2 font-medium">
-                        <span>May 05, 2024</span>
-                        <span class="w-1 h-1 bg-slate-300 dark:bg-slate-700 rounded-full"></span>
-                        <span>15 min read</span>
-                    </div>
-                    <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2 group-hover:text-primary transition-colors leading-tight">
-                        Cybersecurity Best Practices for 2024
-                    </h3>
-                    <p class="text-slate-600 dark:text-slate-400 text-sm line-clamp-2 leading-relaxed mb-4">
-                        A comprehensive guide for CTOs to secure decentralized infrastructure against evolving threats.
-                    </p>
-                    <a class="text-primary text-sm font-bold flex items-center gap-1 group/link" href="#">
-                        Read More
-                        <span class="material-symbols-outlined text-sm group-hover/link:translate-x-1 transition-transform">chevron_right</span>
-                    </a>
-                </article>
-
-                <!-- Article Card 4 -->
-                <article class="group">
-                    <div class="aspect-video rounded-xl overflow-hidden mb-4 border border-slate-200 dark:border-slate-800 relative">
-                        <div class="absolute top-4 left-4 z-10">
-                            <span class="px-3 py-1 bg-white/90 dark:bg-slate-900/90 backdrop-blur rounded text-[10px] font-black uppercase text-primary border border-primary/20">Industry Trends</span>
-                        </div>
-                        <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Robotic arm pointing towards a futuristic digital screen" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBQnWtRlh0pV2X2fTLDiNNumntsfjMljGoprun2NeZ9KChI5fDNnqSecGjROljunGWVXbG3o0QZv6VjD_p6juW32Piessgjg5J9kxiq3s4JWS4fsVielVlrfBNZH7xce8RNuyMuKIIzbqOjjMT2DELnpunVEA22-WI1Vx3dBhEfprOc8NKj7mNsWPMAWUgYq_BuMgqJhxX8wF2e85AQDPMOtTqdL74nhI5wNWV4W1NS_IJVZbw6AMG5569rWj1pLVY2WtslE6GQ3mkd"/>
-                    </div>
-                    <div class="flex items-center gap-3 text-xs text-slate-500 dark:text-slate-400 mb-2 font-medium">
-                        <span>April 28, 2024</span>
-                        <span class="w-1 h-1 bg-slate-300 dark:bg-slate-700 rounded-full"></span>
-                        <span>10 min read</span>
-                    </div>
-                    <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2 group-hover:text-primary transition-colors leading-tight">
-                        How Generative AI is Reshaping Tech Development
-                    </h3>
-                    <p class="text-slate-600 dark:text-slate-400 text-sm line-clamp-2 leading-relaxed mb-4">
-                        Exploring the balance between automated coding assistants and human architectural oversight.
-                    </p>
-                    <a class="text-primary text-sm font-bold flex items-center gap-1 group/link" href="#">
-                        Read More
-                        <span class="material-symbols-outlined text-sm group-hover/link:translate-x-1 transition-transform">chevron_right</span>
-                    </a>
-                </article>
-            </div>
-
-            <!-- Mid-page Newsletter CTA -->
-            <div class="bg-primary rounded-xl p-8 lg:p-12 text-white overflow-hidden relative">
-                <div class="absolute -right-20 -bottom-20 opacity-10">
-                    <span class="material-symbols-outlined text-[240px]">mail</span>
-                </div>
-                <div class="relative z-10 max-w-lg">
-                    <h2 class="text-3xl font-black mb-4">Stay Ahead of the Curve</h2>
-                    <p class="text-blue-100 text-lg mb-8 leading-relaxed">
-                        Get the latest tech and marketing insights delivered to your inbox every Tuesday. No spam, just pure strategy.
-                    </p>
-                    <form method="post" action="#" class="flex flex-col sm:flex-row gap-3">
-                        {% csrf_token %}
-                        <input class="flex-1 px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-white/50" placeholder="Work email address" type="email" name="email" required/>
-                        <button type="submit" class="bg-white text-primary px-8 py-3 rounded-lg font-bold hover:bg-slate-100 transition-colors">
-                            Subscribe
-                        </button>
-                    </form>
-                    <p class="text-xs text-white/60 mt-4">Join 2,500+ industry professionals. Unsubscribe at any time.</p>
-                </div>
-            </div>
-
-            <!-- More Articles Load Button -->
-            <div class="flex justify-center py-8">
-                <button class="flex items-center justify-center gap-2 px-8 py-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl font-bold text-slate-900 dark:text-white hover:border-primary transition-all shadow-sm">
-                    Load More Insights
-                    <span class="material-symbols-outlined">keyboard_arrow_down</span>
-                </button>
+                {% endfor %}
             </div>
         </div>
 
         <!-- Sidebar -->
+        {% if not show_all %}
         <aside class="lg:col-span-4 space-y-10">
             <!-- Trending Now -->
             <div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-6 shadow-sm">
@@ -209,33 +136,17 @@
                     Trending Now
                 </h4>
                 <ul class="space-y-6">
+                    {% for post in trending_posts %}
                     <li class="flex gap-4 group cursor-pointer">
-                        <span class="text-2xl font-black text-slate-200 dark:text-slate-800 group-hover:text-primary transition-colors">01</span>
+                        <span class="text-2xl font-black text-slate-200 dark:text-slate-800 group-hover:text-primary transition-colors">0{{ forloop.counter }}</span>
                         <div>
                             <h5 class="font-bold text-slate-900 dark:text-white text-sm leading-snug group-hover:text-primary transition-colors">
-                                Why SEO-First Design is Crucial for 2024 Launch
+                                {{ post.title }}
                             </h5>
-                            <span class="text-[10px] text-slate-500 font-bold uppercase tracking-tight">Digital Marketing</span>
+                            <span class="text-[10px] text-slate-500 font-bold uppercase tracking-tight">{{ post.category.name }}</span>
                         </div>
                     </li>
-                    <li class="flex gap-4 group cursor-pointer">
-                        <span class="text-2xl font-black text-slate-200 dark:text-slate-800 group-hover:text-primary transition-colors">02</span>
-                        <div>
-                            <h5 class="font-bold text-slate-900 dark:text-white text-sm leading-snug group-hover:text-primary transition-colors">
-                                The Rise of Fractional CTO Services for Startups
-                            </h5>
-                            <span class="text-[10px] text-slate-500 font-bold uppercase tracking-tight">IT Solutions</span>
-                        </div>
-                    </li>
-                    <li class="flex gap-4 group cursor-pointer">
-                        <span class="text-2xl font-black text-slate-200 dark:text-slate-800 group-hover:text-primary transition-colors">03</span>
-                        <div>
-                            <h5 class="font-bold text-slate-900 dark:text-white text-sm leading-snug group-hover:text-primary transition-colors">
-                                Data Sovereignty and Your Cloud Infrastructure
-                            </h5>
-                            <span class="text-[10px] text-slate-500 font-bold uppercase tracking-tight">Industry Trends</span>
-                        </div>
-                    </li>
+                    {% endfor %}
                 </ul>
             </div>
 
@@ -250,36 +161,78 @@
                     Book a Strategy Call
                 </a>
             </div>
-
-            <!-- Social Links -->
-            <div class="p-2">
-                <h4 class="text-xs font-black text-slate-400 uppercase tracking-widest mb-4">Follow Techlynx</h4>
-                <div class="flex gap-4">
-                    <a class="w-10 h-10 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-400 hover:text-primary hover:border-primary transition-all" href="#" aria-label="Website">
-                        <span class="material-symbols-outlined text-xl">public</span>
-                    </a>
-                    <a class="w-10 h-10 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-400 hover:text-primary hover:border-primary transition-all" href="#" aria-label="Share">
-                        <span class="material-symbols-outlined text-xl">share</span>
-                    </a>
-                    <a class="w-10 h-10 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-400 hover:text-primary hover:border-primary transition-all" href="#" aria-label="RSS Feed">
-                        <span class="material-symbols-outlined text-xl">rss_feed</span>
-                    </a>
-                </div>
-            </div>
-
-            <!-- Sticky Report Promo -->
-            <div class="sticky top-24 hidden lg:block">
-                <div class="rounded-xl border border-primary/20 bg-primary/5 p-6 border-dashed">
-                    <h5 class="text-sm font-bold text-primary mb-2 italic">Report: State of IT 2024</h5>
-                    <p class="text-xs text-slate-600 dark:text-slate-400 mb-4 leading-relaxed">
-                        Download our free 45-page industry report on digital transformation trends.
-                    </p>
-                    <a class="text-xs font-black text-primary flex items-center gap-1 uppercase tracking-wider underline" href="#">
-                        Download Now
-                    </a>
-                </div>
-            </div>
         </aside>
+        {% endif %}
     </div>
+
+    <!-- More Articles Load Button -->
+    {% if has_more_posts and not show_all %}
+    <div class="flex justify-center py-12">
+        <a href="{% url 'all_blogs' %}" class="flex items-center justify-center gap-2 px-10 py-4 bg-gradient-to-r from-primary to-blue-600 text-white rounded-xl font-bold hover:shadow-lg hover:scale-105 transition-all">
+            Load More
+            <span class="material-symbols-outlined">keyboard_arrow_down</span>
+        </a>
+    </div>
+    {% endif %}
+
+    <script>
+    let currentCategory = 'all-insights';
+
+    function filterByCategory(categorySlug) {
+        currentCategory = categorySlug;
+        const posts = document.querySelectorAll('.blog-post');
+        const buttons = document.querySelectorAll('.category-btn');
+        
+        // Update button styles
+        buttons.forEach(btn => {
+            if (btn.getAttribute('data-category') === categorySlug) {
+                btn.className = 'category-btn px-5 py-2 rounded-full bg-primary text-white text-sm font-bold transition-colors';
+            } else {
+                btn.className = 'category-btn px-5 py-2 rounded-full bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-sm font-semibold hover:bg-slate-300 dark:hover:bg-slate-700 transition-colors';
+            }
+        });
+        
+        // Filter posts
+        posts.forEach(post => {
+            const postCategory = post.getAttribute('data-category');
+            const searchTerm = document.getElementById('search-input').value.toLowerCase();
+            const matchesSearch = searchTerm === '' || 
+                post.getAttribute('data-title').includes(searchTerm) || 
+                post.getAttribute('data-excerpt').includes(searchTerm) ||
+                post.getAttribute('data-author').includes(searchTerm);
+            
+            if ((categorySlug === 'all-insights' || postCategory === categorySlug) && matchesSearch) {
+                post.style.display = 'block';
+            } else {
+                post.style.display = 'none';
+            }
+        });
+    }
+
+    function searchBlogs() {
+        const searchTerm = document.getElementById('search-input').value.toLowerCase();
+        const posts = document.querySelectorAll('.blog-post');
+        
+        posts.forEach(post => {
+            const postCategory = post.getAttribute('data-category');
+            const title = post.getAttribute('data-title');
+            const excerpt = post.getAttribute('data-excerpt');
+            const author = post.getAttribute('data-author');
+            
+            const matchesSearch = searchTerm === '' || 
+                title.includes(searchTerm) || 
+                excerpt.includes(searchTerm) ||
+                author.includes(searchTerm);
+            
+            const matchesCategory = currentCategory === 'all-insights' || postCategory === currentCategory;
+            
+            if (matchesSearch && matchesCategory) {
+                post.style.display = 'block';
+            } else {
+                post.style.display = 'none';
+            }
+        });
+    }
+    </script>
 </main>
 {% endblock %}

@@ -1,0 +1,161 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ case_study.title }} - Case Study | {{ case_study.category }}{% endblock %}
+
+{% block meta_description %}{{ case_study.description }}{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="relative bg-gradient-to-br from-slate-50 to-white dark:from-background-dark dark:to-slate-900 py-16 md:py-24 overflow-hidden">
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-primary/5 via-transparent to-transparent"></div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="max-w-4xl">
+            <span class="inline-block px-3 py-1 mb-4 text-xs font-bold tracking-widest text-primary uppercase bg-primary/10 rounded-full">{{ case_study.category }}</span>
+            <h1 class="text-4xl md:text-6xl font-black leading-tight tracking-tight text-slate-900 dark:text-white mb-6">
+                {{ case_study.title }}
+            </h1>
+            {% if case_study.client_name %}
+            <p class="text-xl text-slate-600 dark:text-slate-400 font-semibold mb-6">Client: {{ case_study.client_name }}</p>
+            {% endif %}
+            <p class="text-lg md:text-xl text-slate-600 dark:text-slate-400 leading-relaxed">
+                {{ case_study.detailed_description|default:case_study.description }}
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Image -->
+{% if case_study.background_image %}
+<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8 mb-16">
+    <div class="rounded-2xl overflow-hidden shadow-2xl">
+        <img src="{{ case_study.background_image.url }}" alt="{{ case_study.image_alt_text|default:case_study.title }}" class="w-full h-auto object-cover">
+    </div>
+</section>
+{% endif %}
+
+<!-- Key Metrics -->
+<section class="bg-primary py-12 md:py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="text-center">
+                <p class="text-5xl md:text-6xl font-black text-white mb-2">{{ case_study.key_result_value }}</p>
+                <p class="text-white/80 font-semibold uppercase tracking-wide text-sm">{{ case_study.key_result_label }}</p>
+            </div>
+            {% for metric in case_study.metrics.all %}
+            <div class="text-center">
+                <p class="text-5xl md:text-6xl font-black text-white mb-2">{{ metric.value }}</p>
+                <p class="text-white/80 font-semibold uppercase tracking-wide text-sm">{{ metric.label }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Content Sections -->
+<section class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
+    {% if case_study.challenge %}
+    <div class="mb-16">
+        <div class="flex items-center gap-3 mb-6">
+            <span class="material-symbols-outlined text-4xl text-primary">problem</span>
+            <h2 class="text-3xl md:text-4xl font-black text-slate-900 dark:text-white">The Challenge</h2>
+        </div>
+        <div class="prose prose-lg dark:prose-invert max-w-none">
+            <p class="text-slate-600 dark:text-slate-400 leading-relaxed whitespace-pre-line">{{ case_study.challenge }}</p>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if case_study.solution %}
+    <div class="mb-16">
+        <div class="flex items-center gap-3 mb-6">
+            <span class="material-symbols-outlined text-4xl text-primary">lightbulb</span>
+            <h2 class="text-3xl md:text-4xl font-black text-slate-900 dark:text-white">Our Solution</h2>
+        </div>
+        <div class="prose prose-lg dark:prose-invert max-w-none">
+            <p class="text-slate-600 dark:text-slate-400 leading-relaxed whitespace-pre-line">{{ case_study.solution }}</p>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if case_study.results %}
+    <div class="mb-16">
+        <div class="flex items-center gap-3 mb-6">
+            <span class="material-symbols-outlined text-4xl text-primary">trending_up</span>
+            <h2 class="text-3xl md:text-4xl font-black text-slate-900 dark:text-white">Results</h2>
+        </div>
+        <div class="prose prose-lg dark:prose-invert max-w-none">
+            <p class="text-slate-600 dark:text-slate-400 leading-relaxed whitespace-pre-line">{{ case_study.results }}</p>
+        </div>
+    </div>
+    {% endif %}
+</section>
+
+<!-- Related Case Studies -->
+{% if related_case_studies %}
+<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-black text-slate-900 dark:text-white mb-4">Related Case Studies</h2>
+        <p class="text-slate-600 dark:text-slate-400 text-lg">Explore more success stories from the {{ case_study.category }} industry</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {% for related in related_case_studies %}
+        <a href="{% url 'case_study_detail' related.slug %}" class="group flex flex-col bg-white dark:bg-slate-900 rounded-xl overflow-hidden border border-slate-100 dark:border-slate-800 hover:shadow-2xl hover:shadow-primary/5 hover:-translate-y-1 transition-all duration-300">
+            <div class="relative aspect-[16/10] overflow-hidden">
+                <div class="absolute inset-0 bg-primary/10 group-hover:bg-transparent transition-colors z-10"></div>
+                {% if related.background_image %}
+                <img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" 
+                     alt="{{ related.image_alt_text|default:related.title }}" 
+                     src="{{ related.background_image.url }}" />
+                {% else %}
+                <div class="w-full h-full bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
+                    <span class="material-symbols-outlined text-6xl text-primary/30">business</span>
+                </div>
+                {% endif %}
+                <div class="absolute top-4 left-4 z-20">
+                    <span class="px-3 py-1 bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm text-[10px] font-bold uppercase tracking-widest rounded text-primary">{{ related.category }}</span>
+                </div>
+            </div>
+            <div class="p-6 flex flex-col flex-grow">
+                <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2 group-hover:text-primary transition-colors">{{ related.title }}</h3>
+                <p class="text-sm text-slate-500 dark:text-slate-400 mb-4 line-clamp-2">{{ related.description }}</p>
+                <div class="mt-auto border-t border-slate-100 dark:border-slate-800 pt-4">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-xs font-bold text-slate-400 uppercase tracking-tight">{{ related.key_result_label }}</p>
+                            <p class="text-xl font-black text-primary">{{ related.key_result_value }}</p>
+                        </div>
+                        <span class="material-symbols-outlined text-slate-300 group-hover:text-primary group-hover:translate-x-1 transition-all">arrow_forward</span>
+                    </div>
+                </div>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
+
+<!-- CTA Section -->
+{% if cta %}
+<section class="bg-slate-50 dark:bg-slate-900 py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-3xl md:text-5xl font-black text-slate-900 dark:text-white mb-6 tracking-tight">{{ cta.headline }}</h2>
+        <p class="text-slate-600 dark:text-slate-400 text-lg mb-10 max-w-2xl mx-auto">{{ cta.description }}</p>
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <a href="{{ cta.primary_button_url }}" class="w-full sm:w-auto px-10 py-4 bg-primary text-white font-bold rounded-lg shadow-xl shadow-primary/20 hover:bg-primary/90 transition-colors">{{ cta.primary_button_text }}</a>
+            <a href="{{ cta.secondary_button_url }}" class="w-full sm:w-auto px-10 py-4 bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white font-bold rounded-lg hover:border-primary transition-colors">{{ cta.secondary_button_text }}</a>
+        </div>
+    </div>
+</section>
+{% else %}
+<section class="bg-slate-50 dark:bg-slate-900 py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-3xl md:text-5xl font-black text-slate-900 dark:text-white mb-6 tracking-tight">Ready for Similar Results?</h2>
+        <p class="text-slate-600 dark:text-slate-400 text-lg mb-10 max-w-2xl mx-auto">Let's discuss how we can help transform your business with proven strategies and solutions.</p>
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <a href="{% url 'contact' %}" class="w-full sm:w-auto px-10 py-4 bg-primary text-white font-bold rounded-lg shadow-xl shadow-primary/20 hover:bg-primary/90 transition-colors">Start Your Project</a>
+            <a href="{% url 'case_studies' %}" class="w-full sm:w-auto px-10 py-4 bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white font-bold rounded-lg hover:border-primary transition-colors">View More Case Studies</a>
+        </div>
+    </div>
+</section>
+{% endif %}
+{% endblock %}

@@ -1,1 +1,548 @@
 /* Custom CSS - Add your additional styles here */
+
+/* AI Technology Logos - Enhanced Display */
+.ai-tech-logo-container {
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.ai-tech-logo-container img {
+    filter: grayscale(30%);
+    transition: all 0.3s ease;
+}
+
+.ai-tech-logo-container:hover img {
+    filter: grayscale(0%);
+    transform: scale(1.1);
+}
+
+/* Dark mode logo adjustments */
+.dark .ai-tech-logo-container img {
+    filter: brightness(0.9) grayscale(30%);
+}
+
+.dark .ai-tech-logo-container:hover img {
+    filter: brightness(1) grayscale(0%);
+}
+
+/* Ensure SVG logos render properly */
+.ai-tech-logo-container img[src$=".svg"] {
+    width: auto;
+    height: 100%;
+    max-height: 4rem;
+}
+
+/* PNG logos with transparent backgrounds */
+.ai-tech-logo-container img[src$=".png"] {
+    max-height: 4rem;
+    width: auto;
+}
+
+/* AI Service Icons - Professional Style */
+.ai-service-icon {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ai-service-icon img {
+    filter: saturate(0.8);
+    transition: all 0.3s ease;
+}
+
+.group:hover .ai-service-icon {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(139, 92, 246, 0.2) 100%);
+    transform: scale(1.1) rotate(3deg);
+}
+
+.group:hover .ai-service-icon img {
+    filter: saturate(1.2);
+}
+
+/* Dark mode adjustments for service icons */
+.dark .ai-service-icon {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(139, 92, 246, 0.15) 100%);
+}
+
+.dark .group:hover .ai-service-icon {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.25) 0%, rgba(139, 92, 246, 0.25) 100%);
+}
+
+/* AI Tech Detail Icons - Professional Style */
+.ai-tech-detail-icon {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ai-tech-detail-icon img {
+    filter: saturate(0.9);
+    transition: all 0.3s ease;
+}
+
+.ai-tech-detail-icon:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+}
+
+.ai-tech-detail-icon:hover img {
+    filter: saturate(1.1);
+    transform: scale(1.05);
+}
+
+/* AI ROI Metrics Icons - White Icons on Primary Background */
+.ai-roi-icon {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ai-roi-icon img {
+    filter: brightness(0) invert(1);
+    transition: all 0.3s ease;
+}
+
+.group:hover .ai-roi-icon img {
+    transform: scale(1.15) rotate(5deg);
+    filter: brightness(0) invert(1) drop-shadow(0 0 8px rgba(255, 255, 255, 0.5));
+}
+
+/* Performance Metrics Check Icon */
+.performance-check-icon {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    transition: all 0.3s ease;
+}
+
+.performance-check-icon:hover {
+    transform: scale(1.05) rotate(-5deg);
+    box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4);
+}
+
+/* ============================================
+   WEB DEVELOPMENT PAGE ICONS
+   ============================================ */
+
+/* Web Dev Service Icons */
+.web-service-icon {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.web-service-icon img {
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+    transition: all 0.3s ease;
+}
+
+.group:hover .web-service-icon {
+    transform: scale(1.1) rotate(-5deg);
+}
+
+.group:hover .web-service-icon img {
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2)) brightness(1.1);
+}
+
+/* Web Dev Stack Feature Icons */
+.web-stack-icon {
+    transition: all 0.3s ease;
+}
+
+.web-stack-icon img {
+    filter: saturate(0.9);
+    transition: all 0.3s ease;
+}
+
+.web-stack-icon:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.web-stack-icon:hover img {
+    filter: saturate(1.1) drop-shadow(0 2px 8px rgba(59, 130, 246, 0.3));
+}
+
+/* Web Dev Technology Logos */
+.web-tech-logo {
+    transition: all 0.3s ease;
+}
+
+.web-tech-logo img {
+    filter: grayscale(40%) opacity(0.85);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.web-tech-logo:hover img {
+    filter: grayscale(0%) opacity(1);
+}
+
+/* Dark mode adjustments for tech logos */
+.dark .web-tech-logo img {
+    filter: grayscale(40%) opacity(0.75) brightness(1.1);
+}
+
+.dark .web-tech-logo:hover img {
+    filter: grayscale(0%) opacity(1) brightness(1.2);
+}
+
+/* Web Dev SEO Benefit Icons */
+.web-seo-icon {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.web-seo-icon img {
+    transition: all 0.3s ease;
+    filter: brightness(0) invert(1) drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
+}
+
+.web-seo-icon:hover {
+    transform: translateY(-4px);
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.4);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+.web-seo-icon:hover img {
+    transform: scale(1.15);
+    filter: brightness(0) invert(1) drop-shadow(0 0 12px rgba(255, 255, 255, 0.8));
+}
+
+/* ============================================
+   DIGITAL MARKETING PAGE ICONS
+   ============================================ */
+
+/* Digital Marketing Service Icons */
+.dm-service-icon {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dm-service-icon img {
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+    transition: all 0.3s ease;
+}
+
+.group:hover .dm-service-icon {
+    transform: scale(1.15) rotate(-5deg);
+}
+
+.group:hover .dm-service-icon img {
+    filter: drop-shadow(0 6px 12px rgba(59, 130, 246, 0.4)) brightness(1.15);
+}
+
+/* Digital Marketing Strategy Numbers */
+.dm-strategy-number {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dm-strategy-number:hover {
+    transform: scale(1.15);
+    box-shadow: 0 8px 24px rgba(59, 130, 246, 0.4);
+}
+
+/* Digital Marketing Testimonial Photos */
+.dm-testimonial-photo {
+    transition: all 0.3s ease;
+}
+
+.dm-testimonial-photo:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.dm-testimonial-photo img {
+    transition: all 0.3s ease;
+}
+
+/* Digital Marketing Metric Bars */
+.dm-metric-bar {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dm-metric-bar:hover {
+    transform: scaleY(1.05);
+}
+
+/* ============================================
+   APP DEVELOPMENT PAGE ICONS
+   ============================================ */
+
+/* App Dev Service Icons */
+.appdev-service-icon {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.appdev-service-icon img {
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+    transition: all 0.3s ease;
+}
+
+.group:hover .appdev-service-icon {
+    transform: scale(1.15) rotate(-8deg);
+}
+
+.group:hover .appdev-service-icon img {
+    filter: drop-shadow(0 6px 14px rgba(59, 130, 246, 0.45)) brightness(1.2);
+}
+
+/* App Dev Stack Feature Icons */
+.appdev-stack-icon {
+    transition: all 0.3s ease;
+}
+
+.appdev-stack-icon img {
+    filter: saturate(0.9);
+    transition: all 0.3s ease;
+}
+
+.appdev-stack-icon:hover {
+    transform: translateY(-4px) scale(1.05);
+    box-shadow: 0 8px 20px rgba(59, 130, 246, 0.2);
+}
+
+.appdev-stack-icon:hover img {
+    filter: saturate(1.2) drop-shadow(0 4px 12px rgba(59, 130, 246, 0.4));
+}
+
+/* App Dev Technology Logos */
+.appdev-tech-logo {
+    transition: all 0.3s ease;
+}
+
+.appdev-tech-logo img {
+    filter: grayscale(50%) opacity(0.85);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.appdev-tech-logo:hover {
+    transform: translateY(-6px) scale(1.05);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+    border-color: rgba(59, 130, 246, 0.3);
+}
+
+.appdev-tech-logo:hover img {
+    filter: grayscale(0%) opacity(1);
+}
+
+/* Dark mode adjustments */
+.dark .appdev-tech-logo img {
+    filter: grayscale(50%) opacity(0.75) brightness(1.15);
+}
+
+.dark .appdev-tech-logo:hover img {
+    filter: grayscale(0%) opacity(1) brightness(1.3);
+}
+
+/* App Dev Feature Icons */
+.appdev-feature-icon-container {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.appdev-feature-icon-container:hover {
+    transform: scale(1.1) translateY(-4px);
+    background: rgba(255, 255, 255, 0.98);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25), 0 0 0 3px rgba(255, 255, 255, 0.5);
+}
+
+.appdev-feature-icon {
+    transition: all 0.3s ease;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.appdev-feature-icon-container:hover .appdev-feature-icon {
+    filter: drop-shadow(0 4px 8px rgba(59, 130, 246, 0.3)) brightness(1.1);
+    transform: scale(1.05);
+}
+
+/* App Dev Testimonial Photos */
+.appdev-testimonial-photo {
+    transition: all 0.3s ease;
+}
+
+.appdev-testimonial-photo:hover {
+    transform: scale(1.08);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+}
+
+.appdev-testimonial-photo img {
+    transition: all 0.3s ease;
+}
+
+
+/* ==================== SEO AUDIT PAGE ICONS ==================== */
+
+/* SEO Service Icons */
+.seo-service-icon {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.seo-service-icon:hover {
+    transform: scale(1.15) rotate(-5deg);
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(139, 92, 246, 0.15) 100%);
+}
+
+.seo-service-icon img {
+    transition: all 0.3s ease;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.seo-service-icon:hover img {
+    filter: drop-shadow(0 4px 8px rgba(59, 130, 246, 0.4)) brightness(1.1);
+}
+
+/* SEO Tool Icons */
+.seo-tool-icon {
+    transition: all 0.3s ease;
+}
+
+.seo-tool-icon:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.seo-tool-icon img {
+    transition: all 0.3s ease;
+    filter: saturate(0.8);
+}
+
+.seo-tool-icon:hover img {
+    filter: saturate(1.2) brightness(1.1);
+    transform: scale(1.1);
+}
+
+/* SEO Tool Logos */
+.seo-tool-logo {
+    transition: all 0.3s ease;
+}
+
+.seo-tool-logo:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+    border-color: rgba(59, 130, 246, 0.3);
+}
+
+.seo-tool-logo img {
+    transition: all 0.3s ease;
+    opacity: 0.85;
+}
+
+.seo-tool-logo:hover img {
+    opacity: 1;
+    transform: scale(1.05);
+}
+
+/* Dark mode adjustments */
+.dark .seo-tool-logo img {
+    filter: brightness(1.2);
+}
+
+.dark .seo-tool-logo:hover img {
+    filter: brightness(1.4);
+}
+
+/* SEO Benefit Icons */
+.seo-benefit-icon {
+    transition: all 0.3s ease;
+    filter: drop-shadow(0 2px 6px rgba(255, 255, 255, 0.3));
+}
+
+.seo-benefit-icon:hover {
+    transform: scale(1.15) rotate(5deg);
+    filter: drop-shadow(0 4px 12px rgba(255, 255, 255, 0.5));
+}
+
+/* SEO Testimonial Photos */
+.seo-testimonial-photo {
+    transition: all 0.3s ease;
+}
+
+.seo-testimonial-photo:hover {
+    transform: scale(1.08);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+}
+
+/* ==================== Project Management Page Animations ==================== */
+.pm-badge-icon {
+    transition: all 0.3s ease;
+}
+
+.pm-badge-icon:hover {
+    transform: rotate(10deg) scale(1.1);
+    filter: saturate(1.2);
+}
+
+.pm-service-container {
+    transition: all 0.3s ease;
+}
+
+.pm-service-container:hover {
+    box-shadow: 0 8px 20px rgba(59, 130, 246, 0.15);
+    border-color: rgb(59, 130, 246, 0.2);
+}
+
+.pm-service-icon {
+    transition: all 0.3s ease;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.pm-service-icon:hover {
+    transform: scale(1.15) rotate(5deg);
+    filter: drop-shadow(0 4px 8px rgba(59, 130, 246, 0.3)) saturate(1.3);
+}
+
+.pm-tool-container {
+    transition: all 0.3s ease;
+}
+
+.pm-tool-container:hover {
+    box-shadow: 0 8px 20px rgba(139, 92, 246, 0.1);
+    border-color: rgba(139, 92, 246, 0.2);
+    transform: translateY(-1px);
+}
+
+.pm-tool-icon {
+    transition: all 0.3s ease;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.pm-tool-icon:hover {
+    transform: scale(1.15);
+    filter: drop-shadow(0 4px 8px rgba(139, 92, 246, 0.3)) saturate(1.2);
+}
+
+.pm-tool-logo {
+    transition: all 0.3s ease;
+}
+
+.pm-tool-logo:hover {
+    transform: scale(1.1) translateY(-2px);
+    filter: brightness(1.1) saturate(1.1);
+}
+
+.pm-benefit-container {
+    transition: all 0.3s ease;
+}
+
+.pm-benefit-container:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+}
+
+.pm-benefit-icon {
+    transition: all 0.3s ease;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.pm-benefit-icon:hover {
+    transform: scale(1.15) rotate(-5deg);
+    filter: drop-shadow(0 4px 8px rgba(16, 185, 129, 0.3)) saturate(1.3);
+}
+
+.pm-testimonial-photo {
+    transition: all 0.3s ease;
+}
+
+.pm-testimonial-photo:hover {
+    transform: scale(1.08);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+}
+
+.pm-cta-icon {
+    transition: all 0.3s ease;
+}
+
+.pm-cta-icon:hover {
+    transform: scale(1.1) rotate(5deg);
+    filter: saturate(1.2);
+}
