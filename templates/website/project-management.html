@@ -228,40 +228,6 @@
     </div>
 </section>
 
-<!-- Testimonials -->
-<section class="py-24 bg-white dark:bg-background-dark">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-16">
-            <h2 class="text-3xl font-bold mb-4">Trusted by Leading Organizations</h2>
-            <p class="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">Our project management expertise has delivered successful outcomes across industries.</p>
-        </div>
-        {% if testimonials %}
-        <div class="grid md:grid-cols-2 gap-8">
-            {% for testimonial in testimonials %}
-            <div class="bg-white dark:bg-slate-900 border border-[#e7ecf3] dark:border-slate-800 p-8 rounded-xl">
-                <div class="flex items-center gap-4 mb-6">
-                    <div class="size-16 rounded-full overflow-hidden bg-slate-100 flex-shrink-0">
-                        {% if testimonial.client_photo %}
-                        <img class="w-full h-full object-cover pm-testimonial-photo" alt="{{ testimonial.client_name }}" src="{{ testimonial.client_photo.url }}" />
-                        {% else %}
-                        <div class="w-full h-full bg-slate-200 dark:bg-slate-700"></div>
-                        {% endif %}
-                    </div>
-                    <div>
-                        <p class="font-bold text-slate-900 dark:text-white">{{ testimonial.client_name }}</p>
-                        <p class="text-sm text-slate-500">{{ testimonial.client_position }}, {{ testimonial.client_company }}</p>
-                    </div>
-                </div>
-                <p class="text-slate-600 dark:text-slate-400 italic leading-relaxed">
-                    "{{ testimonial.testimonial_text }}"
-                </p>
-            </div>
-            {% endfor %}
-        </div>
-        {% endif %}
-    </div>
-</section>
-
 <!-- Final CTA -->
 {% if cta %}
 <section class="py-24 bg-slate-50 dark:bg-slate-900/30">
@@ -274,16 +240,7 @@
             <a href="{{ cta.cta_primary_url }}" class="bg-primary hover:bg-primary/90 text-white px-10 py-5 rounded-lg font-black text-lg transition-all shadow-xl shadow-primary/25">
                 {{ cta.cta_primary_text }}
             </a>
-            <a href="{{ cta.cta_secondary_url }}" class="bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white px-10 py-5 rounded-lg font-black text-lg transition-all hover:bg-slate-200 dark:hover:bg-slate-700">
-                {{ cta.cta_secondary_text }}
-            </a>
         </div>
-        {% if cta.footer_text %}
-        <p class="mt-8 text-sm text-slate-500 flex items-center justify-center gap-2">
-            {% if cta.footer_icon %}<span class="material-symbols-outlined text-green-500 text-lg pm-cta-icon">{{ cta.footer_icon }}</span>{% endif %} 
-            {{ cta.footer_text }}
-        </p>
-        {% endif %}
     </div>
 </section>
 {% endif %}

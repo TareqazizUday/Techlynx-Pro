@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Virtual Assistant Services | Professional VA Support | Techlynx Pro{% endblock %}
 
@@ -54,146 +55,416 @@
 {% endblock %}
 
 {% block content %}
+<main class="overflow-x-hidden">
 <!-- Hero Section -->
-<section class="relative py-20 lg:py-32 overflow-hidden bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
-    <div class="max-w-7xl mx-auto px-6 lg:px-10">
-        <div class="grid lg:grid-cols-2 gap-16 items-center">
-            <div class="flex flex-col gap-8">
+<section class="relative overflow-hidden pt-16 pb-20 lg:pt-24 lg:pb-32 bg-background-light dark:bg-background-dark">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="lg:grid lg:grid-cols-2 lg:gap-16 items-center">
+            <div>
                 {% if hero %}
-                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-300 text-xs font-bold uppercase tracking-wider w-fit">
-                    <span class="material-symbols-outlined text-sm">{{ hero.badge_icon }}</span>
-                    {{ hero.badge_text }}
-                </div>
-                
-                <h1 class="text-5xl lg:text-7xl font-black leading-tight tracking-tight text-slate-900 dark:text-white">
-                    Professional
-                    <span class="bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">Virtual</span>
-                    Assistance
+                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-primary/10 text-primary mb-6 uppercase tracking-wider">
+                    <span class="material-symbols-outlined text-sm">{{ hero.badge_icon|default:'support_agent' }}</span> {{ hero.badge_text }}
+                </span>
+                <h1 class="text-4xl md:text-6xl font-black text-slate-900 dark:text-white leading-[1.1] mb-6">
+                    {{ hero.headline|safe }}
                 </h1>
-                
-                <p class="text-lg lg:text-xl text-slate-600 dark:text-slate-400 leading-relaxed max-w-xl">
+                <p class="text-lg md:text-xl text-slate-600 dark:text-slate-400 mb-8 leading-relaxed">
                     {{ hero.description }}
                 </p>
-                
-                <div class="flex flex-wrap gap-4">
-                    <a href="{{ hero.cta_primary_url }}" class="bg-purple-600 text-white px-8 py-4 rounded-lg text-base font-bold shadow-lg shadow-purple-600/20 hover:scale-[1.02] transition-transform">
-                        {{ hero.cta_primary_text }}
+                {% endif %}
+                <div class="flex flex-col sm:flex-row gap-4">
+                    {% if hero %}
+                    <a href="{{ hero.cta_primary_url }}" class="px-8 py-4 bg-primary text-white rounded-lg font-bold text-lg hover:shadow-lg hover:shadow-primary/30 transition-all flex items-center gap-2 justify-center group">
+                        {{ hero.cta_primary_text }} <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
                     </a>
-                    <a href="{{ hero.cta_secondary_url }}" class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-8 py-4 rounded-lg text-base font-bold hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors text-slate-900 dark:text-white">
+                    <a href="{{ hero.cta_secondary_url }}" class="px-8 py-4 border border-[#cfd9e7] dark:border-slate-700 rounded-lg font-bold text-lg hover:bg-white dark:hover:bg-slate-800 transition-all">
                         {{ hero.cta_secondary_text }}
                     </a>
+                    {% endif %}
                 </div>
-                
-                <!-- Stats -->
-                <div class="flex items-center gap-8 pt-4">
-                    <div class="text-center">
-                        <div class="text-3xl font-black text-purple-600">{{ hero.tasks_completed }}+</div>
-                        <div class="text-sm text-slate-600 dark:text-slate-400">Tasks Completed</div>
+            </div>
+            <div class="mt-12 lg:mt-0 relative">
+                <div class="absolute -top-12 -left-12 w-64 h-64 bg-primary/10 rounded-full blur-3xl"></div>
+                <div class="absolute -bottom-12 -right-12 w-64 h-64 bg-primary/20 rounded-full blur-3xl"></div>
+                {% if hero and hero.hero_image and hero.hero_image.url %}
+                <div class="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white dark:border-slate-900">
+                    <img src="{{ hero.hero_image.url }}" alt="Virtual Assistant Services" class="w-full h-auto object-cover" loading="lazy">
+                </div>
+                {% else %}
+                <div class="relative bg-white dark:bg-slate-900 border border-[#e7ecf3] dark:border-slate-800 p-6 rounded-3xl shadow-xl">
+                    <!-- VA Metrics Visualization -->
+                    <div class="flex justify-between items-end mb-8">
+                        <div>
+                            {% if hero %}
+                            <p class="text-xs text-slate-500 uppercase font-bold tracking-widest">Tasks Completed</p>
+                            <h3 class="text-2xl font-bold">{{ hero.tasks_completed }}+</h3>
+                            {% endif %}
+                        </div>
+                        <div class="flex gap-1 items-end h-32">
+                            <div class="w-8 bg-primary/20 rounded-t h-[35%]"></div>
+                            <div class="w-8 bg-primary/30 rounded-t h-[50%]"></div>
+                            <div class="w-8 bg-primary/40 rounded-t h-[45%]"></div>
+                            <div class="w-8 bg-primary/60 rounded-t h-[70%]"></div>
+                            <div class="w-8 bg-primary rounded-t h-[100%]"></div>
+                        </div>
+                </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        {% if hero %}
+                        <div class="p-4 bg-slate-50 dark:bg-slate-800 rounded-xl">
+                            <p class="text-sm text-slate-500">Support Available</p>
+                            <p class="text-xl font-bold text-primary">{{ hero.support_availability }}</p>
                     </div>
-                    <div class="text-center">
-                        <div class="text-3xl font-black text-purple-600">{{ hero.support_availability }}</div>
-                        <div class="text-sm text-slate-600 dark:text-slate-400">Support Available</div>
+                        <div class="p-4 bg-slate-50 dark:bg-slate-800 rounded-xl">
+                            <p class="text-sm text-slate-500">Satisfaction Rate</p>
+                            <p class="text-xl font-bold text-green-500">{{ hero.satisfaction_rate }}%</p>
                     </div>
-                    <div class="text-center">
-                        <div class="text-3xl font-black text-purple-600">{{ hero.satisfaction_rate }}%</div>
-                        <div class="text-sm text-slate-600 dark:text-slate-400">Satisfaction Rate</div>
+                        {% endif %}
                     </div>
                 </div>
                 {% endif %}
-            </div>
-            
-            <!-- Hero Image -->
-            <div class="relative">
-                <div class="aspect-square rounded-3xl overflow-hidden shadow-2xl border-8 border-white dark:border-slate-900" style="background-image: url('/media/services/virtual-assistance.jpg'); background-size: cover; background-position: center;">
-                </div>
-                
-                <!-- Floating element -->
-                <div class="absolute -bottom-6 -right-6 bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-xl flex items-center gap-4 border border-slate-100 dark:border-slate-800">
-                    <div class="p-3 bg-green-100 dark:bg-green-900/30 rounded-full text-green-600">
-                        <span class="material-symbols-outlined text-2xl">verified</span>
-                    </div>
-                    <div>
-                        <div class="font-black text-slate-900 dark:text-white">Certified VAs</div>
-                        <div class="text-sm text-slate-600 dark:text-slate-400">Expert Support Team</div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
 </section>
 
 <!-- Services Section -->
-<section id="services" class="py-20 lg:py-32 bg-white dark:bg-slate-900">
-    <div class="max-w-7xl mx-auto px-6 lg:px-10">
-        <div class="text-center mb-16">
-            <h2 class="text-4xl lg:text-5xl font-black text-slate-900 dark:text-white mb-6">
-                Virtual Assistance Services
-            </h2>
-            <p class="text-lg text-slate-600 dark:text-slate-400 max-w-3xl mx-auto">
-                Professional support across various business functions to help you focus on growth
-            </p>
+<section id="services" class="py-24 bg-white dark:bg-background-dark">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold mb-4">Virtual Assistance Services</h2>
+            <p class="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">Professional support across various business functions to help you focus on growth</p>
         </div>
-        
-        <div class="grid lg:grid-cols-3 gap-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {% for service in services %}
-            <div class="bg-slate-50 dark:bg-slate-800 p-8 rounded-2xl">
-                <div class="w-20 h-20 bg-{{ service.color_scheme }}-100 dark:bg-{{ service.color_scheme }}-900/30 rounded-xl flex items-center justify-center mb-6">
-                    {% if service.icon_image %}
-                        <img src="{{ service.icon_image.url }}" alt="{{ service.title }} icon" class="w-16 h-16">
+            <div class="group p-6 rounded-xl border border-[#cfd9e7] dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-primary transition-all duration-300 hover:shadow-lg shadow-sm">
+                <!-- Icon -->
+                <div class="mb-6">
+                    {% if service.icon_image and service.icon_image.url %}
+                    <div class="w-16 h-16 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center p-3 shadow-sm va-icon-wrapper">
+                        {% with fallback_icon=service.icon|default:"support_agent" %}
+                        <img src="{{ service.icon_image.url }}" 
+                             alt="{{ service.title }} icon" 
+                             class="w-full h-full object-contain va-service-icon" 
+                             data-fallback-icon="{{ fallback_icon }}"
+                             loading="lazy"
+                             onerror="handleIconError(this);" />
+                        {% endwith %}
+                    </div>
                     {% else %}
-                        <span class="material-symbols-outlined text-4xl text-{{ service.color_scheme }}-600">{{ service.icon }}</span>
+                    <div class="w-16 h-16 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center group-hover:scale-110 transition-transform shadow-sm">
+                        {% if service.icon %}
+                        <span class="material-symbols-outlined text-3xl text-blue-600 dark:text-blue-400">{{ service.icon }}</span>
+                    {% else %}
+                        <span class="material-symbols-outlined text-3xl text-blue-600 dark:text-blue-400">support_agent</span>
+                        {% endif %}
+                    </div>
                     {% endif %}
                 </div>
-                <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-4">{{ service.title }}</h3>
-                <p class="text-slate-600 dark:text-slate-400 mb-4">{{ service.description }}</p>
-                <ul class="space-y-3 text-slate-600 dark:text-slate-400">
-                    <li class="flex items-center gap-3">
-                        <span class="material-symbols-outlined text-{{ service.color_scheme }}-600 text-sm">check_circle</span>
-                        {{ service.feature_1 }}
+                
+                <!-- Title -->
+                <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-3">{{ service.title }}</h3>
+                
+                <!-- Description -->
+                <p class="text-sm text-slate-600 dark:text-slate-400 mb-5 leading-relaxed">{{ service.description }}</p>
+                
+                <!-- Features List -->
+                <ul class="space-y-2.5">
+                    {% if service.feature_1 %}
+                    <li class="flex items-start gap-2">
+                        <span class="material-symbols-outlined text-base text-green-500 mt-0.5 flex-shrink-0">check_circle</span>
+                        <span class="text-sm text-slate-600 dark:text-slate-400">{{ service.feature_1 }}</span>
                     </li>
-                    <li class="flex items-center gap-3">
-                        <span class="material-symbols-outlined text-{{ service.color_scheme }}-600 text-sm">check_circle</span>
-                        {{ service.feature_2 }}
+                    {% endif %}
+                    {% if service.feature_2 %}
+                    <li class="flex items-start gap-2">
+                        <span class="material-symbols-outlined text-base text-green-500 mt-0.5 flex-shrink-0">check_circle</span>
+                        <span class="text-sm text-slate-600 dark:text-slate-400">{{ service.feature_2 }}</span>
                     </li>
-                    <li class="flex items-center gap-3">
-                        <span class="material-symbols-outlined text-{{ service.color_scheme }}-600 text-sm">check_circle</span>
-                        {{ service.feature_3 }}
+                    {% endif %}
+                    {% if service.feature_3 %}
+                    <li class="flex items-start gap-2">
+                        <span class="material-symbols-outlined text-base text-green-500 mt-0.5 flex-shrink-0">check_circle</span>
+                        <span class="text-sm text-slate-600 dark:text-slate-400">{{ service.feature_3 }}</span>
                     </li>
-                    <li class="flex items-center gap-3">
-                        <span class="material-symbols-outlined text-{{ service.color_scheme }}-600 text-sm">check_circle</span>
-                        {{ service.feature_4 }}
+                    {% endif %}
+                    {% if service.feature_4 %}
+                    <li class="flex items-start gap-2">
+                        <span class="material-symbols-outlined text-base text-green-500 mt-0.5 flex-shrink-0">check_circle</span>
+                        <span class="text-sm text-slate-600 dark:text-slate-400">{{ service.feature_4 }}</span>
                     </li>
+                    {% endif %}
                 </ul>
+            </div>
+            {% empty %}
+            <div class="col-span-full text-center py-12">
+                <p class="text-slate-500">No services available at the moment.</p>
             </div>
             {% endfor %}
         </div>
     </div>
 </section>
 
+<!-- How It Works / Process Section -->
+<section class="py-24 bg-white dark:bg-background-dark">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-3xl mx-auto mb-20">
+            <h2 class="text-3xl font-bold text-slate-900 dark:text-white mb-4">How Our Virtual Assistance Works</h2>
+            <p class="text-slate-600 dark:text-slate-400">A streamlined process that gets you the right support, fast</p>
+        </div>
+        <div class="relative">
+            <div class="hidden lg:block absolute top-1/2 left-0 right-0 h-0.5 bg-slate-200 dark:bg-slate-800 -translate-y-1/2"></div>
+            <div class="grid lg:grid-cols-4 gap-12 lg:gap-8">
+                <div class="relative bg-white dark:bg-background-dark px-4">
+                    <div class="w-12 h-12 bg-primary text-white font-black rounded-full flex items-center justify-center mb-6 relative z-10 shadow-lg shadow-primary/30 mx-auto lg:mx-0">01</div>
+                    <h4 class="text-xl font-bold text-slate-900 dark:text-white mb-2 text-center lg:text-left">Consultation</h4>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 text-center lg:text-left leading-relaxed">
+                        We understand your business needs, workflow, and goals to match you with the perfect VA.
+                    </p>
+                </div>
+                <div class="relative bg-white dark:bg-background-dark px-4">
+                    <div class="w-12 h-12 bg-primary text-white font-black rounded-full flex items-center justify-center mb-6 relative z-10 shadow-lg shadow-primary/30 mx-auto lg:mx-0">02</div>
+                    <h4 class="text-xl font-bold text-slate-900 dark:text-white mb-2 text-center lg:text-left">VA Matching</h4>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 text-center lg:text-left leading-relaxed">
+                        We select a certified virtual assistant with the exact skills and experience you need.
+                    </p>
+                </div>
+                <div class="relative bg-white dark:bg-background-dark px-4">
+                    <div class="w-12 h-12 bg-primary text-white font-black rounded-full flex items-center justify-center mb-6 relative z-10 shadow-lg shadow-primary/30 mx-auto lg:mx-0">03</div>
+                    <h4 class="text-xl font-bold text-slate-900 dark:text-white mb-2 text-center lg:text-left">Onboarding</h4>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 text-center lg:text-left leading-relaxed">
+                        Quick setup with access to tools, systems, and clear communication channels.
+                    </p>
+                </div>
+                <div class="relative bg-white dark:bg-background-dark px-4">
+                    <div class="w-12 h-12 bg-primary text-white font-black rounded-full flex items-center justify-center mb-6 relative z-10 shadow-lg shadow-primary/30 mx-auto lg:mx-0">04</div>
+                    <h4 class="text-xl font-bold text-slate-900 dark:text-white mb-2 text-center lg:text-left">Ongoing Support</h4>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 text-center lg:text-left leading-relaxed">
+                        Continuous monitoring, feedback, and optimization to ensure maximum productivity.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Tools & Platforms Section -->
+<section class="py-24 bg-slate-50 dark:bg-slate-900/30">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid lg:grid-cols-2 gap-16 items-center">
+            <div>
+                <h2 class="text-3xl font-bold text-slate-900 dark:text-white mb-6">Tools & Platforms We Use</h2>
+                <p class="text-slate-600 dark:text-slate-400 mb-8">Our virtual assistants are proficient in industry-leading tools and platforms to ensure seamless integration with your existing workflows.</p>
+                <div class="space-y-6">
+                    <div class="flex gap-4">
+                        <div class="flex-shrink-0 bg-white dark:bg-slate-800 p-3 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700 h-fit">
+                            <span class="material-symbols-outlined text-primary text-3xl">calendar_month</span>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-slate-900 dark:text-white">Project Management</h4>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">Asana, Trello, Monday.com, ClickUp, Jira</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4">
+                        <div class="flex-shrink-0 bg-white dark:bg-slate-800 p-3 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700 h-fit">
+                            <span class="material-symbols-outlined text-primary text-3xl">mail</span>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-slate-900 dark:text-white">Communication</h4>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">Slack, Microsoft Teams, Zoom, Google Workspace</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4">
+                        <div class="flex-shrink-0 bg-white dark:bg-slate-800 p-3 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700 h-fit">
+                            <span class="material-symbols-outlined text-primary text-3xl">description</span>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-slate-900 dark:text-white">Document Management</h4>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">Google Drive, Dropbox, SharePoint, Notion</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4">
+                        <div class="flex-shrink-0 bg-white dark:bg-slate-800 p-3 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700 h-fit">
+                            <span class="material-symbols-outlined text-primary text-3xl">shopping_cart</span>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-slate-900 dark:text-white">CRM & Sales</h4>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">Salesforce, HubSpot, Zoho CRM, Pipedrive</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="grid grid-cols-3 gap-4">
+                <div class="aspect-square bg-white dark:bg-slate-800 rounded-xl flex flex-col items-center justify-center p-4 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md hover:border-primary/50 transition-all duration-300 group">
+                    <div class="h-16 w-full flex items-center justify-center mb-3">
+                        <img src="/media/services/virtual_assistance/tool_icons/asana.svg" alt="Asana" class="h-12 w-12 object-contain group-hover:scale-110 transition-transform duration-300" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary text-2xl font-bold\'>A</div>';">
+                    </div>
+                    <div class="text-slate-900 dark:text-white font-bold text-center text-sm">Asana</div>
+                </div>
+                <div class="aspect-square bg-white dark:bg-slate-800 rounded-xl flex flex-col items-center justify-center p-4 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md hover:border-primary/50 transition-all duration-300 group">
+                    <div class="h-16 w-full flex items-center justify-center mb-3">
+                        <img src="/media/services/virtual_assistance/tool_icons/slack.svg" alt="Slack" class="h-12 w-12 object-contain group-hover:scale-110 transition-transform duration-300" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary text-2xl font-bold\'>S</div>';">
+                    </div>
+                    <div class="text-slate-900 dark:text-white font-bold text-center text-sm">Slack</div>
+                </div>
+                <div class="aspect-square bg-white dark:bg-slate-800 rounded-xl flex flex-col items-center justify-center p-4 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md hover:border-primary/50 transition-all duration-300 group">
+                    <div class="h-16 w-full flex items-center justify-center mb-3">
+                        <img src="/media/services/virtual_assistance/tool_icons/google.svg" alt="Google" class="h-12 w-12 object-contain group-hover:scale-110 transition-transform duration-300" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary text-2xl font-bold\'>G</div>';">
+                    </div>
+                    <div class="text-slate-900 dark:text-white font-bold text-center text-sm">Google</div>
+                </div>
+                <div class="aspect-square bg-white dark:bg-slate-800 rounded-xl flex flex-col items-center justify-center p-4 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md hover:border-primary/50 transition-all duration-300 group">
+                    <div class="h-16 w-full flex items-center justify-center mb-3">
+                        <img src="/media/services/virtual_assistance/tool_icons/hubspot.svg" alt="HubSpot" class="h-12 w-12 object-contain group-hover:scale-110 transition-transform duration-300" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary text-2xl font-bold\'>H</div>';">
+                    </div>
+                    <div class="text-slate-900 dark:text-white font-bold text-center text-sm">HubSpot</div>
+                </div>
+                <div class="aspect-square bg-white dark:bg-slate-800 rounded-xl flex flex-col items-center justify-center p-4 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md hover:border-primary/50 transition-all duration-300 group">
+                    <div class="h-16 w-full flex items-center justify-center mb-3">
+                        <img src="/media/services/virtual_assistance/tool_icons/zoom.svg" alt="Zoom" class="h-12 w-12 object-contain group-hover:scale-110 transition-transform duration-300" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary text-2xl font-bold\'>Z</div>';">
+                    </div>
+                    <div class="text-slate-900 dark:text-white font-bold text-center text-sm">Zoom</div>
+                </div>
+                <div class="aspect-square bg-white dark:bg-slate-800 rounded-xl flex flex-col items-center justify-center p-4 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md hover:border-primary/50 transition-all duration-300 group">
+                    <div class="h-16 w-full flex items-center justify-center mb-3">
+                        <img src="/media/services/virtual_assistance/tool_icons/trello.svg" alt="Trello" class="h-12 w-12 object-contain group-hover:scale-110 transition-transform duration-300" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary text-2xl font-bold\'>T</div>';">
+                    </div>
+                    <div class="text-slate-900 dark:text-white font-bold text-center text-sm">Trello</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Key Features Section -->
+<section class="py-24 bg-primary text-white overflow-hidden relative">
+    <div class="absolute top-0 right-0 -mt-20 -mr-20 w-96 h-96 bg-white/10 rounded-full blur-3xl"></div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="lg:grid lg:grid-cols-2 lg:gap-16 items-center">
+            <div class="mb-12 lg:mb-0">
+                <h2 class="text-3xl md:text-4xl font-black mb-6">Why Businesses Trust Our Virtual Assistants</h2>
+                <p class="text-blue-100 text-lg mb-8 leading-relaxed">
+                    Our VAs are more than just support staff—they're skilled professionals who become integral parts of your team, delivering consistent results and freeing up your time to focus on growth.
+                </p>
+                <div class="grid sm:grid-cols-2 gap-6">
+                    <div class="flex gap-3 group">
+                        <div class="flex-shrink-0 w-12 h-12 rounded-lg bg-white/10 border border-white/20 flex items-center justify-center">
+                            <span class="material-symbols-outlined text-white text-2xl">verified</span>
+                        </div>
+                        <div>
+                            <h5 class="font-bold">Certified Professionals</h5>
+                            <p class="text-sm opacity-80">All VAs are vetted, trained, and certified in their respective fields</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-3 group">
+                        <div class="flex-shrink-0 w-12 h-12 rounded-lg bg-white/10 border border-white/20 flex items-center justify-center">
+                            <span class="material-symbols-outlined text-white text-2xl">schedule</span>
+                        </div>
+                        <div>
+                            <h5 class="font-bold">24/7 Availability</h5>
+                            <p class="text-sm opacity-80">Round-the-clock support to keep your business running smoothly</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-3 group">
+                        <div class="flex-shrink-0 w-12 h-12 rounded-lg bg-white/10 border border-white/20 flex items-center justify-center">
+                            <span class="material-symbols-outlined text-white text-2xl">security</span>
+                        </div>
+                        <div>
+                            <h5 class="font-bold">Secure & Confidential</h5>
+                            <p class="text-sm opacity-80">NDA-protected with enterprise-grade security protocols</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-3 group">
+                        <div class="flex-shrink-0 w-12 h-12 rounded-lg bg-white/10 border border-white/20 flex items-center justify-center">
+                            <span class="material-symbols-outlined text-white text-2xl">trending_up</span>
+                        </div>
+                        <div>
+                            <h5 class="font-bold">Scalable Solutions</h5>
+                            <p class="text-sm opacity-80">Easily scale up or down based on your business needs</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white/10 backdrop-blur-lg p-8 rounded-2xl border border-white/20">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="w-12 h-12 rounded-full bg-green-400 flex items-center justify-center">
+                        <span class="material-symbols-outlined text-white font-bold">check</span>
+                    </div>
+                    <h4 class="text-xl font-bold">VA Performance Metrics</h4>
+                </div>
+                <div class="space-y-4">
+                    <div>
+                        <div class="flex justify-between items-center text-sm font-bold mb-2">
+                            <span>Task Completion Rate</span>
+                            <span class="text-green-400">98%</span>
+                        </div>
+                        <div class="w-full bg-white/10 h-2 rounded-full">
+                            <div class="bg-green-400 h-2 rounded-full" style="width: 98%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between items-center text-sm font-bold mb-2">
+                            <span>Response Time</span>
+                            <span class="text-green-400">< 2 hours</span>
+                        </div>
+                        <div class="w-full bg-white/10 h-2 rounded-full">
+                            <div class="bg-green-400 h-2 rounded-full" style="width: 95%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between items-center text-sm font-bold mb-2">
+                            <span>Client Satisfaction</span>
+                            <span class="text-green-400">98%</span>
+                        </div>
+                        <div class="w-full bg-white/10 h-2 rounded-full">
+                            <div class="bg-green-400 h-2 rounded-full" style="width: 98%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between items-center text-sm font-bold mb-2">
+                            <span>Cost Savings</span>
+                            <span class="text-green-400">60%</span>
+                        </div>
+                        <div class="w-full bg-white/10 h-2 rounded-full">
+                            <div class="bg-green-400 h-2 rounded-full" style="width: 60%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- Why Choose Us -->
-<section class="py-20 lg:py-32 bg-slate-50 dark:bg-slate-800">
-    <div class="max-w-7xl mx-auto px-6 lg:px-10">
-        <div class="text-center mb-16">
-            <h2 class="text-4xl lg:text-5xl font-black text-slate-900 dark:text-white mb-6">
-                Why Choose Our VAs
-            </h2>
-            <p class="text-lg text-slate-600 dark:text-slate-400 max-w-3xl mx-auto">
-                Experienced professionals dedicated to your business success
-            </p>
+<section class="py-24 bg-slate-50 dark:bg-slate-900/30">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-slate-900 dark:text-white mb-4">Why Choose Our VAs</h2>
+            <p class="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">Experienced professionals dedicated to your business success</p>
         </div>
         
-        <div class="grid lg:grid-cols-4 gap-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {% for benefit in benefits %}
             <div class="text-center">
-                <div class="w-24 h-24 bg-{{ benefit.color_scheme }}-100 dark:bg-{{ benefit.color_scheme }}-900/30 rounded-full flex items-center justify-center mx-auto mb-6">
-                    {% if benefit.icon_image %}
-                        <img src="{{ benefit.icon_image.url }}" alt="{{ benefit.title }} icon" class="w-14 h-14">
+                <div class="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                    {% if benefit.icon_image and benefit.icon_image.url %}
+                        {% with benefit_icon=benefit.icon|default:"check_circle" %}
+                        <img src="{{ benefit.icon_image.url }}" 
+                             alt="{{ benefit.title }} icon" 
+                             class="w-12 h-12 object-contain" 
+                             loading="lazy" 
+                             data-fallback-icon="{{ benefit_icon }}"
+                             onerror="handleBenefitIconError(this);">
+                        {% endwith %}
                     {% else %}
-                        <span class="material-symbols-outlined text-4xl text-{{ benefit.color_scheme }}-600">{{ benefit.icon }}</span>
+                        {% if benefit.icon %}
+                        <span class="material-symbols-outlined text-3xl text-primary">{{ benefit.icon }}</span>
+                    {% else %}
+                        <span class="material-symbols-outlined text-3xl text-primary">check_circle</span>
+                        {% endif %}
                     {% endif %}
                 </div>
                 <h3 class="font-bold text-slate-900 dark:text-white mb-2">{{ benefit.title }}</h3>
-                <p class="text-slate-600 dark:text-slate-400">{{ benefit.description }}</p>
+                <p class="text-sm text-slate-600 dark:text-slate-400">{{ benefit.description }}</p>
             </div>
             {% endfor %}
         </div>
@@ -201,24 +472,71 @@
 </section>
 
 <!-- CTA Section -->
-<section class="py-20 lg:py-32 bg-gradient-to-r from-purple-600 to-blue-600 text-white">
-    <div class="max-w-7xl mx-auto px-6 lg:px-10 text-center">
+<section class="py-24 bg-slate-50 dark:bg-slate-900/30">
+    <div class="max-w-5xl mx-auto px-4 text-center">
         {% if cta %}
-        <h2 class="text-4xl lg:text-5xl font-black mb-6">
-            {{ cta.headline }}
-        </h2>
-        <p class="text-xl text-purple-100 mb-10 max-w-3xl mx-auto">
+        <h2 class="text-4xl md:text-5xl font-black text-slate-900 dark:text-white mb-6">{{ cta.headline }}</h2>
+        <p class="text-xl text-slate-600 dark:text-slate-400 mb-10 max-w-2xl mx-auto">
             {{ cta.description }}
         </p>
-        <div class="flex flex-wrap gap-4 justify-center">
-            <a href="{{ cta.cta_primary_url }}" class="bg-white text-purple-600 px-8 py-4 rounded-lg text-base font-bold shadow-lg hover:scale-[1.02] transition-transform">
+        <div class="flex flex-col sm:flex-row justify-center gap-4">
+            <a href="{{ cta.cta_primary_url }}" class="bg-primary hover:bg-primary/90 text-white px-10 py-5 rounded-lg font-black text-lg transition-all shadow-xl shadow-primary/25">
                 {{ cta.cta_primary_text }}
-            </a>
-            <a href="{{ cta.cta_secondary_url }}" class="border-2 border-white text-white px-8 py-4 rounded-lg text-base font-bold hover:bg-white hover:text-purple-600 transition-colors">
-                {{ cta.cta_secondary_text }}
             </a>
         </div>
         {% endif %}
     </div>
 </section>
+</main>
+
+<style>
+.va-service-icon {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+}
+
+.va-icon-wrapper img {
+    display: block;
+}
+
+@media (prefers-color-scheme: dark) {
+    .va-service-icon {
+        filter: brightness(0.9);
+    }
+}
+</style>
+
+<script>
+function handleIconError(img) {
+    if (!img) return;
+    img.onerror = null;
+    img.style.display = 'none';
+    var container = img.parentElement;
+    if (!container) return;
+    var fallbackIcon = img.getAttribute('data-fallback-icon') || 'support_agent';
+    container.innerHTML = '<span class="material-symbols-outlined text-3xl text-blue-600 dark:text-blue-400">' + fallbackIcon + '</span>';
+}
+
+function handleBenefitIconError(img) {
+    if (!img) return;
+    img.onerror = null;
+    img.style.display = 'none';
+    var container = img.parentElement;
+    if (!container) return;
+    var fallbackIcon = img.getAttribute('data-fallback-icon') || 'check_circle';
+    container.innerHTML = '<span class="material-symbols-outlined text-3xl text-primary">' + fallbackIcon + '</span>';
+}
+
+// Debug function to check image loading
+document.addEventListener('DOMContentLoaded', function() {
+    var images = document.querySelectorAll('.va-service-icon');
+    images.forEach(function(img) {
+        if (img.complete && img.naturalHeight === 0) {
+            handleIconError(img);
+        }
+    });
+});
+</script>
 {% endblock %}

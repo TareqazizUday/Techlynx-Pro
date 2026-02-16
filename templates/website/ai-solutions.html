@@ -62,11 +62,11 @@
                     <div class="grid grid-cols-2 gap-4">
                         {% if hero %}
                         <div class="p-4 bg-slate-50 dark:bg-slate-800 rounded-xl">
-                            <p class="text-sm text-slate-500">Automation Rate</p>
+                            <p class="text-sm text-slate-500">{{ hero.automation_rate_label|default:"Automation Rate" }}</p>
                             <p class="text-xl font-bold text-primary">{{ hero.automation_rate }}%</p>
                         </div>
                         <div class="p-4 bg-slate-50 dark:bg-slate-800 rounded-xl">
-                            <p class="text-sm text-slate-500">Time Saved</p>
+                            <p class="text-sm text-slate-500">{{ hero.time_saved_label|default:"Time Saved" }}</p>
                             <p class="text-xl font-bold text-green-500">{{ hero.time_saved }}</p>
                         </div>
                         {% endif %}
@@ -81,8 +81,13 @@
 <section class="py-24 bg-white dark:bg-background-dark">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-12">
+            {% if hero %}
+            <h2 class="text-3xl font-bold mb-4">{{ hero.services_section_title|default:"Comprehensive AI Solutions" }}</h2>
+            <p class="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">{{ hero.services_section_description|default:"We don't just implement AI; we engineer intelligent systems that adapt, learn, and scale with your business needs." }}</p>
+            {% else %}
             <h2 class="text-3xl font-bold mb-4">Comprehensive AI Solutions</h2>
             <p class="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">We don't just implement AI; we engineer intelligent systems that adapt, learn, and scale with your business needs.</p>
+            {% endif %}
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {% for service in ai_services %}
@@ -114,8 +119,13 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid lg:grid-cols-2 gap-16 items-center">
             <div>
+                {% if hero %}
+                <h2 class="text-3xl font-bold text-slate-900 dark:text-white mb-6">{{ hero.tech_stack_section_title|default:"Cutting-Edge AI Frameworks" }}</h2>
+                <p class="text-slate-600 dark:text-slate-400 mb-8">{{ hero.tech_stack_section_description|default:"We leverage industry-leading AI platforms and frameworks to build robust, scalable solutions tailored to your unique challenges." }}</p>
+                {% else %}
                 <h2 class="text-3xl font-bold text-slate-900 dark:text-white mb-6">Cutting-Edge AI Frameworks</h2>
                 <p class="text-slate-600 dark:text-slate-400 mb-8">We leverage industry-leading AI platforms and frameworks to build robust, scalable solutions tailored to your unique challenges.</p>
+                {% endif %}
                 <div class="space-y-6">
                     {% for detail in tech_details %}
                     <div class="flex gap-4">
@@ -158,8 +168,13 @@
 <section class="py-24 bg-white dark:bg-background-dark">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center max-w-3xl mx-auto mb-20">
+            {% if hero %}
+            <h2 class="text-3xl font-bold text-slate-900 dark:text-white mb-4">{{ hero.process_section_title|default:"Our AI Implementation Methodology" }}</h2>
+            <p class="text-slate-600 dark:text-slate-400">{{ hero.process_section_description|default:"From ideation to deployment, we follow a proven framework that ensures your AI solution delivers measurable ROI." }}</p>
+            {% else %}
             <h2 class="text-3xl font-bold text-slate-900 dark:text-white mb-4">Our AI Implementation Methodology</h2>
             <p class="text-slate-600 dark:text-slate-400">From ideation to deployment, we follow a proven framework that ensures your AI solution delivers measurable ROI.</p>
+            {% endif %}
         </div>
         <div class="relative">
             <div class="hidden lg:block absolute top-1/2 left-0 right-0 h-0.5 bg-slate-200 dark:bg-slate-800 -translate-y-1/2"></div>
@@ -185,10 +200,17 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div class="lg:grid lg:grid-cols-2 lg:gap-16 items-center">
             <div class="mb-12 lg:mb-0">
+                {% if hero %}
+                <h2 class="text-3xl md:text-4xl font-black mb-6">{{ hero.roi_section_title|default:"Measurable AI-Driven Results" }}</h2>
+                <p class="text-blue-100 text-lg mb-8 leading-relaxed">
+                    {{ hero.roi_section_description|default:"Our AI solutions don't just automate—they transform. See how businesses like yours are achieving unprecedented efficiency and growth with intelligent automation." }}
+                </p>
+                {% else %}
                 <h2 class="text-3xl md:text-4xl font-black mb-6">Measurable AI-Driven Results</h2>
                 <p class="text-blue-100 text-lg mb-8 leading-relaxed">
                     Our AI solutions don't just automate—they transform. See how businesses like yours are achieving unprecedented efficiency and growth with intelligent automation.
                 </p>
+                {% endif %}
                 <div class="grid sm:grid-cols-2 gap-6">
                     {% for metric in roi_metrics %}
                     <div class="flex gap-3 group">
@@ -212,7 +234,11 @@
                     <div class="w-12 h-12 rounded-full performance-check-icon flex items-center justify-center">
                         <span class="material-symbols-outlined text-white font-bold">check</span>
                     </div>
+                    {% if hero %}
+                    <h4 class="text-xl font-bold">{{ hero.performance_metrics_title|default:"AI Performance Metrics" }}</h4>
+                    {% else %}
                     <h4 class="text-xl font-bold">AI Performance Metrics</h4>
+                    {% endif %}
                 </div>
                 <div class="space-y-4">
                     {% for perf in performance_metrics %}
@@ -232,38 +258,6 @@
     </div>
 </section>
 
-<!-- Testimonials -->
-<section class="py-24 bg-white dark:bg-background-dark">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-16">
-            <h2 class="text-3xl font-bold mb-4">Trusted by Industry Leaders</h2>
-            <p class="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">See how our AI solutions are transforming businesses across industries.</p>
-        </div>
-        <div class="grid md:grid-cols-2 gap-8">
-            {% for testimonial in ai_testimonials %}
-            <div class="bg-white dark:bg-slate-900 border border-[#e7ecf3] dark:border-slate-800 p-8 rounded-xl">
-                <div class="flex items-center gap-4 mb-6">
-                    <div class="size-16 rounded-full overflow-hidden bg-slate-100 dark:bg-slate-800 flex-shrink-0 shadow-md">
-                        {% if testimonial.client_photo %}
-                        <img class="w-full h-full object-cover" alt="{{ testimonial.client_name }}" src="{{ testimonial.client_photo.url }}" />
-                        {% else %}
-                        <div class="w-full h-full flex items-center justify-center text-2xl font-bold text-slate-400">{{ testimonial.client_name|first }}</div>
-                        {% endif %}
-                    </div>
-                    <div>
-                        <p class="font-bold text-slate-900 dark:text-white">{{ testimonial.client_name }}</p>
-                        <p class="text-sm text-slate-500">{{ testimonial.client_position }}, {{ testimonial.client_company }}</p>
-                    </div>
-                </div>
-                <p class="text-slate-600 dark:text-slate-400 italic leading-relaxed">
-                    "{{ testimonial.testimonial_text }}"
-                </p>
-            </div>
-            {% endfor %}
-        </div>
-    </div>
-</section>
-
 <!-- Final CTA -->
 <section class="py-24 bg-slate-50 dark:bg-slate-900/30">
     <div class="max-w-5xl mx-auto px-4 text-center">
@@ -275,9 +269,6 @@
         <div class="flex flex-col sm:flex-row justify-center gap-4">
             <a href="{{ cta_section.cta_primary_url }}" class="bg-primary hover:bg-primary/90 text-white px-10 py-5 rounded-lg font-black text-lg transition-all shadow-xl shadow-primary/25">
                 {{ cta_section.cta_primary_text }}
-            </a>
-            <a href="{{ cta_section.cta_secondary_url }}" class="bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white px-10 py-5 rounded-lg font-black text-lg transition-all hover:bg-slate-200 dark:hover:bg-slate-700">
-                {{ cta_section.cta_secondary_text }}
             </a>
         </div>
         {% if cta_section.footer_text %}

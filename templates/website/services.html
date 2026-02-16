@@ -11,15 +11,70 @@
 {% block og_description %}Full-service IT solutions: web development, AI automation, digital marketing, and more. 500+ successful projects delivered by certified experts.{% endblock %}
 
 {% block content %}
-<!-- Messages -->
+<!-- Messages Popup -->
 {% if messages %}
-<div class="fixed top-4 right-4 z-50 space-y-2">
+<div id="message-popup" class="fixed top-4 right-4 z-50 transform translate-x-full opacity-0 transition-all duration-300 ease-in-out">
     {% for message in messages %}
-    <div class="bg-{% if message.tags == 'success' %}green{% elif message.tags == 'error' %}red{% else %}blue{% endif %}-100 border border-{% if message.tags == 'success' %}green{% elif message.tags == 'error' %}red{% else %}blue{% endif %}-400 text-{% if message.tags == 'success' %}green{% elif message.tags == 'error' %}red{% else %}blue{% endif %}-700 px-4 py-3 rounded shadow-lg">
-        {{ message }}
+    <div class="bg-white dark:bg-slate-900 border-l-4 {% if message.tags == 'success' %}border-green-500{% elif message.tags == 'error' %}border-red-500{% else %}border-blue-500{% endif %} rounded-lg shadow-2xl p-6 min-w-[350px] max-w-md mb-4">
+        <div class="flex items-start gap-4">
+            <div class="flex-shrink-0">
+                {% if message.tags == 'success' %}
+                <div class="w-10 h-10 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
+                    <span class="material-symbols-outlined text-green-600 dark:text-green-400 text-2xl">check_circle</span>
+                </div>
+                {% elif message.tags == 'error' %}
+                <div class="w-10 h-10 rounded-full bg-red-100 dark:bg-red-900/30 flex items-center justify-center">
+                    <span class="material-symbols-outlined text-red-600 dark:text-red-400 text-2xl">error</span>
+                </div>
+                {% else %}
+                <div class="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
+                    <span class="material-symbols-outlined text-blue-600 dark:text-blue-400 text-2xl">info</span>
+                </div>
+                {% endif %}
+            </div>
+            <div class="flex-1">
+                <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-1">
+                    {% if message.tags == 'success' %}Success!{% elif message.tags == 'error' %}Error!{% else %}Notice{% endif %}
+                </h3>
+                <p class="text-sm text-slate-600 dark:text-slate-400">{{ message }}</p>
+            </div>
+            <button onclick="closeMessagePopup()" class="flex-shrink-0 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
     </div>
     {% endfor %}
 </div>
+
+<script>
+    // Auto-hide message popup after 2 seconds
+    document.addEventListener('DOMContentLoaded', function() {
+        const popup = document.getElementById('message-popup');
+        if (popup) {
+            // Show popup with animation
+            setTimeout(function() {
+                popup.classList.remove('translate-x-full', 'opacity-0');
+                popup.classList.add('translate-x-0', 'opacity-100');
+            }, 100);
+            
+            // Auto-hide after 2 seconds
+            setTimeout(function() {
+                closeMessagePopup();
+            }, 2000);
+        }
+    });
+    
+    function closeMessagePopup() {
+        const popup = document.getElementById('message-popup');
+        if (popup) {
+            popup.classList.add('translate-x-full', 'opacity-0');
+            popup.classList.remove('translate-x-0', 'opacity-100');
+            setTimeout(function() {
+                popup.remove();
+            }, 300);
+        }
+    }
+</script>
 {% endif %}
 
 <!-- Hero Section -->
@@ -50,7 +105,18 @@
             </div>
             <div class="relative">
                 {% if hero and hero.hero_image %}
-                <div class="aspect-square rounded-3xl overflow-hidden shadow-2xl bg-slate-200 dark:bg-slate-800 flex items-center justify-center border-8 border-white dark:border-slate-900" style="background-image: url('{{ hero.hero_image.url }}'); background-size: cover;">
+                <div class="aspect-square rounded-3xl overflow-hidden shadow-2xl bg-slate-200 dark:bg-slate-800 flex items-center justify-center border-8 border-white dark:border-slate-900 relative group">
+                    <img src="{{ hero.hero_image.url }}" 
+                         alt="{{ hero.hero_image_alt_text|default:hero.headline|default:'Techlynx Pro Services' }}" 
+                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                </div>
+                {% else %}
+                <!-- Placeholder when no image is added -->
+                <div class="aspect-square rounded-3xl overflow-hidden shadow-2xl bg-gradient-to-br from-primary/10 to-primary/5 flex items-center justify-center border-8 border-white dark:border-slate-900">
+                    <div class="text-center">
+                        <span class="material-symbols-outlined text-primary/40 text-6xl mb-4 block">image</span>
+                        <p class="text-slate-500 dark:text-slate-400 text-sm">Add hero image from admin panel</p>
+                    </div>
                 </div>
                 {% endif %}
                 {% if hero and hero.is_stat_visible %}
@@ -136,10 +202,31 @@
                     {% endfor %}
                 </div>
             </div>
-            <div class="relative bg-primary/5 rounded-3xl p-10 flex items-center justify-center">
+            <div class="relative">
                 <div class="grid grid-cols-2 gap-4 w-full">
                     {% for image in why_choose_images %}
-                    <div class="aspect-square bg-slate-300 dark:bg-slate-800 rounded-2xl {% cycle '' 'mt-8' '-mt-8' '' %}" style="background-image: url('{{ image.image.url }}'); background-size: cover;"></div>
+                    <div class="relative group overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 {% cycle '' 'mt-8' '-mt-8' '' %}">
+                        <div class="aspect-square bg-slate-200 dark:bg-slate-800 relative overflow-hidden">
+                            {% if image.image %}
+                            <img src="{{ image.image.url }}" 
+                                 alt="{{ image.alt_text|default:'Why Choose Techlynx Pro' }}" 
+                                 class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            {% else %}
+                            <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-primary/10 to-primary/5">
+                                <span class="material-symbols-outlined text-primary/40 text-6xl">image</span>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% empty %}
+                    <!-- Placeholder when no images are added -->
+                    <div class="col-span-2 aspect-square bg-gradient-to-br from-primary/10 to-primary/5 rounded-2xl flex items-center justify-center">
+                        <div class="text-center">
+                            <span class="material-symbols-outlined text-primary/40 text-6xl mb-4 block">image</span>
+                            <p class="text-slate-500 dark:text-slate-400 text-sm">Add images from admin panel</p>
+                        </div>
+                    </div>
                     {% endfor %}
                 </div>
             </div>
@@ -178,8 +265,14 @@
                     </div>
                     {% endif %}
                 </div>
-                <form class="bg-white rounded-2xl p-8 space-y-4 shadow-xl" method="post" action="{% url 'services' %}">
+                <form id="servicesInquiryForm" class="bg-white rounded-2xl p-8 space-y-4 shadow-xl" method="post" action="{% url 'services' %}">
                     {% csrf_token %}
+                    <!-- Hidden tracking fields -->
+                    <input type="hidden" name="source_url" id="source_url" value="">
+                    <input type="hidden" name="utm_source" id="utm_source" value="">
+                    <input type="hidden" name="utm_medium" id="utm_medium" value="">
+                    <input type="hidden" name="utm_campaign" id="utm_campaign" value="">
+                    
                     <div>
                         <label class="block text-sm font-bold text-slate-700 mb-2">Full Name</label>
                         <input name="full_name" class="w-full bg-slate-50 border-slate-200 rounded-lg focus:ring-primary focus:border-primary text-slate-900 p-3" placeholder="John Doe" type="text" required/>
@@ -192,12 +285,9 @@
                         <label class="block text-sm font-bold text-slate-700 mb-2">Service of Interest</label>
                         <select name="service_interest" class="w-full bg-slate-50 border-slate-200 rounded-lg focus:ring-primary focus:border-primary text-slate-900 p-3" required>
                             <option value="">Select a service...</option>
-                            <option value="Web Development">Web Development</option>
-                            <option value="Digital Marketing">Digital Marketing</option>
-                            <option value="AI Solutions">AI Solutions</option>
-                            <option value="App Development">App Development</option>
-                            <option value="SEO Audit">SEO Audit</option>
-                            <option value="Project Management">Project Management</option>
+                            {% for service in services %}
+                            <option value="{{ service.title }}">{{ service.title }}</option>
+                            {% endfor %}
                             <option value="Full Suite Solution">Full Suite Solution</option>
                         </select>
                     </div>
@@ -206,6 +296,23 @@
                     </button>
                     <p class="text-[10px] text-center text-slate-400 mt-4 uppercase font-bold tracking-widest">{{ cta_section.disclaimer_text }}</p>
                 </form>
+                
+                <script>
+                    // Capture source URL and UTM parameters when form loads
+                    document.addEventListener('DOMContentLoaded', function() {
+                        const form = document.getElementById('servicesInquiryForm');
+                        if (form) {
+                            // Set source URL
+                            document.getElementById('source_url').value = window.location.href;
+                            
+                            // Get UTM parameters from URL
+                            const urlParams = new URLSearchParams(window.location.search);
+                            document.getElementById('utm_source').value = urlParams.get('utm_source') || '';
+                            document.getElementById('utm_medium').value = urlParams.get('utm_medium') || '';
+                            document.getElementById('utm_campaign').value = urlParams.get('utm_campaign') || '';
+                        }
+                    });
+                </script>
             </div>
         </div>
     </div>

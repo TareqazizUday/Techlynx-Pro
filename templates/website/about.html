@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
 
-{% block title %}About Techlynx Pro | US-Based IT Experts with 10+ Years Experience{% endblock %}
+{% block title %}{{ seo.page_title|default:"About Techlynx Pro | US-Based IT Experts with 10+ Years Experience" }}{% endblock %}
 
-{% block meta_description %}Meet the team behind 500+ successful IT projects. US-based experts with 10+ years experience in web development, AI solutions, and digital marketing. Our mission: deliver enterprise-grade technology with 98% client retention and 200% average ROI.{% endblock %}
+{% block meta_description %}{{ seo.meta_description|default:"Meet the team behind 500+ successful IT projects. US-based experts with 10+ years experience in web development, AI solutions, and digital marketing. Our mission: deliver enterprise-grade technology with 98% client retention and 200% average ROI." }}{% endblock %}
 
-{% block meta_keywords %}about us, IT company, US-based developers, expert team, company mission, technology experts, software development company, digital agency, enterprise solutions, certified professionals{% endblock %}
+{% block meta_keywords %}{{ seo.meta_keywords|default:"about us, IT company, US-based developers, expert team, company mission, technology experts, software development company, digital agency, enterprise solutions, certified professionals" }}{% endblock %}
 
-{% block og_title %}About Techlynx Pro | Expert US-Based IT Team Since 2015{% endblock %}
+{% block og_title %}{{ seo.og_title|default:"About Techlynx Pro | Expert US-Based IT Team Since 2015" }}{% endblock %}
 
-{% block og_description %}10+ years delivering enterprise IT solutions. 500+ projects, 98% retention, 200% ROI. Meet our certified US-based team.{% endblock %}
+{% block og_description %}{{ seo.og_description|default:"10+ years delivering enterprise IT solutions. 500+ projects, 98% retention, 200% ROI. Meet our certified US-based team." }}{% endblock %}
 
 {% block extra_css %}
 .timeline-line {
@@ -18,224 +18,169 @@
 
 {% block content %}
 <!-- Hero Section -->
+{% if hero %}
 <section class="relative py-24 overflow-hidden bg-background-dark">
     <div class="absolute inset-0 opacity-30">
         <div class="absolute inset-0 bg-gradient-to-r from-background-dark to-transparent z-10"></div>
-        <img class="w-full h-full object-cover" alt="Modern high-tech corporate office interior with glass walls" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCk852bNJ4TF9DLKqBa2lcmZMT8hILNqu0iXjyRBUiyCgkB2wX1pGsLcWPlyubqZY9Bww2JbfOjvcHqj9YwAr1vQFBaJ84mCSeOImFdrOzZANqkByK2K4ArDoErBoKAPpqeIGP7gPEcq4HubNdk771eG4hCuUFPkOfiCq2vGKUJWiOAz6z5hKv-ASOo3eLlCpw8Tmd8flR1-8EFxIer5d4SZVHv3amBI7VZzWJY5L5f5qSU6rH0mb5FlHuRsVLMLME5ptOo--uuft2L"/>
+        {% if hero.background_image %}
+        <img class="w-full h-full object-cover" alt="Modern high-tech corporate office interior with glass walls" src="{{ hero.background_image.url }}"/>
+        {% elif hero.background_image_url %}
+        <img class="w-full h-full object-cover" alt="Modern high-tech corporate office interior with glass walls" src="{{ hero.background_image_url }}"/>
+        {% endif %}
     </div>
     <div class="max-w-7xl mx-auto px-4 relative z-20">
         <h1 class="text-4xl md:text-6xl font-black text-white leading-tight max-w-3xl mb-6">
-            Empowering Brands through <span class="text-primary">US-Led</span> Digital Innovation
+            {{ hero.get_headline_with_highlight|safe }}
         </h1>
         <p class="text-slate-300 text-lg md:text-xl max-w-2xl leading-relaxed">
-            Techlynx Pro delivers high-performance, SEO-first digital marketing and IT solutions with a focus on brand authority and scalable infrastructure.
+            {{ hero.description }}
         </p>
     </div>
 </section>
+{% endif %}
 
 <!-- Mission & Vision Section -->
+{% if mission_vision %}
 <section class="py-20 bg-white dark:bg-background-dark">
     <div class="max-w-7xl mx-auto px-4">
         <div class="grid md:grid-cols-2 gap-8">
             <!-- Mission Card -->
             <div class="flex flex-col gap-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-background-light dark:bg-slate-900/50 p-8 hover:shadow-lg transition-shadow">
                 <div class="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
-                    <span class="material-symbols-outlined text-primary text-3xl">target</span>
+                    <span class="material-symbols-outlined text-primary text-3xl">{{ mission_vision.mission_icon }}</span>
                 </div>
                 <div>
-                    <h2 class="text-2xl font-bold mb-3">Our Mission</h2>
+                    <h2 class="text-2xl font-bold mb-3">{{ mission_vision.mission_title }}</h2>
                     <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
-                        To empower businesses with SEO-first strategies and scalable digital infrastructure that drives measurable growth and sustainable market dominance in an ever-evolving digital landscape.
+                        {{ mission_vision.mission_text }}
                     </p>
                 </div>
             </div>
             <!-- Vision Card -->
             <div class="flex flex-col gap-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-background-light dark:bg-slate-900/50 p-8 hover:shadow-lg transition-shadow">
                 <div class="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
-                    <span class="material-symbols-outlined text-primary text-3xl">visibility</span>
+                    <span class="material-symbols-outlined text-primary text-3xl">{{ mission_vision.vision_icon }}</span>
                 </div>
                 <div>
-                    <h2 class="text-2xl font-bold mb-3">Our Vision</h2>
+                    <h2 class="text-2xl font-bold mb-3">{{ mission_vision.vision_title }}</h2>
                     <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
-                        To be the global leader in high-performance IT solutions, setting the universal standard for digital excellence, operational integrity, and client-centric innovation.
+                        {{ mission_vision.vision_text }}
                     </p>
                 </div>
             </div>
         </div>
     </div>
 </section>
+{% endif %}
 
 <!-- The Techlynx Advantage -->
+{% if advantage_section %}
 <section class="py-20 bg-background-light dark:bg-slate-900/30">
     <div class="max-w-7xl mx-auto px-4">
         <div class="text-center mb-16">
-            <h2 class="text-primary font-bold tracking-widest uppercase text-sm mb-3">Why Work With Us</h2>
-            <h3 class="text-3xl md:text-4xl font-black mb-6">The Techlynx Advantage</h3>
+            <h2 class="text-primary font-bold tracking-widest uppercase text-sm mb-3">{{ advantage_section.badge_text }}</h2>
+            <h3 class="text-3xl md:text-4xl font-black mb-6">{{ advantage_section.title }}</h3>
             <p class="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
-                We combine domestic management with global technical excellence to provide a seamless experience for enterprise clients.
+                {{ advantage_section.description }}
             </p>
         </div>
         <div class="grid md:grid-cols-3 gap-8">
+            {% for advantage in advantages %}
             <div class="bg-white dark:bg-background-dark p-8 rounded-xl shadow-sm border border-slate-100 dark:border-slate-800">
-                <span class="material-symbols-outlined text-primary text-4xl mb-4">public</span>
-                <h4 class="text-xl font-bold mb-3">100% US-Based Management</h4>
+                <span class="material-symbols-outlined text-primary text-4xl mb-4">{{ advantage.icon }}</span>
+                <h4 class="text-xl font-bold mb-3">{{ advantage.title }}</h4>
                 <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
-                    Direct access to project managers and leadership based in the United States, ensuring clear communication and cultural alignment.
+                    {{ advantage.description }}
                 </p>
             </div>
-            <div class="bg-white dark:bg-background-dark p-8 rounded-xl shadow-sm border border-slate-100 dark:border-slate-800">
-                <span class="material-symbols-outlined text-primary text-4xl mb-4">security</span>
-                <h4 class="text-xl font-bold mb-3">Enterprise Security</h4>
-                <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
-                    Military-grade data protection and compliance frameworks integrated into every line of code and marketing campaign we execute.
-                </p>
-            </div>
-            <div class="bg-white dark:bg-background-dark p-8 rounded-xl shadow-sm border border-slate-100 dark:border-slate-800">
-                <span class="material-symbols-outlined text-primary text-4xl mb-4">monitoring</span>
-                <h4 class="text-xl font-bold mb-3">SEO-First Architecture</h4>
-                <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
-                    We don't just build websites; we build visibility. Every technical decision is weighed against its impact on organic search performance.
-                </p>
-            </div>
+            {% endfor %}
         </div>
     </div>
 </section>
+{% endif %}
 
 <!-- Timeline of Growth -->
+{% if timeline_section %}
 <section class="py-20 bg-white dark:bg-background-dark">
     <div class="max-w-4xl mx-auto px-4">
         <div class="text-center mb-16">
-            <h3 class="text-3xl font-black mb-4">Our Growth Story</h3>
-            <p class="text-slate-600 dark:text-slate-400">A journey of innovation and excellence since our inception.</p>
+            <h3 class="text-3xl font-black mb-4">{{ timeline_section.title }}</h3>
+            <p class="text-slate-600 dark:text-slate-400">{{ timeline_section.description }}</p>
         </div>
         <div class="relative">
             <div class="absolute left-1/2 -translate-x-1/2 w-0.5 h-full timeline-line"></div>
             
-            <!-- 2018 Milestone -->
-            <div class="relative flex items-center justify-between mb-16">
+            {% for item in timeline_items %}
+            <div class="relative flex items-center justify-between {% if not forloop.last %}mb-16{% endif %}">
+                {% if item.position == 'left' %}
                 <div class="w-5/12 text-right pr-8">
-                    <h5 class="text-primary font-bold text-xl mb-1">2018</h5>
-                    <p class="text-slate-700 dark:text-slate-300 font-bold">Founding of Techlynx</p>
-                    <p class="text-slate-500 text-sm">Started in Austin, TX with a focus on core SEO services.</p>
+                    <h5 class="text-primary font-bold text-xl mb-1">{{ item.year }}</h5>
+                    <p class="text-slate-700 dark:text-slate-300 font-bold">{{ item.title }}</p>
+                    <p class="text-slate-500 text-sm">{{ item.description }}</p>
                 </div>
-                <div class="absolute left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-primary border-4 border-white dark:border-background-dark z-10"></div>
+                <div class="absolute left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-primary border-4 border-white dark:border-background-dark z-10 {% if forloop.last %}shadow-[0_0_10px_rgba(19,109,236,0.6)]{% endif %}"></div>
                 <div class="w-5/12 pl-8"></div>
-            </div>
-            
-            <!-- 2020 Milestone -->
-            <div class="relative flex items-center justify-between mb-16">
+                {% else %}
                 <div class="w-5/12 text-right pr-8"></div>
-                <div class="absolute left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-primary border-4 border-white dark:border-background-dark z-10"></div>
+                <div class="absolute left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-primary border-4 border-white dark:border-background-dark z-10 {% if forloop.last %}shadow-[0_0_10px_rgba(19,109,236,0.6)]{% endif %}"></div>
                 <div class="w-5/12 pl-8">
-                    <h5 class="text-primary font-bold text-xl mb-1">2020</h5>
-                    <p class="text-slate-700 dark:text-slate-300 font-bold">IT Infrastructure Launch</p>
-                    <p class="text-slate-500 text-sm">Expanded into full-stack IT consulting and cloud infrastructure.</p>
+                    <h5 class="text-primary font-bold text-xl mb-1">{{ item.year }}</h5>
+                    <p class="text-slate-700 dark:text-slate-300 font-bold">{{ item.title }}</p>
+                    <p class="text-slate-500 text-sm">{{ item.description }}</p>
                 </div>
+                {% endif %}
             </div>
-            
-            <!-- 2022 Milestone -->
-            <div class="relative flex items-center justify-between mb-16">
-                <div class="w-5/12 text-right pr-8">
-                    <h5 class="text-primary font-bold text-xl mb-1">2022</h5>
-                    <p class="text-slate-700 dark:text-slate-300 font-bold">Global Expansion</p>
-                    <p class="text-slate-500 text-sm">Opened our first international support hub while maintaining US HQ.</p>
-                </div>
-                <div class="absolute left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-primary border-4 border-white dark:border-background-dark z-10"></div>
-                <div class="w-5/12 pl-8"></div>
-            </div>
-            
-            <!-- 2024 Milestone -->
-            <div class="relative flex items-center justify-between">
-                <div class="w-5/12 text-right pr-8"></div>
-                <div class="absolute left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-primary border-4 border-white dark:border-background-dark z-10 shadow-[0_0_10px_rgba(19,109,236,0.6)]"></div>
-                <div class="w-5/12 pl-8">
-                    <h5 class="text-primary font-bold text-xl mb-1">Present</h5>
-                    <p class="text-slate-700 dark:text-slate-300 font-bold">Leading the SEO-First Charge</p>
-                    <p class="text-slate-500 text-sm">Serving 500+ clients across 12 countries with 98% retention.</p>
-                </div>
-            </div>
+            {% endfor %}
         </div>
     </div>
 </section>
+{% endif %}
 
 <!-- Leadership Team -->
+{% if team_section %}
 <section class="py-20 bg-background-light dark:bg-slate-900/30">
     <div class="max-w-7xl mx-auto px-4">
         <div class="text-center mb-16">
-            <h3 class="text-3xl font-black mb-4">Meet the Leadership</h3>
-            <p class="text-slate-600 dark:text-slate-400">Decades of combined experience in digital transformation.</p>
+            <h3 class="text-3xl font-black mb-4">{{ team_section.title }}</h3>
+            <p class="text-slate-600 dark:text-slate-400">{{ team_section.description }}</p>
         </div>
         <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            <!-- Team Member 1 -->
+            {% for member in team_members %}
             <div class="group">
                 <div class="relative overflow-hidden rounded-xl mb-4 bg-slate-200 aspect-[4/5]">
-                    <img class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" alt="Professional portrait of CEO in a suit" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCmCcdBWQirAfbuiuCJX5UUxlH67NtcMJTEZim0NGW0Yld-rc8wMNghaH4SwhtJe0zdNs9M7Pp4lN22RsIo1PYhLCqlL99GqV5IMNaZ9bxdZCje-t-0iaVZlPaTbHDL4jTNPMb1CQdxLUyR7KVCM0mHW08kWRsXA0mEU4Hs3_Vnubmi-8TABGw_rnMUVTzPzfRnq311d8xMjvAV0CKJpVBWMJLzi3yyBoTlhbsTgsAnnS8jKm9qd6ONNxb-SfK1vx4gxNJLFBDjOBCZ"/>
+                    {% if member.photo %}
+                    <img class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" alt="Professional portrait of {{ member.name }}" src="{{ member.photo.url }}"/>
+                    {% elif member.photo_url %}
+                    <img class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" alt="Professional portrait of {{ member.name }}" src="{{ member.photo_url }}"/>
+                    {% endif %}
                     <div class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
                         <div class="flex gap-2">
                             <span class="material-symbols-outlined bg-white text-primary p-2 rounded-lg cursor-pointer">share</span>
                         </div>
                     </div>
                 </div>
-                <h5 class="text-lg font-bold">Michael Sterling</h5>
-                <p class="text-primary text-sm font-medium">Founder & CEO</p>
+                <h5 class="text-lg font-bold">{{ member.name }}</h5>
+                <p class="text-primary text-sm font-medium">{{ member.position }}</p>
             </div>
-            
-            <!-- Team Member 2 -->
-            <div class="group">
-                <div class="relative overflow-hidden rounded-xl mb-4 bg-slate-200 aspect-[4/5]">
-                    <img class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" alt="Professional portrait of CTO in a modern office" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDiHnB3GHAfBIK_h7QmZFqp2JDF6V1EhGam0EfT_qIaLjmIpHjH6mbAUtCa6HK1mLqtAmdJ0zCp3wenW6XQAo339LAAdsotqilzgEMC9tJeoN7iSK63QAW-6KQ8QAPKUEVN28imiaAW8UtPYy8WT_funCok_usMx_wQYocK1au3PlsrnB_k2R4-Y_BZIsIR_GS-Jqv-C0PGS3077NqJ9-WM6FqSU1RE5MV-HGwNr2Vg0iKnaZFOm1hFCoEmoZt36EQWXv3hgJE-H-gs"/>
-                    <div class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
-                        <div class="flex gap-2">
-                            <span class="material-symbols-outlined bg-white text-primary p-2 rounded-lg cursor-pointer">share</span>
-                        </div>
-                    </div>
-                </div>
-                <h5 class="text-lg font-bold">Sarah Jenkins</h5>
-                <p class="text-primary text-sm font-medium">Chief Technology Officer</p>
-            </div>
-            
-            <!-- Team Member 3 -->
-            <div class="group">
-                <div class="relative overflow-hidden rounded-xl mb-4 bg-slate-200 aspect-[4/5]">
-                    <img class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" alt="Professional portrait of Head of SEO" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCRTYyg27-hDcIsH68FKJ191MybM2Kc-1nuwZTs2wlLtY74cmv5D1ybUtw8quxYUzNGdlJS11yIBfYY7NnAqkwJaNEpAmDvxieZV-97kFwXObGgwxz359JGjZ1Oubn7Y4YDv2v0akoRdY43ecTdfAhqTfPW3ZcRxQvtDBy_Nh6tNRCWRGzpZHfw8JvMd0LXVg1GIa4wk7JGOhNBvXPxM200L2h7zuFdW8ityxaciQ7313Dp2ty8KN7bv68q0zEPPMeu09JeGyZek-ZZ"/>
-                    <div class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
-                        <div class="flex gap-2">
-                            <span class="material-symbols-outlined bg-white text-primary p-2 rounded-lg cursor-pointer">share</span>
-                        </div>
-                    </div>
-                </div>
-                <h5 class="text-lg font-bold">David Chen</h5>
-                <p class="text-primary text-sm font-medium">Director of SEO Strategy</p>
-            </div>
-            
-            <!-- Team Member 4 -->
-            <div class="group">
-                <div class="relative overflow-hidden rounded-xl mb-4 bg-slate-200 aspect-[4/5]">
-                    <img class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" alt="Professional portrait of Head of Operations" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAShDhKL5bM8crDzfqsqK0QCghIfNDHoao2iVEMRlRcpwWffqWdnHrEhX9pt7BTMgNA_hjPWL8Wt40hx_3rQG2LSIuNntlXtCi9Xy1Fuw7CTGwlbAEehp0-HejkrPrmXEZWuXdkKJ4apGRVKoyW1IEjJ6ZXBLUvCGuR0XHYMRnEJaHy1JWmua-7xQCeMJK7jhwszaiJtnKoqh97BvVB7EzB4wPF9ibfN3AKZ2uQ3fgzCbom901v9IYx1fJr4H6tsmVAxjp0nqkmuXqH"/>
-                    <div class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
-                        <div class="flex gap-2">
-                            <span class="material-symbols-outlined bg-white text-primary p-2 rounded-lg cursor-pointer">share</span>
-                        </div>
-                    </div>
-                </div>
-                <h5 class="text-lg font-bold">Elena Rodriguez</h5>
-                <p class="text-primary text-sm font-medium">Head of Operations</p>
-            </div>
+            {% endfor %}
         </div>
     </div>
 </section>
+{% endif %}
 
 <!-- Final CTA -->
+{% if cta %}
 <section class="py-24 bg-primary text-white">
     <div class="max-w-4xl mx-auto px-4 text-center">
-        <h2 class="text-4xl font-black mb-6 tracking-tight">Ready to elevate your digital presence?</h2>
+        <h2 class="text-4xl font-black mb-6 tracking-tight">{{ cta.headline }}</h2>
         <p class="text-blue-100 text-lg mb-10 leading-relaxed">
-            Join the hundreds of businesses scaling faster with Techlynx Pro's SEO-first methodology and US-based expertise.
+            {{ cta.description }}
         </p>
         <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <a href="{% url 'contact' %}" class="bg-white text-primary px-8 py-4 rounded-xl font-black text-lg hover:bg-blue-50 transition-all shadow-xl">Start Your Project</a>
-            <a href="{% url 'case_studies' %}" class="bg-primary/20 border-2 border-white/30 px-8 py-4 rounded-xl font-bold text-lg hover:bg-primary/30 transition-all">View Our Work</a>
+            <a href="{{ cta.cta_primary_url }}" class="bg-white text-primary px-8 py-4 rounded-xl font-black text-lg hover:bg-blue-50 transition-all shadow-xl">{{ cta.cta_primary_text }}</a>
+            <a href="{{ cta.cta_secondary_url }}" class="bg-primary/20 border-2 border-white/30 px-8 py-4 rounded-xl font-bold text-lg hover:bg-primary/30 transition-all">{{ cta.cta_secondary_text }}</a>
         </div>
     </div>
 </section>
+{% endif %}
 {% endblock %}

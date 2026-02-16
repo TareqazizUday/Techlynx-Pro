@@ -1,6 +1,29 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Contact Techlynx Pro | Get Free IT Consultation & Quote{% endblock %}
+
+{% block extra_css %}
+    /* Hide default messages on contact page - we use popup instead */
+    /* Hide message containers and colored message divs */
+    div[class*="max-w-7xl"][class*="mx-auto"][class*="px-4"][class*="py-4"] {
+        display: none !important;
+        visibility: hidden !important;
+        height: 0 !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        overflow: hidden !important;
+        opacity: 0 !important;
+    }
+    div[class*="bg-green-100"],
+    div[class*="bg-red-100"],
+    div[class*="bg-blue-100"],
+    div[class*="bg-green-900"],
+    div[class*="bg-red-900"],
+    div[class*="bg-blue-900"] {
+        display: none !important;
+    }
+{% endblock %}
 
 {% block meta_description %}Get your free strategy consultation and project quote from Techlynx Pro. Contact our US-based IT experts for web development, AI solutions, digital marketing, and more. Call +1 (520) 666-4699 or email hello@techlynxpro.com. Fast response within 24 hours!{% endblock %}
 
@@ -60,8 +83,13 @@
             <!-- Contact Form -->
             <div>
                 <h2 class="text-3xl font-bold text-slate-900 dark:text-white mb-6">Send Us a Message</h2>
-                <form method="post" action="{% url 'contact' %}" class="space-y-6">
+                <form method="post" action="{% url 'contact' %}" class="space-y-6" id="contactForm">
                     {% csrf_token %}
+                    <!-- Hidden tracking fields -->
+                    <input type="hidden" name="source_url" id="source_url" value="{{ current_url|default:request.build_absolute_uri }}">
+                    <input type="hidden" name="utm_source" value="{{ utm_source }}">
+                    <input type="hidden" name="utm_medium" value="{{ utm_medium }}">
+                    <input type="hidden" name="utm_campaign" value="{{ utm_campaign }}">
                     <div class="grid md:grid-cols-2 gap-6">
                         <div>
                             <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Full Name *</label>
@@ -123,10 +151,53 @@
                     </button>
 
                     <p class="text-xs text-slate-500 dark:text-slate-400 text-center">
-                        By submitting this form, you agree to our <a href="#" class="text-primary hover:underline">Privacy Policy</a>
+                        By submitting this form, you agree to our <a href="{% url 'privacy_policy' %}" class="text-primary hover:underline">Privacy Policy</a>
                     </p>
                 </form>
             </div>
+            
+            <script>
+                // Update source URL when form is submitted
+                document.getElementById('contactForm').addEventListener('submit', function() {
+                    document.getElementById('source_url').value = window.location.href;
+                });
+            </script>
+
+            <!-- Success/Error Notification Popup -->
+            {% if messages %}
+            <div id="notification-popup" class="fixed top-4 right-4 z-50 transform translate-x-full transition-transform duration-300 ease-in-out">
+                {% for message in messages %}
+                <div class="bg-white dark:bg-slate-900 border-l-4 {% if message.tags == 'success' %}border-green-500{% elif message.tags == 'error' %}border-red-500{% else %}border-blue-500{% endif %} rounded-lg shadow-2xl p-6 min-w-[350px] max-w-md mb-4">
+                    <div class="flex items-start gap-4">
+                        <div class="flex-shrink-0">
+                            {% if message.tags == 'success' %}
+                            <div class="w-10 h-10 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
+                                <span class="material-symbols-outlined text-green-600 dark:text-green-400 text-2xl">check_circle</span>
+                            </div>
+                            {% elif message.tags == 'error' %}
+                            <div class="w-10 h-10 rounded-full bg-red-100 dark:bg-red-900/30 flex items-center justify-center">
+                                <span class="material-symbols-outlined text-red-600 dark:text-red-400 text-2xl">error</span>
+                            </div>
+                            {% else %}
+                            <div class="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
+                                <span class="material-symbols-outlined text-blue-600 dark:text-blue-400 text-2xl">info</span>
+                            </div>
+                            {% endif %}
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-slate-900 dark:text-white font-semibold mb-1">
+                                {% if message.tags == 'success' %}Success!{% elif message.tags == 'error' %}Error{% else %}Notice{% endif %}
+                            </p>
+                            <p class="text-sm text-slate-600 dark:text-slate-400">{{ message }}</p>
+                        </div>
+                        <button onclick="closeNotification()" class="flex-shrink-0 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors">
+                            <span class="material-symbols-outlined text-xl">close</span>
+                        </button>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
 
             <!-- Contact Information -->
             <div class="space-y-8">
@@ -239,4 +310,72 @@
     </div>
 </section>
 </main>
+
+<script>
+    // Hide default messages and show popup notification
+    function hideMessages() {
+        document.querySelectorAll('div').forEach(function(div) {
+            const classes = div.className || '';
+            // Hide message containers
+            if (classes.includes('max-w-7xl') && classes.includes('mx-auto') && classes.includes('px-4') && classes.includes('py-4')) {
+                const hasMessage = div.querySelector('[class*="bg-green"], [class*="bg-red"], [class*="bg-blue"]');
+                if (hasMessage) {
+                    div.style.cssText = 'display: none !important; visibility: hidden !important; height: 0 !important; padding: 0 !important; margin: 0 !important; opacity: 0 !important;';
+                }
+            }
+            // Hide colored message divs
+            if ((classes.includes('bg-green') || classes.includes('bg-red') || classes.includes('bg-blue')) &&
+                (classes.includes('text-green') || classes.includes('text-red') || classes.includes('text-blue'))) {
+                div.style.cssText = 'display: none !important;';
+            }
+        });
+    }
+    
+    function initPopup() {
+        hideMessages();
+        const popup = document.getElementById('notification-popup');
+        if (popup) {
+            setTimeout(function() {
+                popup.classList.remove('translate-x-full');
+                popup.classList.add('translate-x-0');
+            }, 100);
+            setTimeout(function() {
+                closeNotification();
+            }, 2000);
+        }
+    }
+    
+    function closeNotification() {
+        const popup = document.getElementById('notification-popup');
+        if (popup) {
+            popup.classList.remove('translate-x-0');
+            popup.classList.add('translate-x-full');
+            setTimeout(function() {
+                if (popup && popup.parentNode) popup.remove();
+            }, 300);
+        }
+    }
+    
+    // Run on DOM ready
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initPopup);
+    } else {
+        initPopup();
+    }
+</script>
+
+<style>
+    #notification-popup {
+        animation: slideInRight 0.3s ease-out;
+    }
+    
+    @keyframes slideInRight {
+        from {
+            transform: translateX(100%);
+        }
+        to {
+            transform: translateX(0);
+        }
+    }
+</style>
 {% endblock %}

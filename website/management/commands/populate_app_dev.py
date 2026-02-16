@@ -132,6 +132,13 @@ class Command(BaseCommand):
                 'title': 'Backend & Cloud',
                 'description': 'Firebase, AWS Amplify, and custom APIs for robust backend infrastructure.',
                 'order': 3
+            },
+            {
+                'icon': 'palette',
+                'icon_url': 'https://cdn.svgporn.com/logos/figma.svg',
+                'title': 'UI/UX Design',
+                'description': 'Figma, Adobe XD, and rapid prototyping for stunning user experiences.',
+                'order': 4
             }
         ]
 

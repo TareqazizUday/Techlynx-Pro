@@ -9,7 +9,6 @@ class Command(BaseCommand):
     def handle(self, *args, **kwargs):
         testimonial_photos = {
             'Robert Chen': '/media/testimonials/finance_accounting/robert_chen.svg',
-            'Amanda Williams': '/media/testimonials/finance_accounting/amanda_williams.svg',
         }
         
         updated_count = 0

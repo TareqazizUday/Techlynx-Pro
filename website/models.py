@@ -1,15 +1,31 @@
 from django.db import models
+from django.utils import timezone
 
 # Create your models here.
 
 class ContactInquiry(models.Model):
-    """Model to store contact form submissions"""
+    """Model to store contact form submissions with tracking"""
     full_name = models.CharField(max_length=200)
     email = models.EmailField()
+    phone = models.CharField(max_length=20, blank=True)
+    company = models.CharField(max_length=200, blank=True)
     service_interest = models.CharField(max_length=100)
     budget_range = models.CharField(max_length=50, blank=True)
     project_details = models.TextField()
+    
+    # Tracking fields
+    source_url = models.CharField(max_length=500, blank=True, help_text="URL where form was submitted from")
+    referrer_url = models.CharField(max_length=500, blank=True, help_text="Referrer URL (where user came from)")
+    user_agent = models.TextField(blank=True, help_text="User's browser and device information")
+    ip_address = models.GenericIPAddressField(null=True, blank=True, help_text="User's IP address")
+    country = models.CharField(max_length=100, blank=True, help_text="Country from which form was submitted")
+    utm_source = models.CharField(max_length=100, blank=True, help_text="UTM source parameter")
+    utm_medium = models.CharField(max_length=100, blank=True, help_text="UTM medium parameter")
+    utm_campaign = models.CharField(max_length=100, blank=True, help_text="UTM campaign parameter")
+    
     created_at = models.DateTimeField(auto_now_add=True)
+    is_read = models.BooleanField(default=False, help_text="Mark as read in admin")
+    notes = models.TextField(blank=True, help_text="Internal notes about this inquiry")
     
     class Meta:
         verbose_name = 'Contact Form Submission'
@@ -17,7 +33,7 @@ class ContactInquiry(models.Model):
         ordering = ['-created_at']
     
     def __str__(self):
-        return f"{self.full_name} - {self.email}"
+        return f"{self.full_name} - {self.email} ({self.service_interest})"
 
 
 class Newsletter(models.Model):
@@ -65,6 +81,8 @@ class HeroBenefit(models.Model):
     value = models.CharField(max_length=50, help_text="Benefit value (e.g., 200%)")
     icon = models.CharField(max_length=100, default="trending_up",
                            help_text="Material icon name")
+    icon_image = models.FileField(upload_to='hero/benefit_icons/', null=True, blank=True,
+                                 help_text="SVG icon (preferred over material icon)")
     order = models.IntegerField(default=0, help_text="Display order (lower first)")
     
     class Meta:
@@ -82,6 +100,8 @@ class CompanyStat(models.Model):
     value = models.CharField(max_length=50, help_text="Stat value (e.g., 500+)")
     icon = models.CharField(max_length=100, default="check_circle",
                            help_text="Material icon name")
+    icon_image = models.FileField(upload_to='stats/icons/', null=True, blank=True,
+                                 help_text="SVG icon (preferred over material icon)")
     order = models.IntegerField(default=0, help_text="Display order (lower first)")
     
     class Meta:
@@ -121,6 +141,8 @@ class Benefit(models.Model):
     description = models.TextField()
     icon = models.CharField(max_length=100, default="verified",
                            help_text="Material icon name")
+    icon_image = models.FileField(upload_to='benefits/icons/', null=True, blank=True,
+                                 help_text="SVG icon (preferred over material icon)")
     order = models.IntegerField(default=0, help_text="Display order (lower first)")
     
     class Meta:
@@ -137,6 +159,8 @@ class Guarantee(models.Model):
     text = models.CharField(max_length=200)
     icon = models.CharField(max_length=100, default="shield",
                            help_text="Material icon name")
+    icon_image = models.FileField(upload_to='guarantees/icons/', null=True, blank=True,
+                                 help_text="SVG icon (preferred over material icon)")
     order = models.IntegerField(default=0, help_text="Display order (lower first)")
     
     class Meta:
@@ -312,7 +336,9 @@ class ServicesPageHero(models.Model):
     cta_secondary_text = models.CharField(max_length=100, default="Talk to an Expert")
     cta_secondary_url = models.CharField(max_length=200, default="/contact")
     hero_image = models.ImageField(upload_to='services/hero/', blank=True, null=True,
-                                   help_text="Hero section background image")
+                                   help_text="Hero section image")
+    hero_image_alt_text = models.CharField(max_length=200, blank=True, null=True,
+                                         help_text="Alt text for hero image (SEO)")
     stat_value = models.CharField(max_length=50, default="98%",
                                   help_text="Stat badge value (e.g., 98%)")
     stat_label = models.CharField(max_length=100, default="Client Success Rate",
@@ -392,10 +418,11 @@ class WhyChooseItem(models.Model):
 
 class WhyChooseImage(models.Model):
     """Image grid for Why Choose Us section on services page"""
-    image = models.FileField(upload_to='services/why_choose/',
-                         help_text="SVG image for Why Choose section")
+    image = models.ImageField(upload_to='services/why_choose/',
+                         help_text="Image for Why Choose section (JPG, PNG, SVG supported)")
     alt_text = models.CharField(max_length=200, help_text="Image alt text for SEO")
     order = models.IntegerField(default=0, help_text="Display order (lower first)")
+    is_active = models.BooleanField(default=True, help_text="Show this image on the services page")
     
     class Meta:
         verbose_name = '5️⃣ Why Choose Image'
@@ -708,7 +735,25 @@ class AISolutionsHero(models.Model):
     metric_title = models.CharField(max_length=100, default="AI Impact Forecast")
     metric_main = models.CharField(max_length=100, default="85% Cost Reduction")
     automation_rate = models.IntegerField(default=94, help_text="Percentage")
+    automation_rate_label = models.CharField(max_length=100, default="Automation Rate", blank=True)
     time_saved = models.CharField(max_length=50, default="2,400h/mo")
+    time_saved_label = models.CharField(max_length=100, default="Time Saved", blank=True)
+    
+    # Section titles and descriptions
+    services_section_title = models.CharField(max_length=200, default="Comprehensive AI Solutions", blank=True)
+    services_section_description = models.TextField(default="We don't just implement AI; we engineer intelligent systems that adapt, learn, and scale with your business needs.", blank=True)
+    
+    tech_stack_section_title = models.CharField(max_length=200, default="Cutting-Edge AI Frameworks", blank=True)
+    tech_stack_section_description = models.TextField(default="We leverage industry-leading AI platforms and frameworks to build robust, scalable solutions tailored to your unique challenges.", blank=True)
+    
+    process_section_title = models.CharField(max_length=200, default="Our AI Implementation Methodology", blank=True)
+    process_section_description = models.TextField(default="From ideation to deployment, we follow a proven framework that ensures your AI solution delivers measurable ROI.", blank=True)
+    
+    roi_section_title = models.CharField(max_length=200, default="Measurable AI-Driven Results", blank=True)
+    roi_section_description = models.TextField(default="Our AI solutions don't just automate—they transform. See how businesses like yours are achieving unprecedented efficiency and growth with intelligent automation.", blank=True)
+    
+    performance_metrics_title = models.CharField(max_length=200, default="AI Performance Metrics", blank=True)
+    
     is_active = models.BooleanField(default=True)
     
     class Meta:
@@ -876,6 +921,8 @@ class AISolutionsCTA(models.Model):
 
 class WebDevHero(models.Model):
     """Hero section for Web Development page (singleton)"""
+    badge_icon = models.CharField(max_length=100, default="code", 
+                                  help_text="Material icon name")
     badge_text = models.CharField(max_length=200, default="US-Based Enterprise Agency")
     headline = models.TextField(default="Scalable, <span class='text-primary'>SEO-First</span> Web Development")
     description = models.TextField(default="High-performance websites built with Next.js and WordPress to drive ROI. Get a future-proof digital presence that converts visitors into loyal customers.")
@@ -884,6 +931,26 @@ class WebDevHero(models.Model):
     cta_secondary_text = models.CharField(max_length=100, default="View Case Studies")
     cta_secondary_url = models.CharField(max_length=200, default="/case-studies")
     hero_image = models.ImageField(upload_to='services/web_dev/hero/', blank=True, null=True)
+    
+    # Hero metrics
+    metric_title = models.CharField(max_length=100, default="Performance Score", blank=True)
+    metric_main = models.CharField(max_length=100, default="95+", blank=True)
+    lighthouse_score = models.CharField(max_length=50, default="95+", blank=True)
+    seo_score = models.CharField(max_length=50, default="100%", blank=True)
+    
+    # Section titles and descriptions
+    services_section_title = models.CharField(max_length=200, default="Comprehensive Development Solutions", blank=True)
+    services_section_description = models.TextField(default="We don't just build websites; we build scalable digital infrastructure optimized for search engines and user conversion.", blank=True)
+    
+    tech_stack_section_title = models.CharField(max_length=200, default="Our Core Tech Stack", blank=True)
+    tech_stack_section_description = models.TextField(default="We select the best tools for the job, ensuring your site is fast, maintainable, and highly visible to search engines.", blank=True)
+    
+    process_section_title = models.CharField(max_length=200, default="Our Proven Process", blank=True)
+    process_section_description = models.TextField(default="Transparency at every stage. We follow a rigorous methodology to ensure your project is delivered on time and above expectations.", blank=True)
+    
+    seo_section_title = models.CharField(max_length=200, default="Built for Search Engine Dominance", blank=True)
+    seo_section_description = models.TextField(default="While other agencies treat SEO as an afterthought, we bake it into the very foundation of your site. Every line of code is written to satisfy Google's most stringent requirements.", blank=True)
+    
     is_active = models.BooleanField(default=True)
     
     class Meta:
@@ -1038,6 +1105,22 @@ class DigitalMarketingHero(models.Model):
     avg_cpc_reduction = models.DecimalField(max_digits=5, decimal_places=2, default=1.45)
     conversion_rate = models.DecimalField(max_digits=4, decimal_places=1, default=8.4)
     
+    # Hero Metrics
+    metric_title = models.CharField(max_length=100, default="Growth Forecast", blank=True)
+    metric_main = models.CharField(max_length=100, default="+248% Revenue", blank=True)
+    avg_cpc_label = models.CharField(max_length=100, default="Avg. CPC Saved", blank=True)
+    conversion_rate_label = models.CharField(max_length=100, default="Conversion Rate", blank=True)
+    
+    # Section titles and descriptions
+    services_section_title = models.CharField(max_length=200, default="Our Specialized Growth Services", blank=True)
+    services_section_description = models.TextField(default="We don't just \"run ads.\" We engineer full-funnel growth engines using the most effective digital channels.", blank=True)
+    
+    strategy_section_title = models.CharField(max_length=200, default="The Strategy-First Approach", blank=True)
+    strategy_section_description = models.TextField(default="A proven, data-driven methodology that consistently delivers exceptional results for our clients.", blank=True)
+    
+    metrics_section_title = models.CharField(max_length=200, default="Transparent Growth Monitoring", blank=True)
+    metrics_section_description = models.TextField(default="Track your success with real-time metrics and comprehensive reporting dashboards.", blank=True)
+    
     is_active = models.BooleanField(default=True)
     
     class Meta:
@@ -1132,6 +1215,7 @@ class DigitalMarketingCTA(models.Model):
     description = models.TextField(default="Schedule a 15-minute strategy call and we'll show you exactly how we'd grow your specific brand.")
     cta_text = models.CharField(max_length=100, default="Book Your Free Strategy Call")
     cta_url = models.CharField(max_length=200, default="/contact")
+    footer_text = models.CharField(max_length=200, blank=True, default="Free marketing audit included with every consultation.")
     is_active = models.BooleanField(default=True)
     
     class Meta:
@@ -1160,6 +1244,30 @@ class AppDevHero(models.Model):
     cta_secondary_text = models.CharField(max_length=100)
     cta_secondary_url = models.CharField(max_length=200)
     engagement_growth = models.IntegerField(default=320, help_text="User engagement growth percentage")
+    
+    # Hero Metrics
+    metric_title = models.CharField(max_length=100, default="User Engagement", blank=True)
+    metric_main = models.CharField(max_length=100, default="+320% Growth", blank=True)
+    downloads_label = models.CharField(max_length=100, default="Downloads", blank=True)
+    downloads_value = models.CharField(max_length=50, default="5M+", blank=True)
+    retention_label = models.CharField(max_length=100, default="Retention", blank=True)
+    retention_value = models.CharField(max_length=50, default="87%", blank=True)
+    
+    # Section titles and descriptions
+    services_section_title = models.CharField(max_length=200, default="Complete App Development Services", blank=True)
+    services_section_description = models.TextField(default="From concept to launch and beyond, we build mobile applications that combine stunning design with robust functionality.", blank=True)
+    
+    tech_stack_section_title = models.CharField(max_length=200, default="Modern Mobile Tech Stack", blank=True)
+    tech_stack_section_description = models.TextField(default="We use cutting-edge frameworks and tools to build fast, secure, and scalable mobile applications.", blank=True)
+    
+    process_section_title = models.CharField(max_length=200, default="App Development Process", blank=True)
+    process_section_description = models.TextField(default="From wireframes to App Store launch, we follow a structured approach that ensures quality at every stage.", blank=True)
+    
+    features_section_title = models.CharField(max_length=200, default="Enterprise-Grade Features Built In", blank=True)
+    features_section_description = models.TextField(default="Every app we build comes with essential features for security, performance, and user engagement that drive business results.", blank=True)
+    
+    performance_metrics_title = models.CharField(max_length=200, default="App Performance Metrics", blank=True)
+    
     is_active = models.BooleanField(default=True)
     order = models.IntegerField(default=0)
 
@@ -2080,7 +2188,7 @@ class CPTestimonial(models.Model):
     client_name = models.CharField(max_length=100)
     client_position = models.CharField(max_length=100)
     client_company = models.CharField(max_length=200)
-    client_photo = models.URLField(blank=True)
+    client_photo = models.ImageField(upload_to='testimonials/content_production/', blank=True, null=True)
     testimonial_text = models.TextField()
     is_active = models.BooleanField(default=True)
     order = models.IntegerField(default=0)
@@ -2243,3 +2351,391 @@ class TestimonialsPageCTA(models.Model):
         if not self.pk and TestimonialsPageCTA.objects.exists():
             return TestimonialsPageCTA.objects.first()
         return super().save(*args, **kwargs)
+
+
+class TestimonialsPageMetric(models.Model):
+    """Metrics section for testimonials page (colored boxes)"""
+    COLOR_CHOICES = [
+        ('blue-500', 'Blue'),
+        ('green-500', 'Green'),
+        ('purple-500', 'Purple'),
+        ('orange-500', 'Orange'),
+        ('red-500', 'Red'),
+        ('yellow-500', 'Yellow'),
+        ('pink-500', 'Pink'),
+        ('indigo-500', 'Indigo'),
+    ]
+    
+    value = models.CharField(max_length=50, help_text="Metric value (e.g., 340%, 2,200%, 98%, 500+)")
+    title = models.CharField(max_length=100, help_text="Metric title")
+    description = models.CharField(max_length=200, help_text="Metric description")
+    color = models.CharField(max_length=20, choices=COLOR_CHOICES, default='blue-500', 
+                            help_text="Background color for the metric box")
+    order = models.IntegerField(default=0, help_text="Display order (lower first)")
+    is_active = models.BooleanField(default=True)
+    
+    class Meta:
+        verbose_name = "Testimonials Page Metric"
+        verbose_name_plural = "Testimonials Page Metrics"
+        ordering = ['order']
+    
+    def __str__(self):
+        return f"{self.value} - {self.title}"
+
+
+# ==================== PRIVACY POLICY MODELS ====================
+
+class PrivacyPolicy(models.Model):
+    """Privacy Policy main content"""
+    title = models.CharField(max_length=200, default="Privacy Policy")
+    last_updated = models.DateField(default=timezone.now)
+    introduction = models.TextField(help_text="Introduction paragraph")
+    content = models.TextField(blank=True, help_text="Main content section (supports HTML)")
+    contact_email = models.EmailField(default="privacy@techlynxpro.com")
+    contact_url = models.CharField(max_length=200, default="/contact/")
+    is_active = models.BooleanField(default=True)
+    
+    class Meta:
+        verbose_name = "Privacy Policy"
+        verbose_name_plural = "Privacy Policy"
+    
+    def save(self, *args, **kwargs):
+        if not self.pk and PrivacyPolicy.objects.exists():
+            return
+        super().save(*args, **kwargs)
+    
+    def __str__(self):
+        return f"Privacy Policy - Updated {self.last_updated}"
+
+
+class PrivacyPolicySection(models.Model):
+    """Individual sections of the privacy policy"""
+    policy = models.ForeignKey(PrivacyPolicy, on_delete=models.CASCADE, related_name='sections')
+    section_number = models.IntegerField(help_text="Section number (e.g., 1, 2, 3)")
+    title = models.CharField(max_length=200)
+    content = models.TextField(help_text="Section content (supports HTML)")
+    order = models.IntegerField(default=0)
+    is_active = models.BooleanField(default=True)
+    
+    class Meta:
+        verbose_name = "Privacy Policy Section"
+        verbose_name_plural = "Privacy Policy Sections"
+        ordering = ['order', 'section_number']
+    
+    def __str__(self):
+        return f"Section {self.section_number}: {self.title}"
+
+
+class PrivacyPolicySubsection(models.Model):
+    """Subsections within a privacy policy section"""
+    section = models.ForeignKey(PrivacyPolicySection, on_delete=models.CASCADE, related_name='subsections')
+    title = models.CharField(max_length=200)
+    content = models.TextField(help_text="Subsection content (supports HTML)")
+    order = models.IntegerField(default=0)
+    is_active = models.BooleanField(default=True)
+    
+    class Meta:
+        verbose_name = "Privacy Policy Subsection"
+        verbose_name_plural = "Privacy Policy Subsections"
+        ordering = ['order']
+    
+    def __str__(self):
+        return f"{self.section.title} - {self.title}"
+
+
+# ==================== TERMS OF SERVICE MODELS ====================
+
+class TermsOfService(models.Model):
+    """Terms of Service main content"""
+    title = models.CharField(max_length=200, default="Terms of Service")
+    last_updated = models.DateField(default=timezone.now)
+    introduction = models.TextField(help_text="Introduction paragraph")
+    content = models.TextField(blank=True, help_text="Main content section (supports HTML)")
+    contact_email = models.EmailField(default="legal@techlynxpro.com")
+    contact_url = models.CharField(max_length=200, default="/contact/")
+    is_active = models.BooleanField(default=True)
+    
+    class Meta:
+        verbose_name = "Terms of Service"
+        verbose_name_plural = "Terms of Service"
+    
+    def save(self, *args, **kwargs):
+        if not self.pk and TermsOfService.objects.exists():
+            return
+        super().save(*args, **kwargs)
+    
+    def __str__(self):
+        return f"Terms of Service - Updated {self.last_updated}"
+
+
+class TermsOfServiceSection(models.Model):
+    """Individual sections of the terms of service"""
+    terms = models.ForeignKey(TermsOfService, on_delete=models.CASCADE, related_name='sections')
+    section_number = models.IntegerField(help_text="Section number (e.g., 1, 2, 3)")
+    title = models.CharField(max_length=200)
+    content = models.TextField(help_text="Section content (supports HTML)")
+    order = models.IntegerField(default=0)
+    is_active = models.BooleanField(default=True)
+    
+    class Meta:
+        verbose_name = "Terms of Service Section"
+        verbose_name_plural = "Terms of Service Sections"
+        ordering = ['order', 'section_number']
+    
+    def __str__(self):
+        return f"Section {self.section_number}: {self.title}"
+
+
+class TermsOfServiceSubsection(models.Model):
+    """Subsections within a terms of service section"""
+    section = models.ForeignKey(TermsOfServiceSection, on_delete=models.CASCADE, related_name='subsections')
+    title = models.CharField(max_length=200)
+    content = models.TextField(help_text="Subsection content (supports HTML)")
+    order = models.IntegerField(default=0)
+    is_active = models.BooleanField(default=True)
+    
+    class Meta:
+        verbose_name = "Terms of Service Subsection"
+        verbose_name_plural = "Terms of Service Subsections"
+        ordering = ['order']
+    
+    def __str__(self):
+        return f"{self.section.title} - {self.title}"
+
+
+# ==================== ABOUT PAGE MODELS ====================
+
+class AboutPageSEO(models.Model):
+    """SEO settings for about page (singleton)"""
+    page_title = models.CharField(max_length=60, default="About Techlynx Pro | US-Based IT Experts with 10+ Years Experience")
+    meta_description = models.TextField(
+        default="Meet the team behind 500+ successful IT projects. US-based experts with 10+ years experience in web development, AI solutions, and digital marketing. Our mission: deliver enterprise-grade technology with 98% client retention and 200% average ROI.")
+    meta_keywords = models.TextField(default="about us, IT company, US-based developers, expert team, company mission, technology experts, software development company, digital agency, enterprise solutions, certified professionals")
+    og_title = models.CharField(max_length=60, default="About Techlynx Pro | Expert US-Based IT Team Since 2015")
+    og_description = models.TextField(default="10+ years delivering enterprise IT solutions. 500+ projects, 98% retention, 200% ROI. Meet our certified US-based team.")
+    
+    class Meta:
+        verbose_name = "About Page SEO"
+        verbose_name_plural = "📄 About Page SEO"
+        app_label = 'website'
+    
+    def __str__(self):
+        return "About Page SEO"
+    
+    def save(self, *args, **kwargs):
+        # Only allow one SEO record
+        if not self.pk and AboutPageSEO.objects.exists():
+            return AboutPageSEO.objects.first()
+        super().save(*args, **kwargs)
+
+
+class AboutPageHero(models.Model):
+    """Hero section for about page (singleton)"""
+    headline = models.CharField(max_length=200, default="Empowering Brands through US-Led Digital Innovation")
+    headline_highlight = models.CharField(max_length=50, default="US-Led", help_text="Text to highlight in headline")
+    description = models.TextField(
+        default="Techlynx Pro delivers high-performance, SEO-first digital marketing and IT solutions with a focus on brand authority and scalable infrastructure.")
+    background_image = models.ImageField(upload_to='about/hero/', blank=True, null=True,
+                                        help_text="Hero background image")
+    background_image_url = models.URLField(blank=True, null=True,
+                                          help_text="Or use external image URL")
+    is_active = models.BooleanField(default=True)
+    
+    class Meta:
+        verbose_name = "About Page Hero"
+        verbose_name_plural = "📄 About Page Hero"
+        app_label = 'website'
+    
+    def __str__(self):
+        return "About Page Hero Section"
+    
+    def get_headline_with_highlight(self):
+        """Return headline with highlighted text"""
+        if self.headline_highlight and self.headline_highlight in self.headline:
+            return self.headline.replace(
+                self.headline_highlight,
+                f'<span class="text-primary">{self.headline_highlight}</span>'
+            )
+        return self.headline
+    
+    def save(self, *args, **kwargs):
+        # Only allow one active hero
+        if not self.pk and AboutPageHero.objects.exists():
+            return AboutPageHero.objects.first()
+        super().save(*args, **kwargs)
+
+
+class AboutPageMissionVision(models.Model):
+    """Mission and Vision section for about page (singleton)"""
+    mission_title = models.CharField(max_length=100, default="Our Mission")
+    mission_text = models.TextField(
+        default="To empower businesses with SEO-first strategies and scalable digital infrastructure that drives measurable growth and sustainable market dominance in an ever-evolving digital landscape.")
+    mission_icon = models.CharField(max_length=50, default="target", help_text="Material icon name")
+    
+    vision_title = models.CharField(max_length=100, default="Our Vision")
+    vision_text = models.TextField(
+        default="To be the global leader in high-performance IT solutions, setting the universal standard for digital excellence, operational integrity, and client-centric innovation.")
+    vision_icon = models.CharField(max_length=50, default="visibility", help_text="Material icon name")
+    is_active = models.BooleanField(default=True)
+    
+    class Meta:
+        verbose_name = "About Page Mission & Vision"
+        verbose_name_plural = "📄 About Page Mission & Vision"
+        app_label = 'website'
+    
+    def __str__(self):
+        return "About Page Mission & Vision"
+    
+    def save(self, *args, **kwargs):
+        # Only allow one active mission/vision
+        if not self.pk and AboutPageMissionVision.objects.exists():
+            return AboutPageMissionVision.objects.first()
+        super().save(*args, **kwargs)
+
+
+class AboutPageAdvantage(models.Model):
+    """Advantage items for about page"""
+    title = models.CharField(max_length=200)
+    description = models.TextField()
+    icon = models.CharField(max_length=50, help_text="Material icon name")
+    order = models.IntegerField(default=0)
+    is_active = models.BooleanField(default=True)
+    
+    class Meta:
+        verbose_name = "About Page Advantage"
+        verbose_name_plural = "📄 About Page Advantages"
+        ordering = ['order']
+        app_label = 'website'
+    
+    def __str__(self):
+        return self.title
+
+
+class AboutPageAdvantageSection(models.Model):
+    """Section header for advantages (singleton)"""
+    badge_text = models.CharField(max_length=100, default="Why Work With Us")
+    title = models.CharField(max_length=200, default="The Techlynx Advantage")
+    description = models.TextField(
+        default="We combine domestic management with global technical excellence to provide a seamless experience for enterprise clients.")
+    is_active = models.BooleanField(default=True)
+    
+    class Meta:
+        verbose_name = "About Page Advantage Section"
+        verbose_name_plural = "📄 About Page Advantage Section"
+        app_label = 'website'
+    
+    def __str__(self):
+        return "About Page Advantage Section"
+    
+    def save(self, *args, **kwargs):
+        # Only allow one active section
+        if not self.pk and AboutPageAdvantageSection.objects.exists():
+            return AboutPageAdvantageSection.objects.first()
+        super().save(*args, **kwargs)
+
+
+class AboutPageTimeline(models.Model):
+    """Timeline milestones for about page"""
+    year = models.CharField(max_length=20, help_text="Year or 'Present'")
+    title = models.CharField(max_length=200)
+    description = models.TextField()
+    position = models.CharField(max_length=20, choices=[('left', 'Left'), ('right', 'Right')], default='left',
+                               help_text="Position on timeline")
+    order = models.IntegerField(default=0)
+    is_active = models.BooleanField(default=True)
+    
+    class Meta:
+        verbose_name = "About Page Timeline Milestone"
+        verbose_name_plural = "📄 About Page Timeline Milestones"
+        ordering = ['order']
+        app_label = 'website'
+    
+    def __str__(self):
+        return f"{self.year} - {self.title}"
+
+
+class AboutPageTimelineSection(models.Model):
+    """Section header for timeline (singleton)"""
+    title = models.CharField(max_length=200, default="Our Growth Story")
+    description = models.TextField(default="A journey of innovation and excellence since our inception.")
+    is_active = models.BooleanField(default=True)
+    
+    class Meta:
+        verbose_name = "About Page Timeline Section"
+        verbose_name_plural = "📄 About Page Timeline Section"
+        app_label = 'website'
+    
+    def __str__(self):
+        return "About Page Timeline Section"
+    
+    def save(self, *args, **kwargs):
+        # Only allow one active section
+        if not self.pk and AboutPageTimelineSection.objects.exists():
+            return AboutPageTimelineSection.objects.first()
+        super().save(*args, **kwargs)
+
+
+class AboutPageTeamMember(models.Model):
+    """Team members for about page"""
+    name = models.CharField(max_length=200)
+    position = models.CharField(max_length=200)
+    photo = models.ImageField(upload_to='about/team/', blank=True, null=True)
+    photo_url = models.URLField(blank=True, null=True, help_text="Or use external image URL")
+    order = models.IntegerField(default=0)
+    is_active = models.BooleanField(default=True)
+    
+    class Meta:
+        verbose_name = "About Page Team Member"
+        verbose_name_plural = "📄 About Page Team Members"
+        ordering = ['order']
+        app_label = 'website'
+    
+    def __str__(self):
+        return f"{self.name} - {self.position}"
+
+
+class AboutPageTeamSection(models.Model):
+    """Section header for team (singleton)"""
+    title = models.CharField(max_length=200, default="Meet the Leadership")
+    description = models.TextField(default="Decades of combined experience in digital transformation.")
+    is_active = models.BooleanField(default=True)
+    
+    class Meta:
+        verbose_name = "About Page Team Section"
+        verbose_name_plural = "📄 About Page Team Section"
+        app_label = 'website'
+    
+    def __str__(self):
+        return "About Page Team Section"
+    
+    def save(self, *args, **kwargs):
+        # Only allow one active section
+        if not self.pk and AboutPageTeamSection.objects.exists():
+            return AboutPageTeamSection.objects.first()
+        super().save(*args, **kwargs)
+
+
+class AboutPageCTA(models.Model):
+    """Final CTA section for about page (singleton)"""
+    headline = models.CharField(max_length=200, default="Ready to elevate your digital presence?")
+    description = models.TextField(
+        default="Join the hundreds of businesses scaling faster with Techlynx Pro's SEO-first methodology and US-based expertise.")
+    cta_primary_text = models.CharField(max_length=100, default="Start Your Project")
+    cta_primary_url = models.CharField(max_length=200, default="/contact/")
+    cta_secondary_text = models.CharField(max_length=100, default="View Our Work")
+    cta_secondary_url = models.CharField(max_length=200, default="/case-studies/")
+    is_active = models.BooleanField(default=True)
+    
+    class Meta:
+        verbose_name = "About Page CTA"
+        verbose_name_plural = "📄 About Page CTA"
+        app_label = 'website'
+    
+    def __str__(self):
+        return "About Page CTA Section"
+    
+    def save(self, *args, **kwargs):
+        # Only allow one active CTA
+        if not self.pk and AboutPageCTA.objects.exists():
+            return AboutPageCTA.objects.first()
+        super().save(*args, **kwargs)

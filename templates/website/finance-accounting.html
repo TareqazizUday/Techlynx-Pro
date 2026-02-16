@@ -22,7 +22,7 @@
                 <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-primary/10 text-primary mb-6 uppercase tracking-wider">
                     <span class="material-symbols-outlined text-sm">{{ hero.badge_icon }}</span> {{ hero.badge_text }}
                 </span>
-                <div class="text-4xl md:text-6xl font-black text-slate-900 dark:text-white leading-[1.1] mb-6">{{ hero.headline|safe }}</div>
+                <h1 class="text-4xl md:text-6xl font-black text-slate-900 dark:text-white leading-[1.1] mb-6">{{ hero.headline|safe }}</h1>
                 <p class="text-lg md:text-xl text-slate-600 dark:text-slate-400 mb-8 leading-relaxed">
                     {{ hero.description }}
                 </p>
@@ -35,7 +35,6 @@
                     </a>
                 </div>
                 {% else %}
-                <!-- Fallback content if no hero data -->
                 <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-primary/10 text-primary mb-6 uppercase tracking-wider">
                     <span class="material-symbols-outlined text-sm">account_balance</span> Strategic Financial Management
                 </span>
@@ -117,39 +116,22 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {% for service in services %}
             <div class="group p-6 rounded-xl border border-[#cfd9e7] dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-primary transition-all duration-300">
-                <div class="w-20 h-20 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                <div class="size-12 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                     {% if service.icon_image %}
-                        <div class="w-16 h-16 flex items-center justify-center">
-                            <img src="{{ service.icon_image.url }}" alt="{{ service.title }}" class="w-full h-full" />
-                        </div>
+                    <img src="{{ service.icon_image.url }}" alt="{{ service.title }}" class="w-8 h-8 object-contain" />
                     {% else %}
-                        <span class="material-symbols-outlined text-2xl">{{ service.icon }}</span>
+                    <span class="material-symbols-outlined text-2xl">{{ service.icon }}</span>
                     {% endif %}
                 </div>
                 <h3 class="text-lg font-bold mb-2">{{ service.title }}</h3>
                 <p class="text-sm text-slate-600 dark:text-slate-400 mb-4">{{ service.description }}</p>
                 <ul class="text-xs space-y-2 text-slate-500">
+                    {% if service.feature_1 %}
                     <li class="flex items-center gap-2"><span class="material-symbols-outlined text-xs text-green-500">check_circle</span> {{ service.feature_1 }}</li>
+                    {% endif %}
+                    {% if service.feature_2 %}
                     <li class="flex items-center gap-2"><span class="material-symbols-outlined text-xs text-green-500">check_circle</span> {{ service.feature_2 }}</li>
-                    {% if service.feature_3 %}
-                    <li class="flex items-center gap-2"><span class="material-symbols-outlined text-xs text-green-500">check_circle</span> {{ service.feature_3 }}</li>
                     {% endif %}
-                    {% if service.feature_4 %}
-                    <li class="flex items-center gap-2"><span class="material-symbols-outlined text-xs text-green-500">check_circle</span> {{ service.feature_4 }}</li>
-                    {% endif %}
-                </ul>
-            </div>
-            {% empty %}
-            <!-- Fallback static content -->
-            <div class="group p-6 rounded-xl border border-[#cfd9e7] dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-primary transition-all duration-300">
-                <div class="w-20 h-20 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                    <span class="material-symbols-outlined text-2xl">receipt_long</span>
-                </div>
-                <h3 class="text-lg font-bold mb-2">Bookkeeping & Accounting</h3>
-                <p class="text-sm text-slate-600 dark:text-slate-400 mb-4">Daily transaction recording, account reconciliation, and financial record maintenance.</p>
-                <ul class="text-xs space-y-2 text-slate-500">
-                    <li class="flex items-center gap-2"><span class="material-symbols-outlined text-xs text-green-500">check_circle</span> Transaction Processing</li>
-                    <li class="flex items-center gap-2"><span class="material-symbols-outlined text-xs text-green-500">check_circle</span> Bank Reconciliation</li>
                 </ul>
             </div>
             {% endfor %}
@@ -160,104 +142,61 @@
 <!-- Financial Tools & Software -->
 <section class="py-24 bg-slate-50 dark:bg-slate-900/30">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-slate-900 dark:text-white mb-4">Professional Accounting Software</h2>
+            <p class="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">We work with leading accounting platforms to provide accurate, real-time financial insights and reporting.</p>
+        </div>
         <div class="grid lg:grid-cols-2 gap-16 items-center">
             <div>
-                <h2 class="text-3xl font-bold text-slate-900 dark:text-white mb-6">Professional Accounting Software</h2>
-                <p class="text-slate-600 dark:text-slate-400 mb-8">We work with leading accounting platforms to provide accurate, real-time financial insights and reporting.</p>
                 <div class="space-y-6">
-                    <!-- QuickBooks -->
-                    <div class="flex gap-4">
-                        <div class="flex-shrink-0 bg-white dark:bg-slate-800 p-4 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700 h-fit">
-                            <div class="w-16 h-16 flex items-center justify-center">
-                                <img src="/media/services/finance_accounting/tool_icons/quickbooks.svg?v=2" alt="QuickBooks" class="w-full h-full object-contain" />
-                            </div>
+                    {% for tool in tools %}
+                    {% if tool.category %}
+                    <div class="flex gap-4 group">
+                        <div class="flex-shrink-0 bg-white dark:bg-slate-800 p-3 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700 h-fit group-hover:border-primary group-hover:shadow-md transition-all">
+                            {% if tool.icon_image %}
+                            <img src="{{ tool.icon_image.url }}" alt="{{ tool.name }}" class="w-8 h-8 object-contain" />
+                            {% else %}
+                            <span class="material-symbols-outlined text-primary text-3xl">{{ tool.icon }}</span>
+                            {% endif %}
                         </div>
                         <div>
-                            <h4 class="font-bold text-slate-900 dark:text-white">Cloud Accounting Platforms</h4>
-                            <p class="text-sm text-slate-500 dark:text-slate-400">QuickBooks Online, Xero, and FreshBooks for seamless financial management.</p>
+                            <h4 class="font-bold text-slate-900 dark:text-white mb-1">{{ tool.category }}</h4>
+                            <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">{{ tool.description }}</p>
                         </div>
                     </div>
-                    
-                    <!-- ADP -->
-                    <div class="flex gap-4">
-                        <div class="flex-shrink-0 bg-white dark:bg-slate-800 p-4 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700 h-fit">
-                            <div class="w-16 h-16 flex items-center justify-center">
-                                <img src="/media/services/finance_accounting/tool_icons/adp.svg?v=2" alt="ADP" class="w-full h-full object-contain" />
-                            </div>
-                        </div>
-                        <div>
-                            <h4 class="font-bold text-slate-900 dark:text-white">Payroll & HR Integration</h4>
-                            <p class="text-sm text-slate-500 dark:text-slate-400">ADP, Gusto, and Paychex for comprehensive payroll processing.</p>
-                        </div>
-                    </div>
-                    
-                    <!-- NetSuite -->
-                    <div class="flex gap-4">
-                        <div class="flex-shrink-0 bg-white dark:bg-slate-800 p-4 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700 h-fit">
-                            <div class="w-16 h-16 flex items-center justify-center">
-                                <img src="/media/services/finance_accounting/tool_icons/netsuite.svg?v=2" alt="NetSuite" class="w-full h-full object-contain" />
-                            </div>
-                        </div>
-                        <div>
-                            <h4 class="font-bold text-slate-900 dark:text-white">ERP & Financial Systems</h4>
-                            <p class="text-sm text-slate-500 dark:text-slate-400">NetSuite, Sage, and SAP integration for enterprise finance management.</p>
-                        </div>
-                    </div>
+                    {% endif %}
+                    {% endfor %}
                 </div>
             </div>
-            <div class="grid grid-cols-3 gap-4">
-                {% for tool in tools %}
-                <div class="aspect-square bg-white dark:bg-slate-800 rounded-xl flex flex-col items-center justify-center p-6 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-lg transition-shadow">
-                    {% if tool.icon_image %}
-                        <div class="w-20 h-20 mb-4 flex items-center justify-center">
-                            <img src="{{ tool.icon_image.url }}" alt="{{ tool.name }}" class="w-full h-full object-contain" />
+            <div>
+                <!-- Accounting Software Mockup/Illustration -->
+                <div class="relative">
+                    <div class="absolute -top-8 -right-8 w-64 h-64 bg-primary/10 rounded-full blur-3xl"></div>
+                    <div class="absolute -bottom-8 -left-8 w-48 h-48 bg-primary/5 rounded-full blur-3xl"></div>
+                    <div class="relative bg-white dark:bg-slate-900 rounded-2xl border border-[#e7ecf3] dark:border-slate-800 p-6 shadow-2xl hover:shadow-primary/20 transition-shadow duration-300">
+                        {% if hero and hero.hero_image %}
+                        <img src="{{ hero.hero_image.url }}" alt="Professional Accounting Software" class="w-full h-auto rounded-xl" />
+                        {% else %}
+                        <img src="{% static 'images/finance-accounting-software.jpg' %}" alt="Professional Accounting Software" class="w-full h-auto rounded-xl" />
+                        {% endif %}
+                    </div>
+                </div>
+                <!-- Tool Logos Grid -->
+                <div class="mt-8">
+                    <p class="text-xs uppercase font-bold text-slate-500 dark:text-slate-400 tracking-wider mb-4 text-center">Integrated Platforms</p>
+                    <div class="grid grid-cols-3 gap-4">
+                        {% for tool in tools %}
+                        {% if not tool.category %}
+                        <div class="aspect-square bg-white dark:bg-slate-800 rounded-xl flex flex-col items-center justify-center p-4 border border-slate-200 dark:border-slate-700 shadow-sm hover:border-primary hover:shadow-lg hover:-translate-y-1 transition-all duration-300 cursor-pointer group">
+                            {% if tool.icon_image %}
+                            <img src="{{ tool.icon_image.url }}" alt="{{ tool.name }}" class="w-12 h-12 object-contain mb-2 group-hover:scale-110 transition-transform" />
+                            {% endif %}
+                            <div class="text-slate-900 dark:text-white font-bold text-xs text-center">{{ tool.name }}</div>
                         </div>
-                    {% else %}
-                        <div class="w-20 h-20 mb-4 flex items-center justify-center bg-primary/10 rounded-xl">
-                            <span class="material-symbols-outlined text-primary text-4xl">{{ tool.icon|default:'account_balance' }}</span>
-                        </div>
-                    {% endif %}
-                    <div class="text-slate-900 dark:text-white font-bold text-center">{{ tool.name }}</div>
-                </div>
-                {% empty %}
-                <!-- Fallback logos -->
-                <div class="aspect-square bg-white dark:bg-slate-800 rounded-xl flex flex-col items-center justify-center p-6 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-lg transition-shadow">
-                    <div class="w-20 h-20 mb-4 flex items-center justify-center">
-                        <img src="/media/services/finance_accounting/tool_icons/quickbooks.svg?v=2" alt="QuickBooks" class="w-full h-full object-contain" />
+                        {% endif %}
+                        {% endfor %}
                     </div>
-                    <div class="text-slate-900 dark:text-white font-bold text-center">QuickBooks</div>
                 </div>
-                <div class="aspect-square bg-white dark:bg-slate-800 rounded-xl flex flex-col items-center justify-center p-6 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-lg transition-shadow">
-                    <div class="w-20 h-20 mb-4 flex items-center justify-center">
-                        <img src="/media/services/finance_accounting/tool_icons/adp.svg?v=2" alt="ADP" class="w-full h-full object-contain" />
-                    </div>
-                    <div class="text-slate-900 dark:text-white font-bold text-center">ADP</div>
-                </div>
-                <div class="aspect-square bg-white dark:bg-slate-800 rounded-xl flex flex-col items-center justify-center p-6 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-lg transition-shadow">
-                    <div class="w-20 h-20 mb-4 flex items-center justify-center">
-                        <img src="/media/services/finance_accounting/tool_icons/netsuite.svg?v=2" alt="NetSuite" class="w-full h-full object-contain" />
-                    </div>
-                    <div class="text-slate-900 dark:text-white font-bold text-center">NetSuite</div>
-                </div>
-                <div class="aspect-square bg-white dark:bg-slate-800 rounded-xl flex flex-col items-center justify-center p-6 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-lg transition-shadow">
-                    <div class="w-20 h-20 mb-4 flex items-center justify-center">
-                        <img src="/media/services/finance_accounting/tool_icons/xero.svg?v=2" alt="Xero" class="w-full h-full object-contain" />
-                    </div>
-                    <div class="text-slate-900 dark:text-white font-bold text-center">Xero</div>
-                </div>
-                <div class="aspect-square bg-white dark:bg-slate-800 rounded-xl flex flex-col items-center justify-center p-6 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-lg transition-shadow">
-                    <div class="w-20 h-20 mb-4 flex items-center justify-center">
-                        <img src="/media/services/finance_accounting/tool_icons/sage.svg?v=2" alt="Sage" class="w-full h-full object-contain" />
-                    </div>
-                    <div class="text-slate-900 dark:text-white font-bold text-center">Sage</div>
-                </div>
-                <div class="aspect-square bg-white dark:bg-slate-800 rounded-xl flex flex-col items-center justify-center p-6 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-lg transition-shadow">
-                    <div class="w-20 h-20 mb-4 flex items-center justify-center">
-                        <img src="/media/services/finance_accounting/tool_icons/gusto.svg?v=2" alt="Gusto" class="w-full h-full object-contain" />
-                    </div>
-                    <div class="text-slate-900 dark:text-white font-bold text-center">Gusto</div>
-                </div>
-                {% endfor %}
             </div>
         </div>
     </div>
@@ -281,36 +220,6 @@
                         {{ step.description }}
                     </p>
                 </div>
-                {% empty %}
-                <!-- Fallback static steps -->
-                <div class="relative bg-white dark:bg-background-dark px-4">
-                    <div class="w-12 h-12 bg-primary text-white font-black rounded-full flex items-center justify-center mb-6 relative z-10 shadow-lg shadow-primary/30 mx-auto lg:mx-0">01</div>
-                    <h4 class="text-xl font-bold text-slate-900 dark:text-white mb-2 text-center lg:text-left">Account Setup</h4>
-                    <p class="text-sm text-slate-500 dark:text-slate-400 text-center lg:text-left leading-relaxed">
-                        Chart of accounts creation, system integration, and clean historical data migration.
-                    </p>
-                </div>
-                <div class="relative bg-white dark:bg-background-dark px-4">
-                    <div class="w-12 h-12 bg-primary text-white font-black rounded-full flex items-center justify-center mb-6 relative z-10 shadow-lg shadow-primary/30 mx-auto lg:mx-0">02</div>
-                    <h4 class="text-xl font-bold text-slate-900 dark:text-white mb-2 text-center lg:text-left">Daily Operations</h4>
-                    <p class="text-sm text-slate-500 dark:text-slate-400 text-center lg:text-left leading-relaxed">
-                        Transaction recording, invoice processing, expense tracking, and payroll management.
-                    </p>
-                </div>
-                <div class="relative bg-white dark:bg-background-dark px-4">
-                    <div class="w-12 h-12 bg-primary text-white font-black rounded-full flex items-center justify-center mb-6 relative z-10 shadow-lg shadow-primary/30 mx-auto lg:mx-0">03</div>
-                    <h4 class="text-xl font-bold text-slate-900 dark:text-white mb-2 text-center lg:text-left">Monthly Close</h4>
-                    <p class="text-sm text-slate-500 dark:text-slate-400 text-center lg:text-left leading-relaxed">
-                        Account reconciliation, financial statements, variance analysis, and reporting.
-                    </p>
-                </div>
-                <div class="relative bg-white dark:bg-background-dark px-4">
-                    <div class="w-12 h-12 bg-primary text-white font-black rounded-full flex items-center justify-center mb-6 relative z-10 shadow-lg shadow-primary/30 mx-auto lg:mx-0">04</div>
-                    <h4 class="text-xl font-bold text-slate-900 dark:text-white mb-2 text-center lg:text-left">Strategic Advisory</h4>
-                    <p class="text-sm text-slate-500 dark:text-slate-400 text-center lg:text-left leading-relaxed">
-                        Business insights, forecasting, tax planning, and growth strategy recommendations.
-                    </p>
-                </div>
                 {% endfor %}
             </div>
         </div>
@@ -330,46 +239,14 @@
                 <div class="grid sm:grid-cols-2 gap-6">
                     {% for benefit in benefits %}
                     <div class="flex gap-3">
-                        <div class="w-6 h-6 flex items-center justify-center flex-shrink-0">
-                            {% if benefit.icon_image %}
-                                <img src="{{ benefit.icon_image.url }}" alt="{{ benefit.title }}" class="w-full h-full" />
-                            {% else %}
-                                <span class="material-symbols-outlined text-white">{{ benefit.icon }}</span>
-                            {% endif %}
-                        </div>
+                        {% if benefit.icon_image %}
+                        <img src="{{ benefit.icon_image.url }}" alt="{{ benefit.title }}" class="w-6 h-6 object-contain flex-shrink-0" />
+                        {% else %}
+                        <span class="material-symbols-outlined text-white">{{ benefit.icon }}</span>
+                        {% endif %}
                         <div>
-                            <h5 class="font-bold">{{ benefit.metric }}</h5>
+                            <h5 class="font-bold">{{ benefit.title }}</h5>
                             <p class="text-sm opacity-80">{{ benefit.description }}</p>
-                        </div>
-                    </div>
-                    {% empty %}
-                    <!-- Fallback static benefits -->
-                    <div class="flex gap-3">
-                        <span class="material-symbols-outlined text-white">trending_down</span>
-                        <div>
-                            <h5 class="font-bold">42% Cost Reduction</h5>
-                            <p class="text-sm opacity-80">Lower overhead vs hiring full-time accounting staff.</p>
-                        </div>
-                    </div>
-                    <div class="flex gap-3">
-                        <span class="material-symbols-outlined text-white">speed</span>
-                        <div>
-                            <h5 class="font-bold">280 Hours Saved</h5>
-                            <p class="text-sm opacity-80">Monthly time savings to focus on core business activities.</p>
-                        </div>
-                    </div>
-                    <div class="flex gap-3">
-                        <span class="material-symbols-outlined text-white">shield</span>
-                        <div>
-                            <h5 class="font-bold">100% Compliance</h5>
-                            <p class="text-sm opacity-80">Stay compliant with IRS, GAAP, and industry regulations.</p>
-                        </div>
-                    </div>
-                    <div class="flex gap-3">
-                        <span class="material-symbols-outlined text-white">verified</span>
-                        <div>
-                            <h5 class="font-bold">99.98% Accuracy</h5>
-                            <p class="text-sm opacity-80">Error-free bookkeeping with certified professionals.</p>
                         </div>
                     </div>
                     {% endfor %}
@@ -423,70 +300,6 @@
     </div>
 </section>
 
-<!-- Testimonials -->
-<section class="py-24 bg-white dark:bg-background-dark">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-16">
-            <h2 class="text-3xl font-bold mb-4">Trusted by Growing Businesses</h2>
-            <p class="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">Our finance and accounting services help businesses make better financial decisions.</p>
-        </div>
-        <div class="grid md:grid-cols-2 gap-8">
-            {% for testimonial in testimonials %}
-            <div class="bg-white dark:bg-slate-900 border border-[#e7ecf3] dark:border-slate-800 p-8 rounded-xl">
-                <div class="flex items-center gap-4 mb-6">
-                    <div class="size-16 rounded-full overflow-hidden bg-slate-100 flex-shrink-0">
-                        {% if testimonial.client_photo %}
-                        <img class="w-full h-full object-cover" alt="{{ testimonial.client_name }}" src="{{ testimonial.client_photo.url }}" />
-                        {% else %}
-                        <div class="w-full h-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center">
-                            <span class="material-symbols-outlined text-slate-400">person</span>
-                        </div>
-                        {% endif %}
-                    </div>
-                    <div>
-                        <p class="font-bold text-slate-900 dark:text-white">{{ testimonial.client_name }}</p>
-                        <p class="text-sm text-slate-500">{{ testimonial.client_position }}, {{ testimonial.client_company }}</p>
-                    </div>
-                </div>
-                <p class="text-slate-600 dark:text-slate-400 italic leading-relaxed">
-                    "{{ testimonial.testimonial_text }}"
-                </p>
-            </div>
-            {% empty %}
-            <!-- Fallback testimonials -->
-            <div class="bg-white dark:bg-slate-900 border border-[#e7ecf3] dark:border-slate-800 p-8 rounded-xl">
-                <div class="flex items-center gap-4 mb-6">
-                    <div class="size-16 rounded-full overflow-hidden bg-slate-100 flex-shrink-0">
-                        <img class="w-full h-full object-cover" alt="CEO" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCSOi_qlLJG0cA7bB7AJTaMW-k_iOXB8SjLZhyp_QwjpXpzWSGZQ81VInZw9-OGALxY51S3iHWNco6afjwiFyrkJ15m9LvprbpkUlSdCx7S0T3EjgRG6Woxry81B2_GWODy6eLJPtjKTbFE5HYk1SnMjDb-7eo1KeBggdqne1jqk1A8SjsD80bWI72x2z9OA6B1bxaB6kNm7vpN7DCm__NfYj7ksaE7mgFJ86PtCWEgVetE7IqtF4CAKHeCgAI3mhnaEO8MBdFBiwzX" />
-                    </div>
-                    <div>
-                        <p class="font-bold text-slate-900 dark:text-white">Robert Chen</p>
-                        <p class="text-sm text-slate-500">CEO, TechStart Inc</p>
-                    </div>
-                </div>
-                <p class="text-slate-600 dark:text-slate-400 italic leading-relaxed">
-                    "Switching to their finance team saved us $8K/month and gave us real-time financial visibility. Best decision we made for our startup."
-                </p>
-            </div>
-            <div class="bg-white dark:bg-slate-900 border border-[#e7ecf3] dark:border-slate-800 p-8 rounded-xl">
-                <div class="flex items-center gap-4 mb-6">
-                    <div class="size-16 rounded-full overflow-hidden bg-slate-100 flex-shrink-0">
-                        <img class="w-full h-full object-cover" alt="CFO" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA8pDDzP6BfevE_JnONcZ529Z_YB1pMIupHHa3rmte_LACgxKO5ewO678gNiI4-5-uoGJ6Aa4DwaAhfsjxvxAeA8WmE27XXqJmgKtMVIdHv4VqwKQmEwklfkjPYYA3E8A6WfeO3LY2l0-OxlSnKvI4xWL5W-DHhb0D3iWsrRi-CsIVm4LwfoZA4ovW1ehUZ5a7r1IWGiU-RBLfJtm3bbvHj7Q9NtrSWDIV-g6PMgMHIsZZv89Doq0oVI_X8YMbZl_lga2YBHQIlAaF3" />
-                    </div>
-                    <div>
-                        <p class="font-bold text-slate-900 dark:text-white">Amanda Williams</p>
-                        <p class="text-sm text-slate-500">CFO, RetailPro</p>
-                    </div>
-                </div>
-                <p class="text-slate-600 dark:text-slate-400 italic leading-relaxed">
-                    "Their virtual CFO service provided strategic financial guidance that helped us secure $2M in funding. Absolutely professional team."
-                </p>
-            </div>
-            {% endfor %}
-        </div>
-    </div>
-</section>
-
 <!-- Final CTA -->
 <section class="py-24 bg-slate-50 dark:bg-slate-900/30">
     <div class="max-w-5xl mx-auto px-4 text-center">
@@ -499,16 +312,8 @@
             <a href="{{ cta.cta_primary_url }}" class="bg-primary hover:bg-primary/90 text-white px-10 py-5 rounded-lg font-black text-lg transition-all shadow-xl shadow-primary/25">
                 {{ cta.cta_primary_text }}
             </a>
-            <a href="{{ cta.cta_secondary_url }}" class="bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white px-10 py-5 rounded-lg font-black text-lg transition-all hover:bg-slate-200 dark:hover:bg-slate-700">
-                {{ cta.cta_secondary_text }}
-            </a>
         </div>
-        <p class="mt-8 text-sm text-slate-500 flex items-center justify-center gap-2">
-            <span class="material-symbols-outlined text-green-500 text-lg">verified_user</span> 
-            {{ cta.guarantee_text }}
-        </p>
         {% else %}
-        <!-- Fallback CTA -->
         <h2 class="text-4xl md:text-5xl font-black text-slate-900 dark:text-white mb-6">Ready to Optimize Your Finances?</h2>
         <p class="text-xl text-slate-600 dark:text-slate-400 mb-10 max-w-2xl mx-auto">
             Get expert financial management that saves time, reduces costs, and provides the insights you need to grow your business confidently.
@@ -517,14 +322,7 @@
             <a href="{% url 'contact' %}" class="bg-primary hover:bg-primary/90 text-white px-10 py-5 rounded-lg font-black text-lg transition-all shadow-xl shadow-primary/25">
                 Get Free Financial Review
             </a>
-            <a href="{% url 'contact' %}" class="bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white px-10 py-5 rounded-lg font-black text-lg transition-all hover:bg-slate-200 dark:hover:bg-slate-700">
-                View Pricing Options
-            </a>
         </div>
-        <p class="mt-8 text-sm text-slate-500 flex items-center justify-center gap-2">
-            <span class="material-symbols-outlined text-green-500 text-lg">verified_user</span> 
-            CPA-certified accountants with 20+ years of experience.
-        </p>
         {% endif %}
     </div>
 </section>

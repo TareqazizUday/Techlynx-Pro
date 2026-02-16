@@ -238,7 +238,6 @@ class Command(BaseCommand):
                 'client_name': 'Sarah Thompson',
                 'client_position': 'Marketing Director',
                 'client_company': 'GreenLife',
-                'client_photo': 'https://lh3.googleusercontent.com/aida-public/AB6AXuCSOi_qlLJG0cA7bB7AJTaMW-k_iOXB8SjLZhyp_QwjpXpzWSGZQ81VInZw9-OGALxY51S3iHWNco6afjwiFyrkJ15m9LvprbpkUlSdCx7S0T3EjgRG6Woxry81B2_GWODy6eLJPtjKTbFE5HYk1SnMjDb-7eo1KeBggdqne1jqk1A8SjsD80bWI72x2z9OA6B1bxaB6kNm7vpN7DCm__NfYj7ksaE7mgFJ86PtCWEgVetE7IqtF4CAKHeCgAI3mhnaEO8MBdFBiwzX',
                 'testimonial_text': 'Their blog content increased our organic traffic by 320% in 6 months. Every post ranks on page 1. Absolutely phenomenal quality and strategy.',
                 'order': 1
             },
@@ -246,7 +245,6 @@ class Command(BaseCommand):
                 'client_name': 'Marcus Bennett',
                 'client_position': 'Brand Manager',
                 'client_company': 'TechWave',
-                'client_photo': 'https://lh3.googleusercontent.com/aida-public/AB6AXuA8pDDzP6BfevE_JnONcZ529Z_YB1pMIupHHa3rmte_LACgxKO5ewO678gNiI4-5-uoGJ6Aa4DwaAhfsjxvxAeA8WmE27XXqJmgKtMVIdHv4VqwKQmEwklfkjPYYA3E8A6WfeO3LY2l0-OxlSnKvI4xWL5W-DHhb0D3iWsrRi-CsIVm4LwfoZA4ovW1ehUZ5a7r1IWGiU-RBLfJtm3bbvHj7Q9NtrSWDIV-g6PMgMHIsZZv89Doq0oVI_X8YMbZl_lga2YBHQIlAaF3',
                 'testimonial_text': 'The video content they produced for our product launch went viral—2.5M views in the first week. Creative, professional, and on-brand.',
                 'order': 2
             },

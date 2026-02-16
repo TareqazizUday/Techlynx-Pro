@@ -243,13 +243,6 @@ class Command(BaseCommand):
                 'testimonial_text': 'Switching to their finance team saved us $8K/month and gave us real-time financial visibility. Best decision we made for our startup.',
                 'order': 1,
             },
-            {
-                'client_name': 'Amanda Williams',
-                'client_position': 'CFO',
-                'client_company': 'RetailPro',
-                'testimonial_text': 'Their virtual CFO service provided strategic financial guidance that helped us secure $2M in funding. Absolutely professional team.',
-                'order': 2,
-            },
         ]
 
         for testimonial_data in testimonials_data:

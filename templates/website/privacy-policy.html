@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Privacy Policy | Techlynx Pro{% endblock %}
+
+{% block meta_description %}Techlynx Pro Privacy Policy. Learn how we collect, use, and protect your personal information when you use our services.{% endblock %}
+
+{% block content %}
+<main class="overflow-x-hidden">
+<!-- Hero Section -->
+<section class="relative bg-gradient-to-br from-slate-50 to-white dark:from-background-dark dark:to-slate-900 py-16 md:py-24 overflow-hidden">
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-primary/5 via-transparent to-transparent"></div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="max-w-4xl">
+            <span class="inline-block px-3 py-1 mb-4 text-xs font-bold tracking-widest text-primary uppercase bg-primary/10 rounded-full">Legal</span>
+            <h1 class="text-4xl md:text-6xl font-black leading-tight tracking-tight text-slate-900 dark:text-white mb-6">
+                {% if policy %}{{ policy.title }}{% else %}Privacy Policy{% endif %}
+            </h1>
+            <p class="text-lg md:text-xl text-slate-600 dark:text-slate-400 leading-relaxed">
+                Last Updated: <span id="last-updated">{% if policy %}{{ policy.last_updated|date:"F Y" }}{% else %}January 2025{% endif %}</span>
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- Introduction Section -->
+{% if policy and policy.introduction %}
+<section class="py-8 bg-white dark:bg-background-dark border-b border-slate-200 dark:border-slate-800">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="prose prose-lg dark:prose-invert max-w-none">
+            <p class="text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
+                {{ policy.introduction|safe }}
+            </p>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Privacy Policy Content -->
+<section class="py-10 md:py-12 bg-white dark:bg-background-dark">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="prose prose-lg dark:prose-invert max-w-none">
+            
+            {% if policy and policy.content %}
+            <div class="text-slate-600 dark:text-slate-400 leading-relaxed legal-content">
+                {{ policy.content|safe }}
+            </div>
+            {% else %}
+            <div class="text-center py-12">
+                <p class="text-slate-500 dark:text-slate-400">Privacy Policy content is being updated. Please check back soon.</p>
+            </div>
+            {% endif %}
+
+        </div>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section class="py-10 md:py-12 bg-slate-50 dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="prose prose-lg dark:prose-invert max-w-none">
+            <h2 class="text-3xl font-black text-slate-900 dark:text-white mb-6">Contact Us</h2>
+            <p class="text-slate-600 dark:text-slate-400 mb-4 leading-relaxed">
+                If you have any questions, concerns, or requests regarding this Privacy Policy or our data practices, please contact us:
+            </p>
+            <div class="bg-white dark:bg-slate-800 rounded-xl p-6 mt-6 border border-slate-200 dark:border-slate-700">
+                <p class="text-slate-900 dark:text-white font-bold mb-2">Techlynx Pro</p>
+                <p class="text-slate-600 dark:text-slate-400 mb-2">
+                    Email: <a href="mailto:{% if policy %}{{ policy.contact_email }}{% else %}privacy@techlynxpro.com{% endif %}" class="text-primary hover:underline">{% if policy %}{{ policy.contact_email }}{% else %}privacy@techlynxpro.com{% endif %}</a>
+                </p>
+                <p class="text-slate-600 dark:text-slate-400 mb-2">
+                    Website: <a href="{% if policy %}{{ policy.contact_url }}{% else %}/contact/{% endif %}" class="text-primary hover:underline">Contact Us</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+</main>
+
+<style>
+    /* Professional spacing for legal content */
+    .legal-content > div {
+        margin-bottom: 2rem !important;
+    }
+    
+    .legal-content h2 {
+        margin-top: 2rem !important;
+        margin-bottom: 1rem !important;
+    }
+    
+    .legal-content h2:first-child {
+        margin-top: 0 !important;
+    }
+    
+    .legal-content h3 {
+        margin-top: 1.5rem !important;
+        margin-bottom: 0.75rem !important;
+    }
+    
+    .legal-content p {
+        margin-bottom: 1rem !important;
+    }
+    
+    .legal-content ul,
+    .legal-content ol {
+        margin-top: 0.5rem !important;
+        margin-bottom: 1rem !important;
+    }
+    
+    .legal-content li {
+        margin-bottom: 0.5rem !important;
+    }
+</style>
+{% endblock %}
+

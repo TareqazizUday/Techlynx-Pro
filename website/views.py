@@ -6,6 +6,7 @@ from django.conf import settings
 import google.generativeai as genai
 import json
 import time
+import requests
 from .models import (
     ContactInquiry, Newsletter, HeroSection, HeroBenefit, CompanyStat,
     Service, Benefit, Guarantee, CaseStudy, Testimonial, Partner, CTASection,
@@ -15,7 +16,13 @@ from .models import (
     SEOAuditTestimonial, SEOAuditCTA,
     PMHero, PMService, PMTool, PMToolLogo, PMProcess, PMBenefit,
     PMMetric, PMTestimonial, PMCTA,
-    FAHero, FAService, FATool, FAProcess, FABenefit, FATestimonial, FACTA
+    FAHero, FAService, FATool, FAProcess, FABenefit, FATestimonial, FACTA,
+    SEOAuditHero, SEOAuditService, SEOAuditTool, SEOAuditToolLogo,
+    SEOAuditProcess, SEOAuditResult, SEOAuditBenefit, SEOAuditHealthMetric,
+    SEOAuditTestimonial, SEOAuditCTA,
+    AboutPageSEO, AboutPageHero, AboutPageMissionVision, AboutPageAdvantage,
+    AboutPageAdvantageSection, AboutPageTimeline, AboutPageTimelineSection,
+    AboutPageTeamMember, AboutPageTeamSection, AboutPageCTA
 )
 from .chatbot_context import get_chatbot_context
 
@@ -39,8 +46,64 @@ def home(request):
 
 
 def about(request):
-    """About Us page view"""
-    return render(request, 'website/about.html')
+    """About Us page view with dynamic content"""
+    from .models import (
+        AboutPageSEO, AboutPageHero, AboutPageMissionVision, AboutPageAdvantage,
+        AboutPageAdvantageSection, AboutPageTimeline, AboutPageTimelineSection,
+        AboutPageTeamMember, AboutPageTeamSection, AboutPageCTA
+    )
+    
+    seo = AboutPageSEO.objects.first()
+    hero = AboutPageHero.objects.filter(is_active=True).first()
+    mission_vision = AboutPageMissionVision.objects.filter(is_active=True).first()
+    advantage_section = AboutPageAdvantageSection.objects.filter(is_active=True).first()
+    advantages = AboutPageAdvantage.objects.filter(is_active=True).order_by('order')
+    timeline_section = AboutPageTimelineSection.objects.filter(is_active=True).first()
+    timeline_items = AboutPageTimeline.objects.filter(is_active=True).order_by('order')
+    team_section = AboutPageTeamSection.objects.filter(is_active=True).first()
+    team_members = AboutPageTeamMember.objects.filter(is_active=True).order_by('order')
+    cta = AboutPageCTA.objects.filter(is_active=True).first()
+    
+    context = {
+        'seo': seo,
+        'hero': hero,
+        'mission_vision': mission_vision,
+        'advantage_section': advantage_section,
+        'advantages': advantages,
+        'timeline_section': timeline_section,
+        'timeline_items': timeline_items,
+        'team_section': team_section,
+        'team_members': team_members,
+        'cta': cta,
+    }
+    
+    return render(request, 'website/about.html', context)
+
+
+def privacy_policy(request):
+    """Privacy Policy page view with dynamic content"""
+    from .models import PrivacyPolicy
+    
+    policy = PrivacyPolicy.objects.filter(is_active=True).first()
+    
+    context = {
+        'policy': policy,
+    }
+    
+    return render(request, 'website/privacy-policy.html', context)
+
+
+def terms_of_service(request):
+    """Terms of Service page view with dynamic content"""
+    from .models import TermsOfService
+    
+    terms = TermsOfService.objects.filter(is_active=True).first()
+    
+    context = {
+        'terms': terms,
+    }
+    
+    return render(request, 'website/terms-of-service.html', context)
 
 
 def services(request):
@@ -50,16 +113,52 @@ def services(request):
         full_name = request.POST.get('full_name')
         email = request.POST.get('email')
         service_interest = request.POST.get('service_interest')
-        message = request.POST.get('message', f'Service inquiry for: {service_interest}')
+        phone = request.POST.get('phone', '')
+        company = request.POST.get('company', '')
+        budget_range = request.POST.get('budget_range', '')
+        project_details = request.POST.get('project_details', f'Service inquiry for: {service_interest}')
+        
+        # Get tracking information
+        source_url = request.POST.get('source_url', request.build_absolute_uri())
+        referrer_url = request.META.get('HTTP_REFERER', '')
+        user_agent = request.META.get('HTTP_USER_AGENT', '')
+        
+        # Get IP address (check for proxy/load balancer)
+        ip_address = request.META.get('HTTP_X_FORWARDED_FOR', '').split(',')[0].strip() if request.META.get('HTTP_X_FORWARDED_FOR') else request.META.get('REMOTE_ADDR', None)
+        if not ip_address or ip_address == '':
+            ip_address = request.META.get('REMOTE_ADDR', None)
+        
+        # Get country from IP
+        country = ''
+        if ip_address:
+            try:
+                country = get_country_from_ip(ip_address)
+            except:
+                country = ''
+        
+        # Get UTM parameters if available
+        utm_source = request.POST.get('utm_source', '')
+        utm_medium = request.POST.get('utm_medium', '')
+        utm_campaign = request.POST.get('utm_campaign', '')
         
         # Save inquiry to database
         if full_name and email and service_interest:
             ContactInquiry.objects.create(
                 full_name=full_name,
                 email=email,
-                service_of_interest=service_interest,
-                message=message,
-                inquiry_type='Service Inquiry'
+                phone=phone,
+                company=company,
+                service_interest=service_interest,
+                budget_range=budget_range,
+                project_details=project_details,
+                source_url=source_url,
+                referrer_url=referrer_url,
+                user_agent=user_agent,
+                ip_address=ip_address,
+                country=country,
+                utm_source=utm_source,
+                utm_medium=utm_medium,
+                utm_campaign=utm_campaign,
             )
             messages.success(request, 'Thank you! Your inquiry has been submitted successfully. We will contact you soon.')
         else:
@@ -71,7 +170,7 @@ def services(request):
         'hero': ServicesPageHero.objects.first(),
         'services': ServiceDetail.objects.filter(is_active=True).prefetch_related('features').order_by('order'),
         'why_choose_items': WhyChooseItem.objects.filter(is_active=True).order_by('order'),
-        'why_choose_images': WhyChooseImage.objects.all().order_by('order'),
+        'why_choose_images': WhyChooseImage.objects.filter(is_active=True).order_by('order')[:4],  # Limit to 4 active images for 2x2 grid
         'cta_section': ServicesPageCTA.objects.filter(is_active=True).prefetch_related('checklist_items').first(),
     }
     return render(request, 'website/services.html', context)
@@ -163,20 +262,19 @@ def app_development(request):
 
 
 def seo_audit(request):
-    """SEO Audit services page"""
+    """SEO Audit services page with dynamic content"""
     context = {
         'hero': SEOAuditHero.objects.filter(is_active=True).first(),
-        'services': SEOAuditService.objects.filter(is_active=True),
-        'tools': SEOAuditTool.objects.filter(is_active=True),
-        'tool_logos': SEOAuditToolLogo.objects.filter(is_active=True),
-        'process_steps': SEOAuditProcess.objects.filter(is_active=True),
+        'seo_services': SEOAuditService.objects.filter(is_active=True).order_by('order'),
+        'seo_tools': SEOAuditTool.objects.filter(is_active=True).order_by('order'),
+        'tool_logos': SEOAuditToolLogo.objects.filter(is_active=True).order_by('order'),
+        'process_steps': SEOAuditProcess.objects.filter(is_active=True).order_by('step_number'),
         'results': SEOAuditResult.objects.filter(is_active=True).first(),
-        'benefits': SEOAuditBenefit.objects.filter(is_active=True),
-        'health_metrics': SEOAuditHealthMetric.objects.filter(is_active=True),
-        'testimonials': SEOAuditTestimonial.objects.filter(is_active=True),
-        'cta': SEOAuditCTA.objects.filter(is_active=True).first(),
+        'benefits': SEOAuditBenefit.objects.filter(is_active=True).order_by('order'),
+        'health_metrics': SEOAuditHealthMetric.objects.filter(is_active=True).order_by('order'),
+        'testimonials': SEOAuditTestimonial.objects.filter(is_active=True).order_by('order'),
+        'cta_section': SEOAuditCTA.objects.filter(is_active=True).first(),
     }
-    
     return render(request, 'website/seo-audit.html', context)
 
 
@@ -480,7 +578,7 @@ def testimonials(request):
         AITestimonial, DigitalMarketingTestimonial, AppDevTestimonial,
         SEOAuditTestimonial, PMTestimonial, FATestimonial, CPTestimonial,
         TestimonialsPageSEO, TestimonialsPageHero, TestimonialsPageWhyChoose,
-        TestimonialsPageWhyChooseReason, TestimonialsPageCTA
+        TestimonialsPageWhyChooseReason, TestimonialsPageCTA, TestimonialsPageMetric
     )
     
     # Get dynamic page content
@@ -489,6 +587,7 @@ def testimonials(request):
     why_choose = TestimonialsPageWhyChoose.objects.filter(is_active=True).first()
     why_choose_reasons = TestimonialsPageWhyChooseReason.objects.filter(is_active=True).order_by('order')
     cta = TestimonialsPageCTA.objects.filter(is_active=True).first()
+    metrics = TestimonialsPageMetric.objects.filter(is_active=True).order_by('order')
     
     # Gather testimonials from all services
     ai_testimonials = AITestimonial.objects.filter(is_active=True).order_by('order')[:10]
@@ -498,6 +597,54 @@ def testimonials(request):
     pm_testimonials = PMTestimonial.objects.filter(is_active=True).order_by('order')[:10]
     fa_testimonials = FATestimonial.objects.filter(is_active=True).order_by('order')[:10]
     cp_testimonials = CPTestimonial.objects.filter(is_active=True).order_by('order')[:10]
+    
+    # Create unified testimonial list with service metadata for simplified templating
+    unified_testimonials = []
+    
+    # AI Solutions (Blue theme)
+    for testimonial in ai_testimonials:
+        unified_testimonials.append({
+            'testimonial': testimonial,
+            'service': 'AI Solutions',
+            'color_primary': 'primary',
+            'color_secondary': 'blue-600',
+            'bg_gradient_from': 'blue-500/10',
+            'bg_gradient_to': 'purple-500/10',
+            'border_color': 'blue-200',
+            'dark_border': 'blue-800',
+            'text_color': 'blue-600',
+            'dark_text': 'blue-400'
+        })
+    
+    # Digital Marketing (Green theme)
+    for testimonial in marketing_testimonials:
+        unified_testimonials.append({
+            'testimonial': testimonial,
+            'service': 'Digital Marketing',
+            'color_primary': 'green-500',
+            'color_secondary': 'emerald-600',
+            'bg_gradient_from': 'green-500/10',
+            'bg_gradient_to': 'emerald-500/10',
+            'border_color': 'green-200',
+            'dark_border': 'green-800',
+            'text_color': 'green-600',
+            'dark_text': 'green-400'
+        })
+    
+    # App Development (Purple theme)
+    for testimonial in app_testimonials:
+        unified_testimonials.append({
+            'testimonial': testimonial,
+            'service': 'App Development',
+            'color_primary': 'purple-500',
+            'color_secondary': 'pink-600',
+            'bg_gradient_from': 'purple-500/10',
+            'bg_gradient_to': 'pink-500/10',
+            'border_color': 'purple-200',
+            'dark_border': 'purple-800',
+            'text_color': 'purple-600',
+            'dark_text': 'purple-400'
+        })
     
     # Calculate total testimonials
     total_testimonials = (
@@ -514,7 +661,10 @@ def testimonials(request):
         'why_choose': why_choose,
         'why_choose_reasons': why_choose_reasons,
         'cta': cta,
-        # Testimonials
+        'metrics': metrics,
+        # Unified testimonials (removes duplicate template code)
+        'unified_testimonials': unified_testimonials,
+        # Legacy testimonials (kept for compatibility)
         'ai_testimonials': ai_testimonials,
         'marketing_testimonials': marketing_testimonials,
         'app_testimonials': app_testimonials,
@@ -528,38 +678,145 @@ def testimonials(request):
     return render(request, 'website/testimonials.html', context)
 
 
+def get_country_from_ip(ip_address):
+    """Get country name from IP address using free API"""
+    if not ip_address:
+        return 'Unknown'
+    
+    # Check for local/private IPs
+    if ip_address == '127.0.0.1' or ip_address == '::1' or ip_address.startswith('192.168.') or ip_address.startswith('10.') or ip_address.startswith('172.16.'):
+        return 'Local/Unknown'
+    
+    # Try multiple APIs to get country
+    try:
+        # Method 1: ip-api.com (free, no API key required, 45 requests/minute)
+        response = requests.get(f'http://ip-api.com/json/{ip_address}', timeout=5)
+        if response.status_code == 200:
+            data = response.json()
+            if data.get('status') == 'success':
+                country = data.get('country', '').strip()
+                if country and country != 'None':
+                    return country
+    except Exception as e:
+        pass
+    
+    try:
+        # Method 2: ipapi.co (free, 1000 requests/day)
+        response = requests.get(f'https://ipapi.co/{ip_address}/country_name/', timeout=5)
+        if response.status_code == 200:
+            country = response.text.strip()
+            if country and country != 'None' and country != 'Undefined':
+                return country
+    except Exception as e:
+        pass
+    
+    try:
+        # Method 3: ip-api.com alternative endpoint
+        response = requests.get(f'https://ip-api.com/json/{ip_address}?fields=status,country', timeout=5)
+        if response.status_code == 200:
+            data = response.json()
+            if data.get('status') == 'success':
+                country = data.get('country', '').strip()
+                if country and country != 'None':
+                    return country
+    except Exception as e:
+        pass
+    
+    try:
+        # Method 4: ipgeolocation.io (free tier available)
+        response = requests.get(f'https://api.ipgeolocation.io/ipgeo?ip={ip_address}', timeout=5)
+        if response.status_code == 200:
+            data = response.json()
+            country = data.get('country_name', '').strip()
+            if country and country != 'None':
+                return country
+    except Exception as e:
+        pass
+    
+    # If all APIs fail, return Unknown
+    return 'Unknown'
+
 def contact(request):
-    """Contact page with form handling"""
+    """Contact page with form handling and tracking"""
     if request.method == 'POST':
         try:
-            # Save contact inquiry
+            # Get client IP address
+            x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+            if x_forwarded_for:
+                ip_address = x_forwarded_for.split(',')[0].strip()
+            else:
+                ip_address = request.META.get('REMOTE_ADDR')
+            
+            # Get country from IP address
+            country = get_country_from_ip(ip_address) if ip_address else 'Unknown'
+            
+            # Save contact inquiry with tracking information
             inquiry = ContactInquiry(
                 full_name=request.POST.get('full_name'),
                 email=request.POST.get('email'),
+                phone=request.POST.get('phone', ''),
+                company=request.POST.get('company', ''),
                 service_interest=request.POST.get('service_interest'),
                 budget_range=request.POST.get('budget_range', ''),
-                project_details=request.POST.get('project_details', '')
+                project_details=request.POST.get('project_details', ''),
+                # Tracking fields
+                source_url=request.POST.get('source_url', request.build_absolute_uri()),
+                referrer_url=request.META.get('HTTP_REFERER', ''),
+                user_agent=request.META.get('HTTP_USER_AGENT', ''),
+                ip_address=ip_address,
+                country=country,
+                utm_source=request.POST.get('utm_source', ''),
+                utm_medium=request.POST.get('utm_medium', ''),
+                utm_campaign=request.POST.get('utm_campaign', ''),
             )
             inquiry.save()
-            messages.success(request, 'Thank you! Your inquiry has been submitted successfully.')
+            messages.success(request, 'Thank you! Your inquiry has been submitted successfully. We will get back to you within 24 hours.')
             return redirect('contact')
         except Exception as e:
-            messages.error(request, 'An error occurred. Please try again.')
+            messages.error(request, f'An error occurred. Please try again. Error: {str(e)}')
     
-    return render(request, 'website/contact.html')
+    # Get current URL and UTM parameters for form
+    context = {
+        'current_url': request.build_absolute_uri(),
+        'utm_source': request.GET.get('utm_source', ''),
+        'utm_medium': request.GET.get('utm_medium', ''),
+        'utm_campaign': request.GET.get('utm_campaign', ''),
+        'referrer': request.META.get('HTTP_REFERER', ''),
+    }
+    
+    return render(request, 'website/contact.html', context)
 
 
 def newsletter_subscribe(request):
     """Handle newsletter subscription"""
     if request.method == 'POST':
-        email = request.POST.get('email')
+        email = request.POST.get('email', '').strip().lower()
+        
+        if not email:
+            if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+                return JsonResponse({'success': False, 'message': 'Please provide a valid email address.'}, status=400)
+            messages.error(request, 'Please provide a valid email address.')
+            return redirect(request.META.get('HTTP_REFERER', 'home'))
+        
         try:
-            Newsletter.objects.create(email=email)
-            messages.success(request, 'Successfully subscribed to our newsletter!')
-        except:
-            messages.info(request, 'This email is already subscribed.')
+            # Check if email already exists
+            if Newsletter.objects.filter(email=email).exists():
+                if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+                    return JsonResponse({'success': False, 'message': 'This email is already subscribed to our newsletter.'}, status=400)
+                messages.info(request, 'This email is already subscribed to our newsletter.')
+            else:
+                Newsletter.objects.create(email=email)
+                if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+                    return JsonResponse({'success': True, 'message': 'Successfully subscribed to our newsletter! Thank you!'})
+                messages.success(request, 'Successfully subscribed to our newsletter! Thank you!')
+        except Exception as e:
+            if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+                return JsonResponse({'success': False, 'message': 'An error occurred. Please try again later.'}, status=500)
+            messages.error(request, 'An error occurred. Please try again later.')
     
-    return redirect('home')
+    # Redirect to referer or home
+    referer = request.META.get('HTTP_REFERER', '/')
+    return redirect(referer)
 
 
 @csrf_exempt

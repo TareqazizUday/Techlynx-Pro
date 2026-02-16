@@ -26,7 +26,12 @@ from .models import (
     FAHero, FAService, FATool, FAProcess, FABenefit, FATestimonial, FACTA,
     CPService, CPTool, CPBenefit, CPProcessStep, CPMetric, CPTestimonial, CPTechnology,
     TestimonialsPageSEO, TestimonialsPageHero, TestimonialsPageWhyChooseReason,
-    TestimonialsPageWhyChoose, TestimonialsPageCTA
+    TestimonialsPageWhyChoose, TestimonialsPageCTA, TestimonialsPageMetric,
+    PrivacyPolicy, PrivacyPolicySection, PrivacyPolicySubsection,
+    TermsOfService, TermsOfServiceSection, TermsOfServiceSubsection,
+    AboutPageSEO, AboutPageHero, AboutPageMissionVision, AboutPageAdvantage,
+    AboutPageAdvantageSection, AboutPageTimeline, AboutPageTimelineSection,
+    AboutPageTeamMember, AboutPageTeamSection, AboutPageCTA
 )
 
 
@@ -52,11 +57,43 @@ admin.site.index_title = 'Website Management Dashboard'
 
 @admin.register(ContactInquiry)
 class ContactInquiryAdmin(admin.ModelAdmin):
-    list_display = ('full_name', 'email', 'service_interest', 'created_at')
-    list_filter = ('service_interest', 'created_at')
-    search_fields = ('full_name', 'email', 'project_details')
-    readonly_fields = ('created_at',)
+    list_display = ('full_name', 'email', 'phone', 'company', 'service_interest', 'country', 'source_display', 'is_read', 'created_at')
+    list_filter = ('service_interest', 'is_read', 'created_at', 'utm_source', 'utm_medium', 'country')
+    search_fields = ('full_name', 'email', 'phone', 'company', 'project_details', 'source_url', 'referrer_url', 'country')
+    readonly_fields = ('created_at', 'ip_address', 'user_agent', 'country')
+    list_editable = ('is_read',)
     date_hierarchy = 'created_at'
+    list_per_page = 25
+    
+    fieldsets = (
+        ('Contact Information', {
+            'fields': ('full_name', 'email', 'phone', 'company')
+        }),
+        ('Project Details', {
+            'fields': ('service_interest', 'budget_range', 'project_details')
+        }),
+        ('Tracking Information', {
+            'fields': ('source_url', 'referrer_url', 'ip_address', 'country', 'user_agent', 'utm_source', 'utm_medium', 'utm_campaign'),
+            'classes': ('collapse',),
+            'description': 'Automatically captured tracking information when form is submitted.'
+        }),
+        ('Status & Notes', {
+            'fields': ('is_read', 'notes', 'created_at')
+        }),
+    )
+    
+    def source_display(self, obj):
+        """Display source URL in a shortened format"""
+        if obj.source_url:
+            url = obj.source_url[:50] + '...' if len(obj.source_url) > 50 else obj.source_url
+            return url
+        return '-'
+    source_display.short_description = 'Source URL'
+    
+    def get_readonly_fields(self, request, obj=None):
+        if obj:  # editing an existing object
+            return self.readonly_fields + ('full_name', 'email', 'phone', 'company', 'service_interest', 'budget_range', 'project_details', 'source_url', 'referrer_url', 'user_agent', 'ip_address', 'country', 'utm_source', 'utm_medium', 'utm_campaign')
+        return self.readonly_fields
 
 
 @admin.register(Newsletter)
@@ -265,7 +302,7 @@ class ServicesPageHeroAdmin(admin.ModelAdmin):
             'fields': ('cta_primary_text', 'cta_primary_url', 'cta_secondary_text', 'cta_secondary_url')
         }),
         ('Hero Image', {
-            'fields': ('hero_image', 'image_preview')
+            'fields': ('hero_image', 'image_preview', 'hero_image_alt_text')
         }),
         ('Stat Badge', {
             'fields': ('stat_value', 'stat_label', 'stat_icon', 'is_stat_visible')
@@ -341,8 +378,9 @@ class WhyChooseItemAdmin(admin.ModelAdmin):
 
 @admin.register(WhyChooseImage)
 class WhyChooseImageAdmin(admin.ModelAdmin):
-    list_display = ('alt_text', 'image_preview', 'order')
-    list_editable = ('order',)
+    list_display = ('alt_text', 'image_preview', 'order', 'is_active')
+    list_editable = ('order', 'is_active')
+    list_filter = ('is_active',)
     search_fields = ('alt_text',)
     readonly_fields = ('image_preview',)
     ordering = ('order',)
@@ -352,7 +390,7 @@ class WhyChooseImageAdmin(admin.ModelAdmin):
             'fields': ('image', 'image_preview', 'alt_text')
         }),
         ('Display', {
-            'fields': ('order',)
+            'fields': ('order', 'is_active')
         }),
     )
     
@@ -704,7 +742,16 @@ class AISolutionsHeroAdmin(admin.ModelAdmin):
                       ('cta_secondary_text', 'cta_secondary_url'))
         }),
         ('Hero Metrics', {
-            'fields': ('metric_title', 'metric_main', 'automation_rate', 'time_saved')
+            'fields': ('metric_title', 'metric_main', 'automation_rate', 'automation_rate_label', 'time_saved', 'time_saved_label')
+        }),
+        ('Section Titles & Descriptions', {
+            'fields': (
+                ('services_section_title', 'services_section_description'),
+                ('tech_stack_section_title', 'tech_stack_section_description'),
+                ('process_section_title', 'process_section_description'),
+                ('roi_section_title', 'roi_section_description'),
+                ('performance_metrics_title',),
+            )
         }),
         ('Status', {
             'fields': ('is_active',)
@@ -882,11 +929,22 @@ class WebDevHeroAdmin(admin.ModelAdmin):
     list_display = ('__str__', 'is_active')
     fieldsets = (
         ('Badge & Headline', {
-            'fields': ('badge_text', 'headline', 'description')
+            'fields': ('badge_icon', 'badge_text', 'headline', 'description')
         }),
         ('Call-to-Actions', {
             'fields': (('cta_primary_text', 'cta_primary_url'),
                       ('cta_secondary_text', 'cta_secondary_url'))
+        }),
+        ('Hero Metrics', {
+            'fields': ('metric_title', 'metric_main', 'lighthouse_score', 'seo_score')
+        }),
+        ('Section Titles & Descriptions', {
+            'fields': (
+                ('services_section_title', 'services_section_description'),
+                ('tech_stack_section_title', 'tech_stack_section_description'),
+                ('process_section_title', 'process_section_description'),
+                ('seo_section_title', 'seo_section_description'),
+            )
         }),
         ('Hero Image', {
             'fields': ('hero_image',)
@@ -1029,11 +1087,8 @@ class WebDevCTAAdmin(admin.ModelAdmin):
 class DigitalMarketingHeroAdmin(admin.ModelAdmin):
     list_display = ('__str__', 'growth_percentage', 'is_active')
     fieldsets = (
-        ('Badge', {
-            'fields': ('badge_text', 'badge_icon')
-        }),
-        ('Headline & Description', {
-            'fields': ('headline', 'description')
+        ('Badge & Headline', {
+            'fields': ('badge_icon', 'badge_text', 'headline', 'description')
         }),
         ('Call-to-Actions', {
             'fields': (('cta_primary_text', 'cta_primary_url'),
@@ -1041,6 +1096,16 @@ class DigitalMarketingHeroAdmin(admin.ModelAdmin):
         }),
         ('Hero Stats', {
             'fields': ('growth_percentage', 'avg_cpc_reduction', 'conversion_rate')
+        }),
+        ('Hero Metrics', {
+            'fields': ('metric_title', 'metric_main', 'avg_cpc_label', 'conversion_rate_label')
+        }),
+        ('Section Titles & Descriptions', {
+            'fields': (
+                ('services_section_title', 'services_section_description'),
+                ('strategy_section_title', 'strategy_section_description'),
+                ('metrics_section_title', 'metrics_section_description'),
+            )
         }),
         ('Status', {
             'fields': ('is_active',)
@@ -1125,7 +1190,7 @@ class DigitalMarketingCTAAdmin(admin.ModelAdmin):
             'fields': ('icon', 'headline', 'description')
         }),
         ('Call-to-Action', {
-            'fields': ('cta_text', 'cta_url')
+            'fields': ('cta_text', 'cta_url', 'footer_text')
         }),
         ('Status', {
             'fields': ('is_active',)
@@ -1145,17 +1210,27 @@ class AppDevHeroAdmin(admin.ModelAdmin):
     list_display = ('headline', 'engagement_growth', 'is_active', 'order')
     list_editable = ('is_active', 'order')
     fieldsets = (
-        ('Badge', {
-            'fields': ('badge_icon', 'badge_text')
+        ('Badge & Headline', {
+            'fields': ('badge_icon', 'badge_text', 'headline', 'description')
         }),
-        ('Content', {
-            'fields': ('headline', 'description')
+        ('Call-to-Actions', {
+            'fields': (('cta_primary_text', 'cta_primary_url'),
+                      ('cta_secondary_text', 'cta_secondary_url'))
         }),
-        ('Metrics', {
+        ('Hero Stats', {
             'fields': ('engagement_growth',)
         }),
-        ('Call-to-Action', {
-            'fields': ('cta_primary_text', 'cta_primary_url', 'cta_secondary_text', 'cta_secondary_url')
+        ('Hero Metrics', {
+            'fields': ('metric_title', 'metric_main', 'downloads_label', 'downloads_value', 'retention_label', 'retention_value')
+        }),
+        ('Section Titles & Descriptions', {
+            'fields': (
+                ('services_section_title', 'services_section_description'),
+                ('tech_stack_section_title', 'tech_stack_section_description'),
+                ('process_section_title', 'process_section_description'),
+                ('features_section_title', 'features_section_description'),
+                ('performance_metrics_title',),
+            )
         }),
         ('Settings', {
             'fields': ('is_active', 'order')
@@ -1333,20 +1408,23 @@ class AppDevCTAAdmin(admin.ModelAdmin):
 
 @admin.register(SEOAuditHero)
 class SEOAuditHeroAdmin(admin.ModelAdmin):
-    list_display = ('traffic_growth', 'domain_authority', 'keywords_ranked', 'is_active')
+    list_display = ('badge_text', 'traffic_growth', 'domain_authority', 'keywords_ranked', 'is_active')
     list_editable = ('is_active',)
     fieldsets = (
         ('Badge', {
-            'fields': ('badge_icon', 'badge_text')
+            'fields': ('badge_icon', 'badge_text'),
+            'description': 'Badge icon should be a Material Symbols icon name (e.g., "search", "analytics")'
         }),
         ('Hero Content', {
-            'fields': ('headline', 'description')
+            'fields': ('headline', 'description'),
+            'description': 'Headline supports HTML. Use <span class="text-primary">text</span> for colored text.'
         }),
         ('Call-to-Action Buttons', {
             'fields': ('cta_primary_text', 'cta_primary_url', 'cta_secondary_text', 'cta_secondary_url')
         }),
         ('Stats', {
-            'fields': ('traffic_growth', 'domain_authority', 'keywords_ranked')
+            'fields': ('traffic_growth', 'domain_authority', 'keywords_ranked'),
+            'description': 'These numbers will be displayed in the hero metrics card'
         }),
         ('Status', {
             'fields': ('is_active',)
@@ -1361,22 +1439,26 @@ class SEOAuditHeroAdmin(admin.ModelAdmin):
 class SEOAuditServiceAdmin(admin.ModelAdmin):
     list_display = ('title', 'icon_preview', 'is_active', 'order')
     list_editable = ('is_active', 'order')
+    list_filter = ('is_active',)
+    search_fields = ('title', 'description')
     fieldsets = (
         ('Icon', {
-            'fields': ('icon', 'icon_image')
+            'fields': ('icon', 'icon_image'),
+            'description': 'Upload SVG icon file. Icon will be saved to: media/services/seo_audit/service_icons/'
         }),
         ('Service Details', {
             'fields': ('title', 'description', 'feature_1', 'feature_2')
         }),
         ('Settings', {
-            'fields': ('is_active', 'order')
+            'fields': ('is_active', 'order'),
+            'description': 'Order determines display sequence. Lower numbers appear first.'
         }),
     )
     
     def icon_preview(self, obj):
         if obj.icon_image:
-            return format_html('<img src="{}" width="40" height="40" style="object-fit: contain;" />', obj.icon_image.url)
-        return '-'
+            return format_html('<img src="{}" width="40" height="40" style="object-fit: contain; background: #f3f4f6; padding: 4px; border-radius: 4px;" />', obj.icon_image.url)
+        return format_html('<span style="color: #999;">No icon</span>')
     icon_preview.short_description = 'Icon Preview'
 
 
@@ -1384,22 +1466,26 @@ class SEOAuditServiceAdmin(admin.ModelAdmin):
 class SEOAuditToolAdmin(admin.ModelAdmin):
     list_display = ('title', 'icon_preview', 'is_active', 'order')
     list_editable = ('is_active', 'order')
+    list_filter = ('is_active',)
+    search_fields = ('title', 'description')
     fieldsets = (
         ('Icon', {
-            'fields': ('icon', 'icon_image')
+            'fields': ('icon', 'icon_image'),
+            'description': 'Upload SVG icon file. Icon will be saved to: media/services/seo_audit/tool_icons/'
         }),
         ('Tool Details', {
             'fields': ('title', 'description')
         }),
         ('Settings', {
-            'fields': ('is_active', 'order')
+            'fields': ('is_active', 'order'),
+            'description': 'Order determines display sequence. Lower numbers appear first.'
         }),
     )
     
     def icon_preview(self, obj):
         if obj.icon_image:
-            return format_html('<img src="{}" width="40" height="40" style="object-fit: contain;" />', obj.icon_image.url)
-        return '-'
+            return format_html('<img src="{}" width="40" height="40" style="object-fit: contain; background: #f3f4f6; padding: 4px; border-radius: 4px;" />', obj.icon_image.url)
+        return format_html('<span style="color: #999;">No icon</span>')
     icon_preview.short_description = 'Icon Preview'
 
 
@@ -1407,19 +1493,23 @@ class SEOAuditToolAdmin(admin.ModelAdmin):
 class SEOAuditToolLogoAdmin(admin.ModelAdmin):
     list_display = ('name', 'logo_preview', 'is_active', 'order')
     list_editable = ('is_active', 'order')
+    list_filter = ('is_active',)
+    search_fields = ('name',)
     fieldsets = (
         ('Logo', {
-            'fields': ('name', 'logo')
+            'fields': ('name', 'logo'),
+            'description': 'Upload SVG logo file. Logo will be saved to: media/services/seo_audit/tool_logos/'
         }),
         ('Settings', {
-            'fields': ('is_active', 'order')
+            'fields': ('is_active', 'order'),
+            'description': 'Order determines display sequence. Lower numbers appear first.'
         }),
     )
     
     def logo_preview(self, obj):
         if obj.logo:
-            return format_html('<img src="{}" width="60" height="40" style="object-fit: contain;" />', obj.logo.url)
-        return '-'
+            return format_html('<img src="{}" width="60" height="40" style="object-fit: contain; background: #f3f4f6; padding: 4px; border-radius: 4px;" />', obj.logo.url)
+        return format_html('<span style="color: #999;">No logo</span>')
     logo_preview.short_description = 'Logo Preview'
 
 
@@ -2218,6 +2308,378 @@ class TestimonialsPageCTAAdmin(admin.ModelAdmin):
     
     def has_add_permission(self, request):
         return not TestimonialsPageCTA.objects.exists()
+    
+    def has_delete_permission(self, request, obj=None):
+        return False
+
+
+@admin.register(TestimonialsPageMetric)
+class TestimonialsPageMetricAdmin(admin.ModelAdmin):
+    list_display = ('value', 'title', 'color', 'order', 'is_active')
+    list_editable = ('order', 'is_active')
+    list_filter = ('is_active', 'color')
+    search_fields = ('value', 'title', 'description')
+    ordering = ('order',)
+    
+    fieldsets = (
+        ('Metric Display', {
+            'fields': ('value', 'title', 'description', 'color')
+        }),
+        ('Display Options', {
+            'fields': ('order', 'is_active')
+        }),
+    )
+
+
+# ==================== PRIVACY POLICY ====================
+
+class PrivacyPolicySubsectionInline(admin.TabularInline):
+    """Inline admin for Privacy Policy Subsections"""
+    model = PrivacyPolicySubsection
+    extra = 1
+    fields = ('title', 'content', 'order', 'is_active')
+    ordering = ('order',)
+    classes = ('collapse',)
+    verbose_name = "Subsection"
+    verbose_name_plural = "Subsections"
+
+
+class PrivacyPolicySectionInline(admin.StackedInline):
+    """Inline admin for Privacy Policy Sections"""
+    model = PrivacyPolicySection
+    extra = 1
+    fields = ('section_number', 'title', 'content', 'order', 'is_active')
+    ordering = ('order', 'section_number')
+    classes = ('collapse',)
+    verbose_name = "Section"
+    verbose_name_plural = "Sections"
+
+
+@admin.register(PrivacyPolicy)
+class PrivacyPolicyAdmin(admin.ModelAdmin):
+    list_display = ('title', 'last_updated', 'is_active')
+    list_editable = ('is_active',)
+    list_filter = ('is_active', 'last_updated')
+    search_fields = ('title', 'introduction', 'content')
+    fieldsets = (
+        ('Hero Section', {
+            'fields': ('title', 'last_updated'),
+            'description': 'Title and last updated date displayed in the hero section.'
+        }),
+        ('Introduction Text', {
+            'fields': ('introduction',),
+            'description': 'Introduction paragraph displayed below the hero section. Supports HTML formatting.'
+        }),
+        ('Content', {
+            'fields': ('content',),
+            'description': 'Main content section. Supports HTML formatting. This will be displayed as the main privacy policy content.'
+        }),
+        ('Contact Information', {
+            'fields': ('contact_email', 'contact_url')
+        }),
+        ('Status', {
+            'fields': ('is_active',)
+        }),
+    )
+    
+    def has_add_permission(self, request):
+        return not PrivacyPolicy.objects.exists()
+
+
+# PrivacyPolicySection and PrivacyPolicySubsection are now managed through the main PrivacyPolicy page
+# Unregistering them from admin to avoid showing separate tables
+from django.contrib.admin.sites import NotRegistered
+
+# Unregister Privacy Policy models from admin if they are registered
+try:
+    admin.site.unregister(PrivacyPolicySection)
+except NotRegistered:
+    pass
+
+try:
+    admin.site.unregister(PrivacyPolicySubsection)
+except NotRegistered:
+    pass
+
+
+# ==================== TERMS OF SERVICE ====================
+
+class TermsOfServiceSubsectionInline(admin.TabularInline):
+    """Inline admin for Terms of Service Subsections"""
+    model = TermsOfServiceSubsection
+    extra = 1
+    fields = ('title', 'content', 'order', 'is_active')
+    ordering = ('order',)
+    classes = ('collapse',)
+    verbose_name = "Subsection"
+    verbose_name_plural = "Subsections"
+
+
+class TermsOfServiceSectionInline(admin.StackedInline):
+    """Inline admin for Terms of Service Sections"""
+    model = TermsOfServiceSection
+    extra = 1
+    fields = ('section_number', 'title', 'content', 'order', 'is_active')
+    ordering = ('order', 'section_number')
+    classes = ('collapse',)
+    verbose_name = "Section"
+    verbose_name_plural = "Sections"
+
+
+@admin.register(TermsOfService)
+class TermsOfServiceAdmin(admin.ModelAdmin):
+    list_display = ('title', 'last_updated', 'is_active')
+    list_editable = ('is_active',)
+    list_filter = ('is_active', 'last_updated')
+    search_fields = ('title', 'introduction', 'content')
+    fieldsets = (
+        ('Hero Section', {
+            'fields': ('title', 'last_updated'),
+            'description': 'Title and last updated date displayed in the hero section.'
+        }),
+        ('Introduction Text', {
+            'fields': ('introduction',),
+            'description': 'Introduction paragraph displayed below the hero section. Supports HTML formatting.'
+        }),
+        ('Content', {
+            'fields': ('content',),
+            'description': 'Main content section. Supports HTML formatting. This will be displayed as the main terms content.'
+        }),
+        ('Contact Information', {
+            'fields': ('contact_email', 'contact_url'),
+            'description': 'Contact details displayed in the Contact Us section at the bottom of the page.'
+        }),
+        ('Status', {
+            'fields': ('is_active',)
+        }),
+    )
+    
+    def has_add_permission(self, request):
+        return not TermsOfService.objects.exists()
+
+
+# TermsOfServiceSection and TermsOfServiceSubsection are now managed through the main TermsOfService page
+# Unregistering them from admin to avoid showing separate tables
+# NotRegistered is already imported above
+
+# Unregister Terms of Service models from admin if they are registered
+try:
+    admin.site.unregister(TermsOfServiceSection)
+except NotRegistered:
+    pass
+
+try:
+    admin.site.unregister(TermsOfServiceSubsection)
+except NotRegistered:
+    pass
+
+
+# ==================== ABOUT PAGE MANAGEMENT ====================
+
+@admin.register(AboutPageSEO)
+class AboutPageSEOAdmin(admin.ModelAdmin):
+    list_display = ('page_title',)
+    fieldsets = (
+        ('Page Title', {
+            'fields': ('page_title',)
+        }),
+        ('Meta Tags', {
+            'fields': ('meta_description', 'meta_keywords')
+        }),
+        ('Open Graph Tags', {
+            'fields': ('og_title', 'og_description')
+        }),
+    )
+    
+    def has_add_permission(self, request):
+        return not AboutPageSEO.objects.exists()
+    
+    def has_delete_permission(self, request, obj=None):
+        return False
+
+
+@admin.register(AboutPageHero)
+class AboutPageHeroAdmin(admin.ModelAdmin):
+    list_display = ('headline', 'is_active')
+    list_editable = ('is_active',)
+    fieldsets = (
+        ('Content', {
+            'fields': ('headline', 'headline_highlight', 'description')
+        }),
+        ('Background Image', {
+            'fields': ('background_image', 'background_image_url'),
+            'description': 'Upload an image or provide an external URL'
+        }),
+        ('Settings', {
+            'fields': ('is_active',)
+        }),
+    )
+    
+    def has_add_permission(self, request):
+        return not AboutPageHero.objects.exists()
+    
+    def has_delete_permission(self, request, obj=None):
+        return False
+
+
+@admin.register(AboutPageMissionVision)
+class AboutPageMissionVisionAdmin(admin.ModelAdmin):
+    list_display = ('mission_title', 'vision_title', 'is_active')
+    list_editable = ('is_active',)
+    fieldsets = (
+        ('Mission', {
+            'fields': ('mission_title', 'mission_text', 'mission_icon')
+        }),
+        ('Vision', {
+            'fields': ('vision_title', 'vision_text', 'vision_icon')
+        }),
+        ('Settings', {
+            'fields': ('is_active',)
+        }),
+    )
+    
+    def has_add_permission(self, request):
+        return not AboutPageMissionVision.objects.exists()
+    
+    def has_delete_permission(self, request, obj=None):
+        return False
+
+
+@admin.register(AboutPageAdvantage)
+class AboutPageAdvantageAdmin(admin.ModelAdmin):
+    list_display = ('title', 'icon', 'order', 'is_active')
+    list_editable = ('order', 'is_active')
+    fieldsets = (
+        ('Content', {
+            'fields': ('title', 'description', 'icon')
+        }),
+        ('Settings', {
+            'fields': ('order', 'is_active')
+        }),
+    )
+
+
+@admin.register(AboutPageAdvantageSection)
+class AboutPageAdvantageSectionAdmin(admin.ModelAdmin):
+    list_display = ('title', 'is_active')
+    list_editable = ('is_active',)
+    fieldsets = (
+        ('Content', {
+            'fields': ('badge_text', 'title', 'description')
+        }),
+        ('Settings', {
+            'fields': ('is_active',)
+        }),
+    )
+    
+    def has_add_permission(self, request):
+        return not AboutPageAdvantageSection.objects.exists()
+    
+    def has_delete_permission(self, request, obj=None):
+        return False
+
+
+@admin.register(AboutPageTimeline)
+class AboutPageTimelineAdmin(admin.ModelAdmin):
+    list_display = ('year', 'title', 'position', 'order', 'is_active')
+    list_editable = ('order', 'is_active', 'position')
+    fieldsets = (
+        ('Content', {
+            'fields': ('year', 'title', 'description', 'position')
+        }),
+        ('Settings', {
+            'fields': ('order', 'is_active')
+        }),
+    )
+
+
+@admin.register(AboutPageTimelineSection)
+class AboutPageTimelineSectionAdmin(admin.ModelAdmin):
+    list_display = ('title', 'is_active')
+    list_editable = ('is_active',)
+    fieldsets = (
+        ('Content', {
+            'fields': ('title', 'description')
+        }),
+        ('Settings', {
+            'fields': ('is_active',)
+        }),
+    )
+    
+    def has_add_permission(self, request):
+        return not AboutPageTimelineSection.objects.exists()
+    
+    def has_delete_permission(self, request, obj=None):
+        return False
+
+
+@admin.register(AboutPageTeamMember)
+class AboutPageTeamMemberAdmin(admin.ModelAdmin):
+    list_display = ('name', 'position', 'photo_preview', 'order', 'is_active')
+    list_editable = ('order', 'is_active')
+    fieldsets = (
+        ('Team Member Info', {
+            'fields': ('name', 'position')
+        }),
+        ('Photo', {
+            'fields': ('photo', 'photo_url'),
+            'description': 'Upload a photo or provide an external URL'
+        }),
+        ('Settings', {
+            'fields': ('order', 'is_active')
+        }),
+    )
+    
+    def photo_preview(self, obj):
+        if obj.photo:
+            return format_html('<img src="{}" width="50" height="50" style="object-fit: cover; border-radius: 50%;" />', obj.photo.url)
+        elif obj.photo_url:
+            return format_html('<img src="{}" width="50" height="50" style="object-fit: cover; border-radius: 50%;" />', obj.photo_url)
+        return '-'
+    photo_preview.short_description = 'Photo Preview'
+
+
+@admin.register(AboutPageTeamSection)
+class AboutPageTeamSectionAdmin(admin.ModelAdmin):
+    list_display = ('title', 'is_active')
+    list_editable = ('is_active',)
+    fieldsets = (
+        ('Content', {
+            'fields': ('title', 'description')
+        }),
+        ('Settings', {
+            'fields': ('is_active',)
+        }),
+    )
+    
+    def has_add_permission(self, request):
+        return not AboutPageTeamSection.objects.exists()
+    
+    def has_delete_permission(self, request, obj=None):
+        return False
+
+
+@admin.register(AboutPageCTA)
+class AboutPageCTAAdmin(admin.ModelAdmin):
+    list_display = ('headline', 'is_active')
+    list_editable = ('is_active',)
+    fieldsets = (
+        ('Content', {
+            'fields': ('headline', 'description')
+        }),
+        ('Primary Button', {
+            'fields': ('cta_primary_text', 'cta_primary_url')
+        }),
+        ('Secondary Button', {
+            'fields': ('cta_secondary_text', 'cta_secondary_url')
+        }),
+        ('Settings', {
+            'fields': ('is_active',)
+        }),
+    )
+    
+    def has_add_permission(self, request):
+        return not AboutPageCTA.objects.exists()
     
     def has_delete_permission(self, request, obj=None):
         return False

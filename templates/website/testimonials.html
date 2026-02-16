@@ -11,286 +11,310 @@
 {% block og_description %}{{ seo.og_description|default:"Don't just take our word for it. See what businesses say about working with Techlynx Pro." }}{% endblock %}
 
 {% block content %}
-<!-- Hero Section -->
-<section class="relative overflow-hidden pt-16 pb-20 lg:pt-24 lg:pb-32 bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="max-w-4xl">
-            {% if hero %}
-            <!-- Subtitle -->
-            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-primary/10 text-primary mb-6 uppercase tracking-widest">
-                <span class="material-symbols-outlined text-sm mr-1">{{ hero.badge_icon }}</span> {{ hero.badge_text }}
-            </span>
-            
-            <!-- Main Headline -->
-            <h1 class="text-4xl md:text-6xl font-black text-slate-900 dark:text-white mb-6 leading-[1.1]">
-                {{ hero.headline|safe }}<br/>
-                <span class="text-slate-600 dark:text-slate-400">{{ hero.subheadline }}</span>
-            </h1>
-            
-            <!-- Description -->
-            <p class="text-lg md:text-xl text-slate-600 dark:text-slate-400 mb-8 leading-relaxed">
-                {{ hero.description }}
-            </p>
-            
-            <!-- CTA Button -->
-            <a href="{{ hero.cta_url }}" class="inline-flex items-center gap-2 px-8 py-4 bg-primary text-white rounded-lg font-bold text-lg hover:brightness-110 transition-all shadow-lg shadow-primary/20">
-                {{ hero.cta_text }}
-                <span class="material-symbols-outlined">{{ hero.cta_icon }}</span>
-            </a>
+<!-- Professional Hero Section with Gradient -->
+<section class="relative py-12 lg:py-16 bg-gradient-to-br from-slate-50 via-white to-blue-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 overflow-hidden">
+    <!-- Background Pattern -->
+    <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23f1f5f9" fill-opacity="0.4"%3E%3Ccircle cx="7" cy="7" r="1"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] dark:bg-[url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23334155" fill-opacity="0.1"%3E%3Ccircle cx="7" cy="7" r="1"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')]"></div>
+    
+    <div class="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        {% if hero %}
+        <!-- Premium Badge -->
+        <div class="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 backdrop-blur-sm border border-primary/20 rounded-full mb-4">
+            <div class="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
+            <span class="text-sm font-semibold text-primary uppercase tracking-wider">{{ hero.badge_text }}</span>
+        </div>
+        
+        <!-- Professional Headline -->
+        <h1 class="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black text-slate-900 dark:text-white mb-4 leading-tight">
+            {{ hero.headline|linebreaksbr }}
+            {% if hero.subheadline %}<br/>
+            <span class="text-2xl md:text-3xl lg:text-4xl font-light text-slate-600 dark:text-slate-400">{{ hero.subheadline }}</span>
             {% endif %}
+        </h1>
+        
+        <!-- Professional Description -->
+        <p class="text-xl md:text-2xl text-slate-600 dark:text-slate-400 leading-relaxed max-w-4xl mx-auto mb-6">
+            {{ hero.description }}
+        </p>
+        {% else %}
+        <!-- Fallback if no hero data -->
+        <div class="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 backdrop-blur-sm border border-primary/20 rounded-full mb-4">
+            <div class="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
+            <span class="text-sm font-semibold text-primary uppercase tracking-wider">Client Success Stories</span>
+        </div>
+        <h1 class="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black text-slate-900 dark:text-white mb-4 leading-tight">
+            Real Clients. <br class="hidden sm:block"/>
+            <span class="bg-gradient-to-r from-primary to-blue-600 bg-clip-text text-transparent">Real Results.</span>
+        </h1>
+        <p class="text-xl md:text-2xl text-slate-600 dark:text-slate-400 leading-relaxed max-w-4xl mx-auto mb-6">
+            We've been transforming businesses since our founding. Here's what industry leaders say about working with Techlynx Pro.
+        </p>
+        {% endif %}
+        
+        <!-- Trust Indicators -->
+        <div class="flex flex-wrap justify-center items-center gap-6 text-sm font-semibold text-slate-500 dark:text-slate-400">
+            <div class="flex items-center gap-2">
+                <div class="w-3 h-3 bg-green-500 rounded-full"></div>
+                <span>500+ Projects Completed</span>
+            </div>
+            <div class="flex items-center gap-2">
+                <div class="w-3 h-3 bg-blue-500 rounded-full"></div>
+                <span>98% Client Satisfaction</span>
+            </div>
+            <div class="flex items-center gap-2">
+                <div class="w-3 h-3 bg-purple-500 rounded-full"></div>
+                <span>50+ Industry Awards</span>
+            </div>
         </div>
     </div>
 </section>
 
-<!-- Service Filter Tabs -->
-<section class="py-12 bg-white dark:bg-background-dark border-b border-slate-200 dark:border-slate-800 sticky top-0 z-40 backdrop-blur-lg bg-white/95 dark:bg-background-dark/95">
-        </div>
-    </div>
-</section>
-
-<!-- Testimonial 1: Image Left, Text Right -->
-{% for testimonial in ai_testimonials|slice:":1" %}
-<section class="py-16 lg:py-24 bg-white dark:bg-slate-900">
+<!-- Premium Testimonials Section - Unified Dynamic Loop -->
+<section class="py-12 lg:py-16 bg-white dark:bg-slate-900">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid lg:grid-cols-2 gap-12 items-center">
-            <!-- Client Photo -->
-            <div>
-                {% if testimonial.client_photo %}
-                <img class="w-full max-w-md mx-auto rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.08)]" src="{{ testimonial.client_photo.url }}" alt="{{ testimonial.client_name }}" />
-                {% else %}
-                <div class="w-full max-w-md mx-auto aspect-square rounded-2xl bg-gradient-to-br from-primary to-blue-600 flex items-center justify-center shadow-[0_4px_20px_rgba(0,0,0,0.08)]">
-                    <span class="text-9xl font-black text-white">{{ testimonial.client_name|first }}</span>
-                </div>
-                {% endif %}
-            </div>
-            <!-- Text Content -->
-            <div>
-                <blockquote class="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white leading-tight mb-8">
-                    "{{ testimonial.testimonial_text }}"
-                </blockquote>
-                <div>
-                    <p class="text-slate-900 dark:text-white font-semibold text-lg">{{ testimonial.client_name }}</p>
-                    <p class="text-slate-600 dark:text-slate-400 font-medium">{{ testimonial.client_position }}</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-{% endfor %}
-
-<!-- Testimonial 2: Image Right, Text Left -->
-{% for testimonial in marketing_testimonials|slice:":1" %}
-<section class="py-16 lg:py-24 bg-slate-50 dark:bg-slate-800">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid lg:grid-cols-2 gap-12 items-center">
-            <!-- Text Content -->
-            <div class="order-2 lg:order-1">
-                <blockquote class="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white leading-tight mb-8">
-                    "{{ testimonial.testimonial_text }}"
-                </blockquote>
-                <div>
-                    <p class="text-slate-900 dark:text-white font-semibold text-lg">{{ testimonial.client_name }}</p>
-                    <p class="text-slate-600 dark:text-slate-400 font-medium">{{ testimonial.client_position }}</p>
-                </div>
-            </div>
-            <!-- Client Photo -->
-            <div class="order-1 lg:order-2">
-                {% if testimonial.client_photo %}
-                <img class="w-full max-w-md mx-auto rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.08)]" src="{{ testimonial.client_photo.url }}" alt="{{ testimonial.client_name }}" />
-                {% else %}
-                <div class="w-full max-w-md mx-auto aspect-square rounded-2xl bg-gradient-to-br from-purple-500 to-pink-600 flex items-center justify-center shadow-[0_4px_20px_rgba(0,0,0,0.08)]">
-                    <span class="text-9xl font-black text-white">{{ testimonial.client_name|first }}</span>
-                </div>
-                {% endif %}
-            </div>
-        </div>
-    </div>
-</section>
-{% endfor %}
-
-<!-- Testimonial 3: Image Left, Text Right -->
-{% for testimonial in app_testimonials|slice:":1" %}
-<section class="py-16 lg:py-24 bg-white dark:bg-slate-900">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid lg:grid-cols-2 gap-12 items-center">
-            <!-- Client Photo -->
-            <div>
-                {% if testimonial.client_photo %}
-                <img class="w-full max-w-md mx-auto rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.08)]" src="{{ testimonial.client_photo.url }}" alt="{{ testimonial.client_name }}" />
-                {% else %}
-                <div class="w-full max-w-md mx-auto aspect-square rounded-2xl bg-gradient-to-br from-green-500 to-teal-600 flex items-center justify-center shadow-[0_4px_20px_rgba(0,0,0,0.08)]">
-                    <span class="text-9xl font-black text-white">{{ testimonial.client_name|first }}</span>
-                </div>
-                {% endif %}
-            </div>
-            <!-- Text Content -->
-            <div>
-                <blockquote class="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white leading-tight mb-8">
-                    "{{ testimonial.testimonial_text }}"
-                </blockquote>
-                <div>
-                    <p class="text-slate-900 dark:text-white font-semibold text-lg">{{ testimonial.client_name }}</p>
-                    <p class="text-slate-600 dark:text-slate-400 font-medium">{{ testimonial.client_position }}</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-{% endfor %}
-
-<!-- Testimonial 4: Image Right, Text Left -->
-{% for testimonial in fa_testimonials|slice:":1" %}
-<section class="py-16 lg:py-24 bg-slate-50 dark:bg-slate-800">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid lg:grid-cols-2 gap-12 items-center">
-            <!-- Text Content -->
-            <div class="order-2 lg:order-1">
-                <blockquote class="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white leading-tight mb-8">
-                    "{{ testimonial.testimonial_text }}"
-                </blockquote>
-                <div>
-                    <p class="text-slate-900 dark:text-white font-semibold text-lg">{{ testimonial.client_name }}</p>
-                    <p class="text-slate-600 dark:text-slate-400 font-medium">{{ testimonial.client_position }}</p>
-                </div>
-            </div>
-            <!-- Client Photo -->
-            <div class="order-1 lg:order-2">
-                {% if testimonial.client_photo %}
-                <img class="w-full max-w-md mx-auto rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.08)]" src="{{ testimonial.client_photo.url }}" alt="{{ testimonial.client_name }}" />
-                {% else %}
-                <div class="w-full max-w-md mx-auto aspect-square rounded-2xl bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center shadow-[0_4px_20px_rgba(0,0,0,0.08)]">
-                    <span class="text-9xl font-black text-white">{{ testimonial.client_name|first }}</span>
-                </div>
-                {% endif %}
-            </div>
-        </div>
-    </div>
-</section>
-{% endfor %}
-
-<!-- Testimonial 5: Image Left, Text Right -->
-{% for testimonial in seo_testimonials|slice:":1" %}
-<section class="py-16 lg:py-24 bg-white dark:bg-slate-900">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid lg:grid-cols-2 gap-12 items-center">
-            <!-- Client Photo -->
-            <div>
-                {% if testimonial.client_photo %}
-                <img class="w-full max-w-md mx-auto rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.08)]" src="{{ testimonial.client_photo.url }}" alt="{{ testimonial.client_name }}" />
-                {% else %}
-                <div class="w-full max-w-md mx-auto aspect-square rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center shadow-[0_4px_20px_rgba(0,0,0,0.08)]">
-                    <span class="text-9xl font-black text-white">{{ testimonial.client_name|first }}</span>
-                </div>
-                {% endif %}
-            </div>
-            <!-- Text Content -->
-            <div>
-                <blockquote class="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white leading-tight mb-8">
-                    "{{ testimonial.testimonial_text }}"
-                </blockquote>
-                <div>
-                    <p class="text-slate-900 dark:text-white font-semibold text-lg">{{ testimonial.client_name }}</p>
-                    <p class="text-slate-600 dark:text-slate-400 font-medium">{{ testimonial.client_position }}</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-{% endfor %}
-
-<!-- Why Choose Section -->
-<section class="py-16 lg:py-24 bg-slate-50 dark:bg-slate-800">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid lg:grid-cols-2 gap-12 items-center">
-            <!-- Text Content -->
-            <div>
-                {% if why_choose %}
-                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-primary/10 text-primary mb-6 uppercase tracking-widest">
-                    <span class="material-symbols-outlined text-sm mr-1">{{ why_choose.badge_icon }}</span> {{ why_choose.badge_text }}
-                </span>
-                <h2 class="text-4xl md:text-5xl font-black text-slate-900 dark:text-white mb-6 leading-tight">
-                    {{ why_choose.headline }}
-                </h2>
-                <p class="text-lg md:text-xl text-slate-600 dark:text-slate-400 mb-8 leading-relaxed">
-                    {{ why_choose.description|safe }}
-                </p>
-                {% endif %}
+        
+        {% for item in unified_testimonials %}
+        {% with testimonial=item.testimonial %}
+        <div class="mb-10 lg:mb-16">
+            <div class="flex flex-col {% cycle 'lg:flex-row' 'lg:flex-row-reverse' %} items-center gap-6 lg:gap-8">
                 
-                <!-- Accordion -->
-                <div class="space-y-4">
-                    {% for reason in why_choose_reasons %}
-                    <details class="group bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-700" {% if reason.is_default_open %}open{% endif %}>
-                        <summary class="flex items-center justify-between cursor-pointer p-6 font-bold text-lg text-slate-900 dark:text-white">
-                            <span>{{ reason.title }}</span>
-                            <span class="material-symbols-outlined group-open:rotate-180 transition-transform">expand_more</span>
-                        </summary>
-                        <div class="px-6 pb-6 text-slate-600 dark:text-slate-400">
-                            {{ reason.description }}
+                <!-- Premium Testimonial Content -->
+                <div class="lg:w-3/5 space-y-2">
+                    <!-- Service Tag -->
+                    {% if item.service == 'AI Solutions' %}
+                    <div class="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-blue-200 dark:border-blue-800 rounded-full">
+                        <span class="w-2 h-2 bg-blue-500 rounded-full"></span>
+                        <span class="text-sm font-semibold text-blue-600 dark:text-blue-400 uppercase tracking-wider">{{ item.service }}</span>
+                    </div>
+                    {% elif item.service == 'Digital Marketing' %}
+                    <div class="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-green-500/10 to-emerald-500/10 border border-green-200 dark:border-green-800 rounded-full">
+                        <span class="w-2 h-2 bg-green-500 rounded-full"></span>
+                        <span class="text-sm font-semibold text-green-600 dark:text-green-400 uppercase tracking-wider">{{ item.service }}</span>
+                    </div>
+                    {% elif item.service == 'App Development' %}
+                    <div class="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-purple-500/10 to-pink-500/10 border border-purple-200 dark:border-purple-800 rounded-full">
+                        <span class="w-2 h-2 bg-purple-500 rounded-full"></span>
+                        <span class="text-sm font-semibold text-purple-600 dark:text-purple-400 uppercase tracking-wider">{{ item.service }}</span>
+                    </div>
+                    {% else %}
+                    <div class="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-primary/10 to-blue-500/10 border border-blue-200 dark:border-blue-800 rounded-full">
+                        <span class="w-2 h-2 bg-primary rounded-full"></span>
+                        <span class="text-sm font-semibold text-primary uppercase tracking-wider">{{ item.service }}</span>
+                    </div>
+                    {% endif %}
+                    
+                    <!-- Large Quote Icon -->
+                    {% if item.service == 'AI Solutions' %}
+                    <div class="w-16 h-16 bg-gradient-to-br from-primary to-blue-600 rounded-2xl flex items-center justify-center mb-4">
+                    {% elif item.service == 'Digital Marketing' %}
+                    <div class="w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl flex items-center justify-center mb-4">
+                    {% elif item.service == 'App Development' %}
+                    <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl flex items-center justify-center mb-4">
+                    {% else %}
+                    <div class="w-16 h-16 bg-gradient-to-br from-primary to-blue-600 rounded-2xl flex items-center justify-center mb-4">
+                    {% endif %}
+                        <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 32 32">
+                            <path d="M10 8c-3.3 0-6 2.7-6 6v10h10V14h-4c0-2.2 1.8-4 4-4V8zm12 0c-3.3 0-6 2.7-6 6v10h10V14h-4c0-2.2 1.8-4 4-4V8z"/>
+                        </svg>
+                    </div>
+                    
+                    <!-- Premium Quote -->
+                    {% if item.service == 'AI Solutions' %}
+                    <blockquote class="text-base md:text-lg lg:text-xl font-light text-slate-800 dark:text-slate-100 leading-relaxed">
+                        <span class="text-primary">"</span>{{ testimonial.testimonial_text }}<span class="text-primary">"</span>
+                    </blockquote>
+                    {% elif item.service == 'Digital Marketing' %}
+                    <blockquote class="text-base md:text-lg lg:text-xl font-light text-slate-800 dark:text-slate-100 leading-relaxed">
+                        <span class="text-green-500">"</span>{{ testimonial.testimonial_text }}<span class="text-green-500">"</span>
+                    </blockquote>
+                    {% elif item.service == 'App Development' %}
+                    <blockquote class="text-base md:text-lg lg:text-xl font-light text-slate-800 dark:text-slate-100 leading-relaxed">
+                        <span class="text-purple-500">"</span>{{ testimonial.testimonial_text }}<span class="text-purple-500">"</span>
+                    </blockquote>
+                    {% else %}
+                    <blockquote class="text-base md:text-lg lg:text-xl font-light text-slate-800 dark:text-slate-100 leading-relaxed">
+                        <span class="text-primary">"</span>{{ testimonial.testimonial_text }}<span class="text-primary">"</span>
+                    </blockquote>
+                    {% endif %}
+                    
+                    <!-- Professional Attribution -->
+                    <div class="flex items-start gap-3 pt-4 border-t border-slate-200 dark:border-slate-700">
+                        {% if item.service == 'AI Solutions' %}
+                        <div class="w-1 h-12 bg-gradient-to-b from-primary to-blue-600 rounded-full"></div>
+                        {% elif item.service == 'Digital Marketing' %}
+                        <div class="w-1 h-12 bg-gradient-to-b from-green-500 to-emerald-600 rounded-full"></div>
+                        {% elif item.service == 'App Development' %}
+                        <div class="w-1 h-12 bg-gradient-to-b from-purple-500 to-pink-600 rounded-full"></div>
+                        {% else %}
+                        <div class="w-1 h-12 bg-gradient-to-b from-primary to-blue-600 rounded-full"></div>
+                        {% endif %}
+                        <div class="space-y-0.5">
+                            <h3 class="text-lg font-bold text-slate-900 dark:text-white">{{ testimonial.client_name }}</h3>
+                            {% if item.service == 'AI Solutions' %}
+                            <p class="text-base font-semibold text-primary">{{ testimonial.client_position }}</p>
+                            {% elif item.service == 'Digital Marketing' %}
+                            <p class="text-base font-semibold text-green-600 dark:text-green-400">{{ testimonial.client_position }}</p>
+                            {% elif item.service == 'App Development' %}
+                            <p class="text-base font-semibold text-purple-600 dark:text-purple-400">{{ testimonial.client_position }}</p>
+                            {% else %}
+                            <p class="text-base font-semibold text-primary">{{ testimonial.client_position }}</p>
+                            {% endif %}
+                            <p class="text-sm text-slate-600 dark:text-slate-400">{{ testimonial.client_company }}</p>
+                            
+                            <!-- Rating Stars -->
+                            <div class="flex items-center gap-1 pt-1">
+                                {% for i in "12345" %}
+                                <svg class="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 20 20">
+                                    <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
+                                </svg>
+                                {% endfor %}
+                                <span class="ml-2 text-xs font-medium text-slate-600 dark:text-slate-400">(5.0/5)</span>
+                            </div>
                         </div>
-                    </details>
-                    {% endfor %}
+                    </div>
+                </div>
+                
+                <!-- Premium Professional Image -->
+                <div class="lg:w-2/5 flex justify-center">
+                    <div class="relative group">
+                        <!-- Gradient Border -->
+                        {% if item.service == 'AI Solutions' %}
+                        <div class="absolute -inset-4 bg-gradient-to-r from-primary via-blue-500 to-purple-600 rounded-3xl blur-xl opacity-30 group-hover:opacity-50 transition-opacity duration-500"></div>
+                        {% elif item.service == 'Digital Marketing' %}
+                        <div class="absolute -inset-4 bg-gradient-to-r from-green-500 via-emerald-500 to-teal-600 rounded-3xl blur-xl opacity-30 group-hover:opacity-50 transition-opacity duration-500"></div>
+                        {% elif item.service == 'App Development' %}
+                        <div class="absolute -inset-4 bg-gradient-to-r from-purple-500 via-pink-500 to-rose-600 rounded-3xl blur-xl opacity-30 group-hover:opacity-50 transition-opacity duration-500"></div>
+                        {% else %}
+                        <div class="absolute -inset-4 bg-gradient-to-r from-primary via-blue-500 to-purple-600 rounded-3xl blur-xl opacity-30 group-hover:opacity-50 transition-opacity duration-500"></div>
+                        {% endif %}
+                        
+                        <!-- Image Container -->
+                        <div class="relative bg-white dark:bg-slate-800 p-4 rounded-3xl shadow-2xl">
+                            {% if testimonial.client_photo %}
+                            <img class="w-80 h-80 lg:w-96 lg:h-96 object-contain rounded-2xl" 
+                                 src="{{ testimonial.client_photo.url }}" 
+                                 alt="{{ testimonial.client_name }}"
+                                 loading="lazy" />
+                            {% else %}
+                            {% if item.service == 'AI Solutions' %}
+                            <div class="w-80 h-80 lg:w-96 lg:h-96 bg-gradient-to-br from-primary to-blue-600 rounded-2xl flex items-center justify-center">
+                            {% elif item.service == 'Digital Marketing' %}
+                            <div class="w-80 h-80 lg:w-96 lg:h-96 bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl flex items-center justify-center">
+                            {% elif item.service == 'App Development' %}
+                            <div class="w-80 h-80 lg:w-96 lg:h-96 bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl flex items-center justify-center">
+                            {% else %}
+                            <div class="w-80 h-80 lg:w-96 lg:h-96 bg-gradient-to-br from-primary to-blue-600 rounded-2xl flex items-center justify-center">
+                            {% endif %}
+                                <span class="text-8xl font-bold text-white">{{ testimonial.client_name|first }}</span>
+                            </div>
+                            {% endif %}
+                            
+                            <!-- Floating Badge -->
+                            <div class="absolute -top-4 -right-4 bg-gradient-to-r from-green-400 to-green-600 text-white px-4 py-2 rounded-2xl shadow-lg">
+                                <span class="text-sm font-bold">Verified Client</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            
-            <!-- Images Grid -->
-            <div class="grid grid-cols-2 gap-6">
-                {% if why_choose %}
-                    {% if why_choose.grid_image_1 %}
-                    <img src="{{ why_choose.grid_image_1.url }}" 
-                         alt="Professional team collaboration" 
-                         class="w-full rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.08)] hover:scale-105 transition-transform duration-300"
-                    />
+        </div>
+        {% endwith %}
+        {% endfor %}
+        
+    </div>
+</section>
+
+
+<!-- Premium Metrics Section - Matching Reference Design -->
+<section class="py-20 bg-slate-800 text-white overflow-hidden">
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center mb-16">
+            <h2 class="text-4xl md:text-5xl font-bold mb-6 text-white">Proven Results Across Industries</h2>
+            <p class="text-xl text-slate-300 max-w-4xl mx-auto leading-relaxed">
+                Our clients consistently achieve exceptional outcomes through our strategic approach and technical expertise.
+            </p>
+        </div>
+        
+        <!-- Metrics Grid - Dynamic from Admin -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+            {% for metric in metrics %}
+            <div class="text-center group">
+                <div class="w-40 h-40 lg:w-44 lg:h-44 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-105 transition-transform duration-300 shadow-lg
+                    {% if metric.color == 'blue-500' %}bg-blue-500
+                    {% elif metric.color == 'green-500' %}bg-green-500
+                    {% elif metric.color == 'purple-500' %}bg-purple-500
+                    {% elif metric.color == 'orange-500' %}bg-orange-500
+                    {% elif metric.color == 'red-500' %}bg-red-500
+                    {% elif metric.color == 'yellow-500' %}bg-yellow-500
+                    {% elif metric.color == 'pink-500' %}bg-pink-500
+                    {% elif metric.color == 'indigo-500' %}bg-indigo-500
+                    {% else %}bg-blue-500{% endif %}">
+                    {% if metric.value|length > 5 %}
+                    <span class="text-2xl lg:text-3xl font-black text-white">{{ metric.value }}</span>
+                    {% else %}
+                    <span class="text-3xl lg:text-4xl font-black text-white">{{ metric.value }}</span>
                     {% endif %}
-                    {% if why_choose.grid_image_2 %}
-                    <img src="{{ why_choose.grid_image_2.url }}" 
-                         alt="Successful project delivery" 
-                         class="w-full rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.08)] hover:scale-105 transition-transform duration-300"
-                    />
-                    {% endif %}
-                    {% if why_choose.grid_image_3 %}
-                    <img src="{{ why_choose.grid_image_3.url }}" 
-                         alt="Client satisfaction and trust" 
-                         class="w-full rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.08)] hover:scale-105 transition-transform duration-300"
-                    />
-                    {% endif %}
-                    {% if why_choose.grid_image_4 %}
-                    <img src="{{ why_choose.grid_image_4.url }}" 
-                         alt="Expert development services" 
-                         class="w-full rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.08)] hover:scale-105 transition-transform duration-300"
-                    />
-                    {% endif %}
-                {% endif %}
+                </div>
+                <h3 class="text-xl lg:text-2xl font-bold mb-3 text-white">{{ metric.title }}</h3>
+                <p class="text-slate-400 text-base lg:text-lg leading-relaxed">{{ metric.description }}</p>
             </div>
+            {% endfor %}
         </div>
     </div>
 </section>
 
-<!-- Final CTA Section -->
-{% if cta %}
-<section class="py-16 lg:py-24 bg-gradient-to-br from-primary to-blue-700 text-white">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <div class="inline-flex items-center gap-2 bg-white/20 px-4 py-2 rounded-full mb-6">
-            <span class="material-symbols-outlined">{{ cta.badge_icon }}</span>
-            <span class="font-bold">{{ cta.badge_text }}</span>
+<!-- Premium CTA Section -->
+<section class="py-20 lg:py-32 bg-gradient-to-br from-white via-blue-50 to-purple-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        {% if cta %}
+        <!-- Badge -->
+        <div class="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 backdrop-blur-sm border border-primary/20 rounded-full mb-8">
+            <div class="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
+            <span class="text-sm font-semibold text-primary uppercase tracking-wider">{{ cta.badge_text }}</span>
         </div>
-        <h2 class="text-4xl md:text-5xl font-black mb-6 leading-tight">
+        
+        <!-- Headline -->
+        <h2 class="text-4xl md:text-5xl lg:text-6xl font-black text-slate-900 dark:text-white mb-8 leading-tight">
             {{ cta.headline }}
         </h2>
-        <p class="text-lg md:text-xl text-blue-50 mb-10 leading-relaxed">
-            {{ cta.description|safe }}
+        
+        <!-- Description -->
+        <p class="text-xl md:text-2xl text-slate-600 dark:text-slate-400 leading-relaxed mb-12 max-w-4xl mx-auto">
+            {{ cta.description }}
         </p>
-        <div class="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="{{ cta.cta_primary_url }}" class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-primary rounded-lg font-bold text-lg hover:shadow-2xl transition-all">
-                {{ cta.cta_primary_text }}
-                <span class="material-symbols-outlined">{{ cta.cta_primary_icon }}</span>
-            </a>
-            <a href="{{ cta.cta_secondary_url }}" class="inline-flex items-center justify-center gap-2 px-8 py-4 border-2 border-white text-white rounded-lg font-bold text-lg hover:bg-white hover:text-primary transition-all">
-                <span class="material-symbols-outlined">{{ cta.cta_secondary_icon }}</span>
-                {{ cta.cta_secondary_text }}
+        
+        <!-- CTA Buttons -->
+        <div class="flex flex-col sm:flex-row gap-6 justify-center items-center">
+            <a href="{{ cta.cta_primary_url }}" class="group inline-flex items-center justify-center gap-3 px-8 py-4 bg-gradient-to-r from-primary to-blue-600 text-white rounded-2xl font-bold text-lg shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300">
+                <span>{{ cta.cta_primary_text }}</span>
+                <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+                </svg>
             </a>
         </div>
+        {% else %}
+        <!-- Fallback if no CTA data -->
+        <div class="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 backdrop-blur-sm border border-primary/20 rounded-full mb-8">
+            <div class="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
+            <span class="text-sm font-semibold text-primary uppercase tracking-wider">Ready to Start?</span>
+        </div>
+        <h2 class="text-4xl md:text-5xl lg:text-6xl font-black text-slate-900 dark:text-white mb-8 leading-tight">
+            Join the <span class="bg-gradient-to-r from-primary to-blue-600 bg-clip-text text-transparent">Success Stories</span>
+        </h2>
+        <p class="text-xl md:text-2xl text-slate-600 dark:text-slate-400 leading-relaxed mb-12 max-w-4xl mx-auto">
+            Ready to achieve similar results? Our team of experts is standing by.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-6 justify-center items-center">
+            <a href="/contact/" class="group inline-flex items-center justify-center gap-3 px-8 py-4 bg-gradient-to-r from-primary to-blue-600 text-white rounded-2xl font-bold text-lg shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300">
+                <span>Start Your Success Story</span>
+                <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+                </svg>
+            </a>
+        </div>
+        {% endif %}
     </div>
 </section>
-{% endif %}
 
 {% endblock %}

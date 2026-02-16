@@ -392,11 +392,80 @@ class TechlynxChatbot {
 }
 
 // Initialize all components when DOM is loaded
+// ========================================
+// NEWSLETTER FORM HANDLER
+// ========================================
+
+function initNewsletterForm() {
+    const newsletterForm = document.getElementById('newsletter-form');
+    const newsletterEmail = document.getElementById('newsletter-email');
+    const newsletterMessage = document.getElementById('newsletter-message');
+    const newsletterSubmit = document.getElementById('newsletter-submit');
+    
+    if (!newsletterForm || !newsletterEmail || !newsletterMessage) {
+        return; // Elements not found, skip initialization
+    }
+    
+    newsletterForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const email = newsletterEmail.value.trim();
+        const formData = new FormData();
+        formData.append('email', email);
+        formData.append('csrfmiddlewaretoken', document.querySelector('[name=csrfmiddlewaretoken]').value);
+        
+        // Disable submit button
+        if (newsletterSubmit) {
+            newsletterSubmit.disabled = true;
+            newsletterSubmit.innerHTML = '<span class="material-symbols-outlined animate-spin">sync</span>';
+        }
+        
+        // Hide previous message
+        newsletterMessage.classList.add('hidden');
+        
+        try {
+            const response = await fetch(newsletterForm.action, {
+                method: 'POST',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                },
+                body: formData
+            });
+            
+            const data = await response.json();
+            
+            // Show message
+            newsletterMessage.classList.remove('hidden');
+            
+            if (data.success) {
+                newsletterMessage.textContent = data.message || 'Successfully subscribed!';
+                newsletterMessage.className = 'mt-2 text-sm text-green-400';
+                newsletterEmail.value = ''; // Clear input
+            } else {
+                newsletterMessage.textContent = data.message || 'An error occurred. Please try again.';
+                newsletterMessage.className = 'mt-2 text-sm text-red-400';
+            }
+        } catch (error) {
+            // Fallback to regular form submission if AJAX fails
+            newsletterForm.submit();
+        } finally {
+            // Re-enable submit button
+            if (newsletterSubmit) {
+                newsletterSubmit.disabled = false;
+                newsletterSubmit.innerHTML = '<span class="material-symbols-outlined">send</span>';
+            }
+        }
+    });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     // Initialize mobile menu
     initMobileMenu();
     
     // Initialize chatbot
     window.techlynxChatbot = new TechlynxChatbot();
+    
+    // Initialize newsletter form
+    initNewsletterForm();
 });
 

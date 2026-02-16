@@ -285,6 +285,198 @@
         </table>
     </div>
 
+    <!-- Privacy Policy Section -->
+    <div class="app-website module" style="margin-top: 20px;">
+        <table>
+            <caption>
+                <a href="#" class="section-title" onclick="toggleSection('privacy-policy-section'); return false;" style="display: flex; align-items: center; justify-content: space-between; padding: 10px; background: linear-gradient(to right, #dc2626, #ef4444); color: white; text-decoration: none; border-radius: 4px; font-weight: bold; font-size: 14px;">
+                    <span style="display: flex; align-items: center; gap: 8px;">
+                        <span style="font-size: 18px;">🔒</span>
+                        <span>Privacy Policy</span>
+                    </span>
+                    <span id="privacy-policy-toggle" style="font-size: 12px;">▶</span>
+                </a>
+            </caption>
+            <tbody id="privacy-policy-section" style="display: none;">
+                {% for model in app_list %}
+                    {% if model.app_label == 'website' %}
+                        {% for model_item in model.models %}
+                            {% if model_item.object_name == 'PrivacyPolicy' %}
+                                <tr class="model-{{ model_item.object_name|lower }}">
+                                    {% if model_item.admin_url %}
+                                        <th scope="row">
+                                            <a href="{{ model_item.admin_url }}" style="color: #447e9b;">
+                                                {{ model_item.name }}
+                                            </a>
+                                        </th>
+                                    {% else %}
+                                        <th scope="row">{{ model_item.name }}</th>
+                                    {% endif %}
+
+                                    {% if model_item.add_url %}
+                                        <td><a href="{{ model_item.add_url }}" class="addlink" style="color: #5b80b2;">➕ Add</a></td>
+                                    {% else %}
+                                        <td>&nbsp;</td>
+                                    {% endif %}
+
+                                    {% if model_item.admin_url %}
+                                        <td><a href="{{ model_item.admin_url }}" class="changelink" style="color: #5b80b2;">✏️ Change</a></td>
+                                    {% else %}
+                                        <td>&nbsp;</td>
+                                    {% endif %}
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- About Page Section -->
+    <div class="app-website module" style="margin-top: 20px;">
+        <table>
+            <caption>
+                <a href="#" class="section-title" onclick="toggleSection('about-page-section'); return false;" style="display: flex; align-items: center; justify-content: space-between; padding: 10px; background: linear-gradient(to right, #059669, #10b981); color: white; text-decoration: none; border-radius: 4px; font-weight: bold; font-size: 14px;">
+                    <span style="display: flex; align-items: center; gap: 8px;">
+                        <span style="font-size: 18px;">📄</span>
+                        <span>About Page</span>
+                    </span>
+                    <span id="about-page-toggle" style="font-size: 12px;">▶</span>
+                </a>
+            </caption>
+            <tbody id="about-page-section" style="display: none;">
+                {% for model in app_list %}
+                    {% if model.app_label == 'website' %}
+                        {% for model_item in model.models %}
+                            {% if model_item.object_name == 'AboutPageSEO' or model_item.object_name == 'AboutPageHero' or model_item.object_name == 'AboutPageMissionVision' or model_item.object_name == 'AboutPageAdvantage' or model_item.object_name == 'AboutPageAdvantageSection' or model_item.object_name == 'AboutPageTimeline' or model_item.object_name == 'AboutPageTimelineSection' or model_item.object_name == 'AboutPageTeamMember' or model_item.object_name == 'AboutPageTeamSection' or model_item.object_name == 'AboutPageCTA' %}
+                                <tr class="model-{{ model_item.object_name|lower }}">
+                                    {% if model_item.admin_url %}
+                                        <th scope="row">
+                                            <a href="{{ model_item.admin_url }}" style="color: #447e9b;">
+                                                {{ model_item.name }}
+                                            </a>
+                                        </th>
+                                    {% else %}
+                                        <th scope="row">{{ model_item.name }}</th>
+                                    {% endif %}
+
+                                    {% if model_item.add_url %}
+                                        <td><a href="{{ model_item.add_url }}" class="addlink" style="color: #5b80b2;">➕ Add</a></td>
+                                    {% else %}
+                                        <td>&nbsp;</td>
+                                    {% endif %}
+
+                                    {% if model_item.admin_url %}
+                                        <td><a href="{{ model_item.admin_url }}" class="changelink" style="color: #5b80b2;">✏️ Change</a></td>
+                                    {% else %}
+                                        <td>&nbsp;</td>
+                                    {% endif %}
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Terms of Service Section -->
+    <div class="app-website module" style="margin-top: 20px;">
+        <table>
+            <caption>
+                <a href="#" class="section-title" onclick="toggleSection('terms-of-service-section'); return false;" style="display: flex; align-items: center; justify-content: space-between; padding: 10px; background: linear-gradient(to right, #dc2626, #ef4444); color: white; text-decoration: none; border-radius: 4px; font-weight: bold; font-size: 14px;">
+                    <span style="display: flex; align-items: center; gap: 8px;">
+                        <span style="font-size: 18px;">📜</span>
+                        <span>Terms of Service</span>
+                    </span>
+                    <span id="terms-of-service-toggle" style="font-size: 12px;">▶</span>
+                </a>
+            </caption>
+            <tbody id="terms-of-service-section" style="display: none;">
+                {% for model in app_list %}
+                    {% if model.app_label == 'website' %}
+                        {% for model_item in model.models %}
+                            {% if model_item.object_name == 'TermsOfService' %}
+                                <tr class="model-{{ model_item.object_name|lower }}">
+                                    {% if model_item.admin_url %}
+                                        <th scope="row">
+                                            <a href="{{ model_item.admin_url }}" style="color: #447e9b;">
+                                                {{ model_item.name }}
+                                            </a>
+                                        </th>
+                                    {% else %}
+                                        <th scope="row">{{ model_item.name }}</th>
+                                    {% endif %}
+
+                                    {% if model_item.add_url %}
+                                        <td><a href="{{ model_item.add_url }}" class="addlink" style="color: #5b80b2;">➕ Add</a></td>
+                                    {% else %}
+                                        <td>&nbsp;</td>
+                                    {% endif %}
+
+                                    {% if model_item.admin_url %}
+                                        <td><a href="{{ model_item.admin_url }}" class="changelink" style="color: #5b80b2;">✏️ Change</a></td>
+                                    {% else %}
+                                        <td>&nbsp;</td>
+                                    {% endif %}
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Contact Forms Section -->
+    <div class="app-website module" style="margin-top: 20px;">
+        <table>
+            <caption>
+                <a href="#" class="section-title" onclick="toggleSection('contact-forms-section'); return false;" style="display: flex; align-items: center; justify-content: space-between; padding: 10px; background: linear-gradient(to right, #059669, #10b981); color: white; text-decoration: none; border-radius: 4px; font-weight: bold; font-size: 14px;">
+                    <span style="display: flex; align-items: center; gap: 8px;">
+                        <span style="font-size: 18px;">📧</span>
+                        <span>Contact Forms</span>
+                    </span>
+                    <span id="contact-forms-toggle" style="font-size: 12px;">▶</span>
+                </a>
+            </caption>
+            <tbody id="contact-forms-section" style="display: none;">
+                {% for model in app_list %}
+                    {% if model.app_label == 'website' %}
+                        {% for model_item in model.models %}
+                            {% if model_item.object_name == 'ContactInquiry' %}
+                                <tr class="model-{{ model_item.object_name|lower }}">
+                                    {% if model_item.admin_url %}
+                                        <th scope="row">
+                                            <a href="{{ model_item.admin_url }}" style="color: #447e9b;">
+                                                {{ model_item.name }}
+                                            </a>
+                                        </th>
+                                    {% else %}
+                                        <th scope="row">{{ model_item.name }}</th>
+                                    {% endif %}
+
+                                    {% if model_item.add_url %}
+                                        <td><a href="{{ model_item.add_url }}" class="addlink" style="color: #5b80b2;">➕ Add</a></td>
+                                    {% else %}
+                                        <td>&nbsp;</td>
+                                    {% endif %}
+
+                                    {% if model_item.admin_url %}
+                                        <td><a href="{{ model_item.admin_url }}" class="changelink" style="color: #5b80b2;">✏️ Change</a></td>
+                                    {% else %}
+                                        <td>&nbsp;</td>
+                                    {% endif %}
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
     <div class="app-website module" style="margin-top: 20px;">
         <table>
             <caption>
@@ -300,7 +492,7 @@
                 {% for model in app_list %}
                     {% if model.app_label == 'website' %}
                         {% for model_item in model.models %}
-                            {% if '📧' in model_item.name %}
+                            {% if '📧' in model_item.name and model_item.object_name != 'ContactInquiry' %}
                                 <tr class="model-{{ model_item.object_name|lower }}">
                                     {% if model_item.admin_url %}
                                         <th scope="row">
