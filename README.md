@@ -2,6 +2,51 @@
 
 Professional Django website for Techlynx Pro IT Services company.
 
+## How to Run the Project
+
+### Quick Start
+
+1. **Create Virtual Environment**
+   ```bash
+   python -m venv venv
+   ```
+
+2. **Activate Virtual Environment**
+   
+   **Windows:**
+   ```bash
+   venv\Scripts\activate
+   ```
+   
+   **Mac/Linux:**
+   ```bash
+   source venv/bin/activate
+   ```
+
+3. **Install Dependencies**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. **Run Migrations**
+   ```bash
+   python manage.py migrate
+   ```
+
+5. **Create Admin User (Optional)**
+   ```bash
+   python manage.py createsuperuser
+   ```
+
+6. **Run Server**
+   ```bash
+   python manage.py runserver
+   ```
+
+7. **Open in Browser**
+   - Website: http://127.0.0.1:8000/
+   - Admin Panel: http://127.0.0.1:8000/admin/
+
 ## Features
 
 - ✅ Modern, responsive design with Tailwind CSS
@@ -19,87 +64,20 @@ Professional Django website for Techlynx Pro IT Services company.
 
 - **Backend**: Django 5.0
 - **Frontend**: Tailwind CSS, Material Icons
-- **Database**: SQLite (development), PostgreSQL recommended for production
+- **Database**: SQLite (development)
 - **Fonts**: Google Fonts (Inter)
-
-## Installation & Setup
-
-### 1. Create Virtual Environment
-
-```bash
-python -m venv venv
-```
-
-### 2. Activate Virtual Environment
-
-**Windows:**
-```bash
-venv\Scripts\activate
-```
-
-**Mac/Linux:**
-```bash
-source venv/bin/activate
-```
-
-### 3. Install Dependencies
-
-```bash
-pip install -r requirements.txt
-```
-
-### 4. Run Migrations
-
-```bash
-python manage.py makemigrations
-python manage.py migrate
-```
-
-### 5. Create Superuser (Admin)
-
-```bash
-python manage.py createsuperuser
-```
-
-Follow the prompts to create your admin account.
-
-### 6. Run Development Server
-
-```bash
-python manage.py runserver
-```
-
-Visit: **http://127.0.0.1:8000/**
-
-### 7. Access Admin Panel
-
-Visit: **http://127.0.0.1:8000/admin/**
-
-Login with the superuser credentials you created.
 
 ## Project Structure
 
 ```
 techlynx_project/
 ├── techlynx_project/        # Project settings
-│   ├── settings.py
-│   ├── urls.py
-│   ├── wsgi.py
-│   └── asgi.py
 ├── website/                 # Main app
-│   ├── models.py           # Database models
-│   ├── views.py            # View functions
-│   ├── urls.py             # URL routing
-│   └── admin.py            # Admin configuration
 ├── templates/              # HTML templates
-│   ├── base.html          # Base template
-│   └── website/           # Page templates
-├── static/                 # Static files
-│   ├── css/
-│   ├── js/
-│   └── images/
+├── static/                 # Static files (CSS, JS, images)
+├── media/                  # User uploaded files
 ├── manage.py              # Django management
-└── requirements.txt       # Dependencies
+└── requirements.txt        # Dependencies
 ```
 
 ## Pages
@@ -107,94 +85,22 @@ techlynx_project/
 - **Home** (`/`) - Landing page
 - **About** (`/about/`) - Company information
 - **Services** (`/services/`) - Services overview
-- **Web Development** (`/services/web-development/`) - Web dev services
-- **Digital Marketing** (`/services/digital-marketing/`) - Marketing services
-- **Industries** (`/industries/`) - Industries served
-- **Case Studies** (`/case-studies/`) - Success stories
-- **Blog** (`/blog/`) - Insights & articles
-- **Careers** (`/careers/`) - Job openings
-- **Contact** (`/contact/`) - Contact form
-
-## Database Models
-
-### ContactInquiry
-Stores contact form submissions with:
-- Full name, email, service interest
-- Budget range, project details
-- Timestamp
-
-### Newsletter
-Manages newsletter subscriptions:
-- Email address
-- Subscription status
-- Timestamp
-
-## Customization
-
-### Update Colors
-Edit Tailwind configuration in `templates/base.html`:
-```javascript
-colors: {
-    "primary": "#136dec",  // Change this
-    ...
-}
-```
-
-### Add New Pages
-1. Create view in `website/views.py`
-2. Add URL in `website/urls.py`
-3. Create template in `templates/website/`
-
-### Modify Contact Form
-Edit the `ContactInquiry` model in `website/models.py` and run:
-```bash
-python manage.py makemigrations
-python manage.py migrate
-```
-
-## Production Deployment
-
-### Settings for Production
-
-In `techlynx_project/settings.py`:
-
-```python
-DEBUG = False
-ALLOWED_HOSTS = ['yourdomain.com', 'www.yourdomain.com']
-
-# Uncomment security settings
-SECURE_SSL_REDIRECT = True
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
-```
-
-### Collect Static Files
-
-```bash
-python manage.py collectstatic
-```
-
-### Database
-
-Switch to PostgreSQL for production:
-
-```python
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'your_db_name',
-        'USER': 'your_db_user',
-        'PASSWORD': 'your_db_password',
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }
-}
-```
-
-## Support
-
-For issues or questions, contact the development team.
+- **Web Development** (`/services/web-development/`)
+- **Digital Marketing** (`/services/digital-marketing/`)
+- **AI Solutions** (`/services/ai-solutions/`)
+- **App Development** (`/services/app-development/`)
+- **SEO Audit** (`/services/seo-audit/`)
+- **Project Management** (`/services/project-management/`)
+- **Finance & Accounting** (`/services/finance-accounting/`)
+- **Content Production** (`/services/content-production/`)
+- **Virtual Assistance** (`/services/virtual-assistance/`)
+- **Industries** (`/industries/`)
+- **Case Studies** (`/case-studies/`)
+- **Blog** (`/blog/`)
+- **Careers** (`/careers/`)
+- **Testimonials** (`/testimonials/`)
+- **Contact** (`/contact/`)
 
 ## License
 
-© 2024 Techlynx Pro. All rights reserved.
+© 2025 Techlynx Pro. All rights reserved.

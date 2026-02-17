@@ -740,7 +740,26 @@ def contact(request):
     """Contact page with form handling and tracking"""
     if request.method == 'POST':
         try:
-            # Get client IP address
+            # Input validation and sanitization
+            full_name = request.POST.get('full_name', '').strip()[:200]
+            email = request.POST.get('email', '').strip().lower()[:254]
+            phone = request.POST.get('phone', '').strip()[:20]
+            company = request.POST.get('company', '').strip()[:200]
+            service_interest = request.POST.get('service_interest', '').strip()[:100]
+            budget_range = request.POST.get('budget_range', '').strip()[:50]
+            project_details = request.POST.get('project_details', '').strip()[:5000]  # Limit to 5000 chars
+            
+            # Validate required fields
+            if not full_name or not email or not service_interest or not project_details:
+                messages.error(request, 'Please fill in all required fields.')
+                return redirect('contact')
+            
+            # Basic email validation
+            if '@' not in email or '.' not in email.split('@')[-1]:
+                messages.error(request, 'Please provide a valid email address.')
+                return redirect('contact')
+            
+            # Get client IP address (sanitized)
             x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
             if x_forwarded_for:
                 ip_address = x_forwarded_for.split(',')[0].strip()
@@ -750,30 +769,41 @@ def contact(request):
             # Get country from IP address
             country = get_country_from_ip(ip_address) if ip_address else 'Unknown'
             
+            # Sanitize URLs (limit length)
+            source_url = request.POST.get('source_url', request.build_absolute_uri())[:500]
+            referrer_url = request.META.get('HTTP_REFERER', '')[:500]
+            user_agent = request.META.get('HTTP_USER_AGENT', '')[:500]
+            
             # Save contact inquiry with tracking information
             inquiry = ContactInquiry(
-                full_name=request.POST.get('full_name'),
-                email=request.POST.get('email'),
-                phone=request.POST.get('phone', ''),
-                company=request.POST.get('company', ''),
-                service_interest=request.POST.get('service_interest'),
-                budget_range=request.POST.get('budget_range', ''),
-                project_details=request.POST.get('project_details', ''),
+                full_name=full_name,
+                email=email,
+                phone=phone,
+                company=company,
+                service_interest=service_interest,
+                budget_range=budget_range,
+                project_details=project_details,
                 # Tracking fields
-                source_url=request.POST.get('source_url', request.build_absolute_uri()),
-                referrer_url=request.META.get('HTTP_REFERER', ''),
-                user_agent=request.META.get('HTTP_USER_AGENT', ''),
+                source_url=source_url,
+                referrer_url=referrer_url,
+                user_agent=user_agent,
                 ip_address=ip_address,
                 country=country,
-                utm_source=request.POST.get('utm_source', ''),
-                utm_medium=request.POST.get('utm_medium', ''),
-                utm_campaign=request.POST.get('utm_campaign', ''),
+                utm_source=request.POST.get('utm_source', '').strip()[:100],
+                utm_medium=request.POST.get('utm_medium', '').strip()[:100],
+                utm_campaign=request.POST.get('utm_campaign', '').strip()[:100],
             )
             inquiry.save()
             messages.success(request, 'Thank you! Your inquiry has been submitted successfully. We will get back to you within 24 hours.')
             return redirect('contact')
         except Exception as e:
-            messages.error(request, f'An error occurred. Please try again. Error: {str(e)}')
+            # Don't expose error details to users (security best practice)
+            messages.error(request, 'An error occurred. Please try again.')
+            # Log error for admin (in production, use proper logging)
+            if settings.DEBUG:
+                import traceback
+                print(f"Contact form error: {str(e)}")
+                traceback.print_exc()
     
     # Get current URL and UTM parameters for form
     context = {
@@ -788,11 +818,19 @@ def contact(request):
 
 
 def newsletter_subscribe(request):
-    """Handle newsletter subscription"""
+    """Handle newsletter subscription with security validation"""
     if request.method == 'POST':
-        email = request.POST.get('email', '').strip().lower()
+        email = request.POST.get('email', '').strip().lower()[:254]  # Limit length
         
+        # Validate email
         if not email:
+            if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+                return JsonResponse({'success': False, 'message': 'Please provide a valid email address.'}, status=400)
+            messages.error(request, 'Please provide a valid email address.')
+            return redirect(request.META.get('HTTP_REFERER', 'home'))
+        
+        # Basic email format validation
+        if '@' not in email or '.' not in email.split('@')[-1] or len(email) < 5:
             if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
                 return JsonResponse({'success': False, 'message': 'Please provide a valid email address.'}, status=400)
             messages.error(request, 'Please provide a valid email address.')
@@ -810,9 +848,12 @@ def newsletter_subscribe(request):
                     return JsonResponse({'success': True, 'message': 'Successfully subscribed to our newsletter! Thank you!'})
                 messages.success(request, 'Successfully subscribed to our newsletter! Thank you!')
         except Exception as e:
+            # Don't expose error details
             if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
                 return JsonResponse({'success': False, 'message': 'An error occurred. Please try again later.'}, status=500)
             messages.error(request, 'An error occurred. Please try again later.')
+            if settings.DEBUG:
+                print(f"Newsletter subscription error: {str(e)}")
     
     # Redirect to referer or home
     referer = request.META.get('HTTP_REFERER', '/')
@@ -821,21 +862,28 @@ def newsletter_subscribe(request):
 
 @csrf_exempt
 def chatbot_query(request):
-    """Handle chatbot queries using Gemini API"""
+    """Handle chatbot queries using Gemini API with security measures"""
     if request.method != 'POST':
         return JsonResponse({'error': 'Method not allowed'}, status=405)
     
     try:
-        # Parse request body
+        # Parse request body with size limit
+        if len(request.body) > 10000:  # 10KB max request size
+            return JsonResponse({'error': 'Request too large'}, status=400)
+        
         data = json.loads(request.body)
         user_message = data.get('message', '').strip()
         
-        # Validate input
+        # Validate and sanitize input
         if not user_message:
             return JsonResponse({'error': 'Message is required'}, status=400)
         
+        # Length validation
         if len(user_message) > 500:
             return JsonResponse({'error': 'Message too long (max 500 characters)'}, status=400)
+        
+        # Basic input sanitization - remove potentially dangerous characters
+        user_message = user_message.replace('<', '&lt;').replace('>', '&gt;')[:500]
         
         # Check rate limiting (session-based)
         if 'chatbot_queries' not in request.session:
