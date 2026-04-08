@@ -32,6 +32,12 @@ db.sqlite3-journal
 /media
 /staticfiles
 
+# Secrets & deploy artifacts (never commit)
+*.pem
+deploy_*.tar.gz
+_upload_all_temp/
+_deploy_temp/
+
 # IDEs
 .vscode/
 .idea/

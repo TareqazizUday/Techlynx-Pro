@@ -2,9 +2,8 @@
 # From your PC (project root): .\upload_all_to_server.ps1
 # Optional: -IncludeDatabase (bundle local db.sqlite3), -RunUpdateOnServer (SSH and run update_code.sh)
 #
-# On the SERVER after upload, use Linux:
+# On the SERVER after upload (if you did not use -RunUpdateOnServer):
 #   cd ~/techlynxpro && chmod +x update_code.sh && ./update_code.sh
-#   # or: chmod +x server_update.sh && ./server_update.sh
 
 param(
     [switch]$IncludeDatabase,
