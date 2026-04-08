@@ -1,0 +1,22 @@
+{% extends "admin/change_list.html" %}
+{% load i18n %}
+
+{% block content %}
+<div class="module" style="margin-bottom: 1.5rem; padding: 1rem; background: #f8f9fa; border: 1px solid #e0e0e0; border-radius: 4px;">
+    <h2 style="margin-top: 0;">Why Choose Section (Services page)</h2>
+    <p style="color: #666; font-size: 13px; margin-bottom: 0.75rem;">Headline and description shown above the Why Choose items on the Services page.</p>
+    <form method="post" action="{% url 'admin:website_whychooseitem_section_save' %}" style="display: flex; flex-direction: column; gap: 0.75rem; max-width: 800px;">
+        {% csrf_token %}
+        <div>
+            <label for="id_why_choose_headline" style="display: block; font-weight: 600; margin-bottom: 4px;">Headline</label>
+            <input type="text" id="id_why_choose_headline" name="why_choose_headline" value="{{ why_choose_headline }}" placeholder="Why Choose Techlynx Pro" style="width: 100%; padding: 6px 10px; box-sizing: border-box;">
+        </div>
+        <div>
+            <label for="id_why_choose_description" style="display: block; font-weight: 600; margin-bottom: 4px;">Description</label>
+            <textarea id="id_why_choose_description" name="why_choose_description" rows="3" placeholder="We combine US-based technical excellence with an SEO-first methodology..." style="width: 100%; padding: 6px 10px; box-sizing: border-box;">{{ why_choose_description }}</textarea>
+        </div>
+        <input type="submit" value="Save section text" class="default" style="padding: 6px 12px; align-self: flex-start;">
+    </form>
+</div>
+{{ block.super }}
+{% endblock %}

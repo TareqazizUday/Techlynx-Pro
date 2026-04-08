@@ -19,7 +19,8 @@ SECRET_KEY = config('SECRET_KEY', default='django-insecure-change-this-in-produc
 DEBUG = config('DEBUG', default=True, cast=bool)
 
 # ALLOWED_HOSTS - Set specific domains in production
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost,127.0.0.1').split(',')
+# Supports: http://techlynxpro.com, https://techlynxpro.com, www.techlynxpro.com
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost,127.0.0.1,techlynxpro.com,www.techlynxpro.com,3.82.24.132').split(',')
 
 
 # Gemini API Configuration
@@ -41,6 +42,8 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # Compressed static files when Django serves /static/
+    'django.middleware.gzip.GZipMiddleware',  # Compress HTML from views (nginx /static/ bypasses this)
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -121,6 +124,16 @@ STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+# Pre-compress JS/CSS at collectstatic (.gz siblings) — nginx gzip_static serves them; fixes PageSpeed "uncompressed assets"
+STORAGES = {
+    'default': {
+        'BACKEND': 'django.core.files.storage.FileSystemStorage',
+    },
+    'staticfiles': {
+        'BACKEND': 'whitenoise.storage.CompressedStaticFilesStorage',
+    },
+}
 
 # Media files
 MEDIA_URL = '/media/'

@@ -1,9 +1,9 @@
 User-agent: *
 Allow: /
+
 Disallow: /admin/
 Disallow: /api/
+Disallow: /newsletter/
 Disallow: /media/
 
-# Sitemap
-Sitemap: https://techlynxpro.com/sitemap.xml
-
+Sitemap: {{ sitemap_url }}

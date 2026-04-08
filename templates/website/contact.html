@@ -40,17 +40,26 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center max-w-3xl mx-auto mb-8">
             <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-primary/10 text-primary mb-6 uppercase tracking-wider">
-                <span class="material-symbols-outlined text-sm">forum</span> Let's Connect
+                <span class="material-symbols-outlined text-sm">forum</span> {{ contact_page.badge_text|default:"Let's Connect" }}
             </span>
             <h1 class="text-4xl md:text-6xl font-black text-slate-900 dark:text-white leading-[1.1] mb-6">
-                Ready to Transform Your <span class="text-primary">Digital Presence?</span>
+                {% if contact_page %}{{ contact_page.headline }}{% else %}Ready to Transform Your <span class="text-primary">Digital Presence?</span>{% endif %}
             </h1>
             <p class="text-lg md:text-xl text-slate-600 dark:text-slate-400 leading-relaxed">
-                Get a custom proposal from our expert team. Most inquiries receive a detailed response within 24 hours.
+                {{ contact_page.hero_description|default:"Get a custom proposal from our expert team. Most inquiries receive a detailed response within 24 hours." }}
             </p>
         </div>
 
         <div class="grid lg:grid-cols-3 gap-6">
+            {% for feat in contact_features %}
+            <div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-[#e7ecf3] dark:border-slate-800 text-center">
+                <div class="size-14 mx-auto rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-4">
+                    <span class="material-symbols-outlined text-3xl">{{ feat.icon }}</span>
+                </div>
+                <h3 class="font-bold text-slate-900 dark:text-white mb-2">{{ feat.title }}</h3>
+                <p class="text-sm text-slate-600 dark:text-slate-400">{{ feat.description }}</p>
+            </div>
+            {% empty %}
             <div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-[#e7ecf3] dark:border-slate-800 text-center">
                 <div class="size-14 mx-auto rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-4">
                     <span class="material-symbols-outlined text-3xl">schedule</span>
@@ -72,6 +81,7 @@
                 <h3 class="font-bold text-slate-900 dark:text-white mb-2">No Obligation</h3>
                 <p class="text-sm text-slate-600 dark:text-slate-400">Free consultation and project assessment</p>
             </div>
+            {% endfor %}
         </div>
     </div>
 </section>
@@ -82,7 +92,7 @@
         <div class="grid lg:grid-cols-2 gap-16">
             <!-- Contact Form -->
             <div>
-                <h2 class="text-3xl font-bold text-slate-900 dark:text-white mb-6">Send Us a Message</h2>
+                <h2 class="text-3xl font-bold text-slate-900 dark:text-white mb-6">{% if contact_page %}{{ contact_page.form_heading }}{% else %}Send Us a Message{% endif %}</h2>
                 <form method="post" action="{% url 'contact' %}" class="space-y-6" id="contactForm">
                     {% csrf_token %}
                     <!-- Hidden tracking fields -->
@@ -146,7 +156,7 @@
                     </div>
 
                     <button type="submit" class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-4 rounded-lg shadow-lg shadow-primary/20 transition-all flex items-center justify-center gap-2">
-                        <span>Send Message</span>
+                        <span>{% if contact_page %}{{ contact_page.submit_button_text }}{% else %}Send Message{% endif %}</span>
                         <span class="material-symbols-outlined">send</span>
                     </button>
 
@@ -202,9 +212,9 @@
             <!-- Contact Information -->
             <div class="space-y-8">
                 <div>
-                    <h2 class="text-3xl font-bold text-slate-900 dark:text-white mb-6">Get In Touch</h2>
+                    <h2 class="text-3xl font-bold text-slate-900 dark:text-white mb-6">{% if contact_page %}{{ contact_page.get_in_touch_heading }}{% else %}Get In Touch{% endif %}</h2>
                     <p class="text-slate-600 dark:text-slate-400 leading-relaxed mb-8">
-                        Have questions? Our team is here to help. Reach out through any of these channels and we'll get back to you promptly.
+                        {% if contact_page %}{{ contact_page.get_in_touch_intro }}{% else %}Have questions? Our team is here to help. Reach out through any of these channels and we'll get back to you promptly.{% endif %}
                     </p>
                 </div>
 
@@ -217,9 +227,9 @@
                             </div>
                         </div>
                         <div>
-                            <h3 class="font-bold text-slate-900 dark:text-white mb-1">Email Us</h3>
-                            <p class="text-sm text-slate-600 dark:text-slate-400 mb-2">Direct inquiries to our team</p>
-                            <a class="text-primary font-semibold hover:underline" href="mailto:hello@techlynxpro.com">hello@techlynxpro.com</a>
+                            <h3 class="font-bold text-slate-900 dark:text-white mb-1">{% if contact_page %}{{ contact_page.email_label }}{% else %}Email Us{% endif %}</h3>
+                            <p class="text-sm text-slate-600 dark:text-slate-400 mb-2">{% if contact_page %}{{ contact_page.email_description }}{% else %}Direct inquiries to our team{% endif %}</p>
+                            <a class="text-primary font-semibold hover:underline" href="mailto:{% if contact_page %}{{ contact_page.email_address }}{% else %}hello@techlynxpro.com{% endif %}">{% if contact_page %}{{ contact_page.email_address }}{% else %}hello@techlynxpro.com{% endif %}</a>
                         </div>
                     </div>
 
@@ -231,9 +241,9 @@
                             </div>
                         </div>
                         <div>
-                            <h3 class="font-bold text-slate-900 dark:text-white mb-1">Call Sales</h3>
-                            <p class="text-sm text-slate-600 dark:text-slate-400 mb-2">Mon-Fri, 9am - 6pm EST</p>
-                            <a class="text-primary font-semibold hover:underline" href="tel:+15206664699">+1 (520) 666-4699</a>
+                            <h3 class="font-bold text-slate-900 dark:text-white mb-1">{% if contact_page %}{{ contact_page.phone_label }}{% else %}Call Sales{% endif %}</h3>
+                            <p class="text-sm text-slate-600 dark:text-slate-400 mb-2">{% if contact_page %}{{ contact_page.phone_description }}{% else %}Mon-Fri, 9am - 6pm EST{% endif %}</p>
+                            <a class="text-primary font-semibold hover:underline" href="tel:{% if contact_page %}{{ contact_page.phone_number }}{% else %}+15206664699{% endif %}">{% if contact_page %}{{ contact_page.phone_number }}{% else %}+1 (520) 666-4699{% endif %}</a>
                         </div>
                     </div>
 
@@ -245,23 +255,9 @@
                             </div>
                         </div>
                         <div>
-                            <h3 class="font-bold text-slate-900 dark:text-white mb-1">Office Location</h3>
-                            <p class="text-sm text-slate-600 dark:text-slate-400 mb-2">Visit our headquarters</p>
-                            <p class="text-slate-900 dark:text-white font-medium">123 Business Avenue<br>Suite 500, New York, NY 10001</p>
-                        </div>
-                    </div>
-
-                    <!-- Live Chat -->
-                    <div class="flex gap-4 p-6 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800">
-                        <div class="flex-shrink-0">
-                            <div class="size-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
-                                <span class="material-symbols-outlined text-2xl">chat</span>
-                            </div>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-slate-900 dark:text-white mb-1">Live Chat</h3>
-                            <p class="text-sm text-slate-600 dark:text-slate-400 mb-2">Available during business hours</p>
-                            <button class="text-primary font-semibold hover:underline">Start Chat →</button>
+                            <h3 class="font-bold text-slate-900 dark:text-white mb-1">{% if contact_page %}{{ contact_page.location_label }}{% else %}Office Location{% endif %}</h3>
+                            <p class="text-sm text-slate-600 dark:text-slate-400 mb-2">{% if contact_page %}{{ contact_page.location_description }}{% else %}Visit our headquarters{% endif %}</p>
+                            <p class="text-slate-900 dark:text-white font-medium">{% if contact_page %}{{ contact_page.address_line1 }}{% if contact_page.address_line2 %}<br>{{ contact_page.address_line2 }}{% endif %}{% else %}123 Business Avenue<br>Suite 500, New York, NY 10001{% endif %}</p>
                         </div>
                     </div>
                 </div>
@@ -274,10 +270,19 @@
 <section class="py-24 bg-slate-50 dark:bg-slate-900/30">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-12">
-            <h2 class="text-3xl font-bold text-slate-900 dark:text-white mb-4">Frequently Asked Questions</h2>
-            <p class="text-slate-600 dark:text-slate-400">Quick answers to common questions</p>
+            <h2 class="text-3xl font-bold text-slate-900 dark:text-white mb-4">{% if contact_page %}{{ contact_page.faq_heading }}{% else %}Frequently Asked Questions{% endif %}</h2>
+            <p class="text-slate-600 dark:text-slate-400">{% if contact_page %}{{ contact_page.faq_subtext }}{% else %}Quick answers to common questions{% endif %}</p>
         </div>
         <div class="space-y-4">
+            {% for faq in contact_faqs %}
+            <details class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-6 group">
+                <summary class="font-bold text-slate-900 dark:text-white cursor-pointer list-none flex justify-between items-center">
+                    {{ faq.question }}
+                    <span class="material-symbols-outlined group-open:rotate-180 transition-transform">expand_more</span>
+                </summary>
+                <p class="mt-4 text-slate-600 dark:text-slate-400">{{ faq.answer }}</p>
+            </details>
+            {% empty %}
             <details class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-6 group">
                 <summary class="font-bold text-slate-900 dark:text-white cursor-pointer list-none flex justify-between items-center">
                     How long does it take to get a response?
@@ -306,6 +311,7 @@
                 </summary>
                 <p class="mt-4 text-slate-600 dark:text-slate-400">Absolutely! We work with clients worldwide and have experience managing projects across different time zones and regions.</p>
             </details>
+            {% endfor %}
         </div>
     </div>
 </section>

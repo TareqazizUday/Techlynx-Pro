@@ -115,7 +115,7 @@ def populate_home_content(apps, schema_editor):
             icon="support_agent",
             detail_page_url="/services",
             is_active=True,
-            order=9
+            order=10
         ),
     ])
     

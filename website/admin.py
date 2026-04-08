@@ -1,12 +1,15 @@
 from django.contrib import admin
 from django.contrib.admin import AdminSite
+from django.shortcuts import redirect
+from django.http import HttpResponseNotAllowed
+from django.urls import path
 from django.utils.html import format_html
 from django.utils.safestring import mark_safe
 from .models import (
-    ContactInquiry, Newsletter, HeroSection, HeroBenefit, CompanyStat,
+    ContactInquiry, Newsletter, ContactPage, ContactPageFeature, ContactPageFAQ, HeroSection, HeroBenefit, CompanyStat,
     Service, Benefit, Guarantee, CaseStudy, CaseStudyMetric, CaseStudiesPageCTA, Testimonial,
     Partner, CTASection, ServicesPageHero, ServiceDetail, ServiceFeature,
-    WhyChooseItem, WhyChooseImage, ServicesPageCTA, CTAChecklist,
+    WhyChooseItem, WhyChooseSection, WhyChooseImage, ServicesPageCTA, CTAChecklist,
     BlogCategory, BlogPost, CareersHero, CareersStat, JobDepartment,
     JobLocation, JobOpening, TalentManagement, TalentFeature, CareerApplication,
     AISolutionsHero, AIService, AITechnology, AITechnologyDetail,
@@ -23,6 +26,7 @@ from .models import (
     PMHero, PMService, PMTool, PMToolLogo, PMProcess, PMBenefit,
     PMMetric, PMTestimonial, PMCTA,
     VAHero, VAService, VABenefit, VACTA,
+    BPOHero, BPOService, BPOBenefit, BPOProcessStep, BPOCTA,
     FAHero, FAService, FATool, FAProcess, FABenefit, FATestimonial, FACTA,
     CPService, CPTool, CPBenefit, CPProcessStep, CPMetric, CPTestimonial, CPTechnology,
     TestimonialsPageSEO, TestimonialsPageHero, TestimonialsPageWhyChooseReason,
@@ -114,6 +118,38 @@ class NewsletterAdmin(admin.ModelAdmin):
         updated = queryset.update(is_active=False)
         self.message_user(request, f'{updated} subscriber(s) deactivated.')
     deactivate_subscribers.short_description = "Deactivate selected subscribers"
+
+
+@admin.register(ContactPage)
+class ContactPageAdmin(admin.ModelAdmin):
+    list_display = ('__str__',)
+    fieldsets = (
+        ('Hero Section', {'fields': ('badge_text', 'headline', 'hero_description')}),
+        ('Form', {'fields': ('form_heading', 'submit_button_text')}),
+        ('Get In Touch', {'fields': ('get_in_touch_heading', 'get_in_touch_intro')}),
+        ('Email', {'fields': ('email_label', 'email_description', 'email_address')}),
+        ('Phone', {'fields': ('phone_label', 'phone_description', 'phone_number')}),
+        ('Location', {'fields': ('location_label', 'location_description', 'address_line1', 'address_line2')}),
+        ('Live Chat', {'fields': ('live_chat_label', 'live_chat_description', 'live_chat_button_text')}),
+        ('FAQ Section', {'fields': ('faq_heading', 'faq_subtext')}),
+    )
+
+    def has_add_permission(self, request):
+        return not ContactPage.objects.exists()
+
+
+@admin.register(ContactPageFeature)
+class ContactPageFeatureAdmin(admin.ModelAdmin):
+    list_display = ('title', 'icon', 'order')
+    list_editable = ('order',)
+    ordering = ('order',)
+
+
+@admin.register(ContactPageFAQ)
+class ContactPageFAQAdmin(admin.ModelAdmin):
+    list_display = ('question', 'order')
+    list_editable = ('order',)
+    ordering = ('order',)
 
 
 # Helper function for admin image previews
@@ -264,6 +300,7 @@ class PartnerAdmin(admin.ModelAdmin):
     search_fields = ('name',)
     readonly_fields = ('logo_preview',)
     ordering = ('order',)
+    change_list_template = 'admin/website/partner/change_list.html'
     
     fieldsets = (
         ('Partner Info', {
@@ -273,6 +310,29 @@ class PartnerAdmin(admin.ModelAdmin):
             'fields': ('order',)
         }),
     )
+    
+    def get_urls(self):
+        urls = super().get_urls()
+        custom = [
+            path('headline-save/', self.admin_site.admin_view(self.save_headline_view), name='website_partner_headline_save'),
+        ]
+        return custom + urls
+    
+    def save_headline_view(self, request):
+        if request.method != 'POST':
+            return HttpResponseNotAllowed(['POST'])
+        headline = request.POST.get('trusted_by_headline', '').strip()
+        first = Partner.objects.order_by('order').first()
+        if first is not None:
+            first.trusted_by_headline = headline
+            first.save()
+        return redirect('admin:website_partner_changelist')
+    
+    def changelist_view(self, request, extra_context=None):
+        extra_context = extra_context or {}
+        first = Partner.objects.order_by('order').first()
+        extra_context['trusted_by_headline'] = (first.trusted_by_headline or '').strip() if first else ''
+        return super().changelist_view(request, extra_context)
     
     def logo_preview(self, obj):
         return get_image_preview(obj.logo if obj else None, "120x60", "No logo")
@@ -374,6 +434,32 @@ class WhyChooseItemAdmin(admin.ModelAdmin):
     list_filter = ('is_active',)
     search_fields = ('title', 'description')
     ordering = ('order',)
+    change_list_template = 'admin/website/whychooseitem/change_list.html'
+
+    def get_urls(self):
+        urls = super().get_urls()
+        custom = [
+            path('section-save/', self.admin_site.admin_view(self.save_section_view), name='website_whychooseitem_section_save'),
+        ]
+        return custom + urls
+
+    def save_section_view(self, request):
+        if request.method != 'POST':
+            return HttpResponseNotAllowed(['POST'])
+        section = WhyChooseSection.objects.first()
+        if section is None:
+            section = WhyChooseSection.objects.create(headline='', description='')
+        section.headline = (request.POST.get('why_choose_headline') or '').strip()
+        section.description = (request.POST.get('why_choose_description') or '').strip()
+        section.save()
+        return redirect('admin:website_whychooseitem_changelist')
+
+    def changelist_view(self, request, extra_context=None):
+        extra_context = extra_context or {}
+        section = WhyChooseSection.objects.first()
+        extra_context['why_choose_headline'] = (section.headline if section else '').strip()
+        extra_context['why_choose_description'] = (section.description if section else '').strip()
+        return super().changelist_view(request, extra_context)
 
 
 @admin.register(WhyChooseImage)
@@ -1949,6 +2035,75 @@ class VACTAAdmin(admin.ModelAdmin):
     
     def has_add_permission(self, request):
         return not VACTA.objects.exists()
+
+
+# ==================== BPO PAGE MANAGEMENT ====================
+
+@admin.register(BPOHero)
+class BPOHeroAdmin(admin.ModelAdmin):
+    list_display = ('__str__', 'efficiency_gain', 'sla_coverage', 'qa_accuracy', 'is_active')
+    fieldsets = (
+        ('Badge', {'fields': ('badge_icon', 'badge_text')}),
+        ('Content', {'fields': ('headline', 'description')}),
+        ('Call-to-Action', {'fields': ('cta_primary_text', 'cta_primary_url', 'cta_secondary_text', 'cta_secondary_url')}),
+        ('Hero Image', {'fields': ('hero_image',)}),
+        ('Highlights', {'fields': ('efficiency_gain', 'sla_coverage', 'qa_accuracy')}),
+        ('Status', {'fields': ('is_active',)}),
+    )
+
+    def has_add_permission(self, request):
+        return not BPOHero.objects.exists()
+
+
+@admin.register(BPOService)
+class BPOServiceAdmin(admin.ModelAdmin):
+    list_display = ('title', 'order', 'is_active')
+    list_filter = ('is_active',)
+    search_fields = ('title', 'description')
+    ordering = ['order']
+    fieldsets = (
+        ('Basic Info', {'fields': ('title', 'description', 'order')}),
+        ('Icon', {'fields': ('icon', 'icon_image')}),
+        ('Features', {'fields': ('feature_1', 'feature_2', 'feature_3', 'feature_4')}),
+        ('Status', {'fields': ('is_active',)}),
+    )
+
+
+@admin.register(BPOProcessStep)
+class BPOProcessStepAdmin(admin.ModelAdmin):
+    list_display = ('step_number', 'title', 'order', 'is_active')
+    list_filter = ('is_active',)
+    ordering = ['order']
+    fieldsets = (
+        ('Step', {'fields': ('step_number', 'title', 'description', 'order')}),
+        ('Status', {'fields': ('is_active',)}),
+    )
+
+
+@admin.register(BPOBenefit)
+class BPOBenefitAdmin(admin.ModelAdmin):
+    list_display = ('title', 'order', 'is_active')
+    list_filter = ('is_active',)
+    search_fields = ('title', 'description')
+    ordering = ['order']
+    fieldsets = (
+        ('Basic Info', {'fields': ('title', 'description', 'order')}),
+        ('Icon', {'fields': ('icon', 'icon_image')}),
+        ('Status', {'fields': ('is_active',)}),
+    )
+
+
+@admin.register(BPOCTA)
+class BPOCTAAdmin(admin.ModelAdmin):
+    list_display = ('headline', 'is_active')
+    fieldsets = (
+        ('Content', {'fields': ('headline', 'description')}),
+        ('Call-to-Action Buttons', {'fields': ('cta_primary_text', 'cta_primary_url', 'cta_secondary_text', 'cta_secondary_url')}),
+        ('Status', {'fields': ('is_active',)}),
+    )
+
+    def has_add_permission(self, request):
+        return not BPOCTA.objects.exists()
 
 
 # ==================== FINANCE & ACCOUNTING PAGE ADMIN ====================

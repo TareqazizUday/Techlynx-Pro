@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import '../static/css/custom.css';
+
+@layer base {
+  body {
+    font-family: 'Inter', sans-serif;
+  }
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  }
+}
+
+/* Chat widget mobile layout (was inline in base.html) */
+@media (max-width: 768px) {
+  #chat-window {
+    position: fixed !important;
+    bottom: 0 !important;
+    right: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 100vh !important;
+    max-height: 100vh !important;
+    border-radius: 0 !important;
+  }
+  #chat-window.hidden {
+    transform: translateY(100%);
+  }
+}
+
+/* Home "Core Services" grid: when the last row has a single card (count 1,4,7,10,… in 3 columns), center it under column 2. Plain CSS so it works even if Tailwind did not scan dynamic class names in templates. */
+@media (min-width: 1024px) {
+  .home-services-grid-last-middle {
+    grid-column-start: 2;
+  }
+}

@@ -1,0 +1,396 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Business Process Outsourcing (BPO) | Support, Back Office & Data | Techlynx Pro{% endblock %}
+
+{% block meta_description %}BPO services for customer support, back-office operations, and data processing. SLA-driven teams, documented SOPs, QA, and secure reporting. Scale without extra headcount—request a tailored outsourcing plan.{% endblock %}
+
+{% block meta_keywords %}BPO, business process outsourcing, outsourced customer support, back office outsourcing, data processing outsourcing, SLA outsourcing, operational outsourcing, Techlynx Pro{% endblock %}
+
+{% block og_title %}Business Process Outsourcing (BPO) | Techlynx Pro{% endblock %}
+
+{% block og_description %}Outsource support, back office, and data workflows with SLAs, playbooks, and quality assurance. Secure handoffs and transparent reporting.{% endblock %}
+
+{% block content %}
+<main>
+<!-- Hero Section (layout matches finance-accounting) -->
+<section class="relative overflow-hidden pt-16 pb-20 lg:pt-24 lg:pb-32 bg-background-light dark:bg-background-dark">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="lg:grid lg:grid-cols-2 lg:gap-16 items-center">
+            <div>
+                {% if hero %}
+                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-primary/10 text-primary mb-6 uppercase tracking-wider">
+                    <span class="material-symbols-outlined text-sm">{{ hero.badge_icon|default:'domain' }}</span> {{ hero.badge_text }}
+                </span>
+                <h1 class="text-4xl md:text-6xl font-black text-slate-900 dark:text-white leading-[1.1] mb-6">{{ hero.headline|safe }}</h1>
+                <p class="text-lg md:text-xl text-slate-600 dark:text-slate-400 mb-8 leading-relaxed">
+                    {{ hero.description }}
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a href="{{ hero.cta_primary_url }}" class="px-8 py-4 bg-primary text-white rounded-lg font-bold text-lg hover:shadow-lg hover:shadow-primary/30 transition-all flex items-center gap-2 justify-center group">
+                        {{ hero.cta_primary_text }} <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                    </a>
+                    <a href="{{ hero.cta_secondary_url }}" class="px-8 py-4 border border-[#cfd9e7] dark:border-slate-700 rounded-lg font-bold text-lg hover:bg-white dark:hover:bg-slate-800 transition-all">
+                        {{ hero.cta_secondary_text }}
+                    </a>
+                </div>
+                {% else %}
+                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-primary/10 text-primary mb-6 uppercase tracking-wider">
+                    <span class="material-symbols-outlined text-sm">domain</span> Operational excellence
+                </span>
+                <h1 class="text-4xl md:text-6xl font-black text-slate-900 dark:text-white leading-[1.1] mb-6">
+                    Expert <span class="text-primary">Business Process Outsourcing</span> (BPO)
+                </h1>
+                <p class="text-lg md:text-xl text-slate-600 dark:text-slate-400 mb-8 leading-relaxed">
+                    Dedicated teams for customer support, back-office workflows, and data processing—built around your SLAs, tools, and quality standards.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a href="{% url 'contact' %}" class="px-8 py-4 bg-primary text-white rounded-lg font-bold text-lg hover:shadow-lg hover:shadow-primary/30 transition-all flex items-center gap-2 justify-center group">
+                        Get a BPO proposal <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                    </a>
+                    <a href="#bpo-services" class="px-8 py-4 border border-[#cfd9e7] dark:border-slate-700 rounded-lg font-bold text-lg hover:bg-white dark:hover:bg-slate-800 transition-all">
+                        View BPO services
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+            <div class="mt-12 lg:mt-0 relative space-y-6">
+                <div class="absolute -top-12 -left-12 w-64 h-64 bg-primary/10 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="absolute -bottom-12 -right-12 w-64 h-64 bg-primary/20 rounded-full blur-3xl pointer-events-none"></div>
+                <figure class="relative z-[1] rounded-2xl overflow-hidden shadow-xl border border-slate-200/80 dark:border-slate-700 bg-slate-100 dark:bg-slate-800">
+                    <img src="{% static 'images/bpo/bpo-page-hero.webp' %}" alt="{% if hero %}{{ hero.badge_text|default:'BPO' }} — operations and delivery{% else %}Business process outsourcing — collaborative operations teams{% endif %}" class="w-full h-auto object-cover aspect-[4/3] sm:aspect-[16/10]" width="1200" height="750" loading="eager" decoding="async">
+                </figure>
+                <div class="relative z-[1] bg-white dark:bg-slate-900 border border-[#e7ecf3] dark:border-slate-800 p-6 rounded-3xl shadow-xl">
+                    <div class="mb-6">
+                        <p class="text-xs text-slate-500 uppercase font-bold tracking-widest mb-2">Typical efficiency uplift</p>
+                        <div class="flex items-end gap-2 mb-4">
+                            {% if hero %}
+                            <h3 class="text-4xl font-black text-green-500">{{ hero.efficiency_gain }}</h3>
+                            {% else %}
+                            <h3 class="text-4xl font-black text-green-500">30–60%</h3>
+                            {% endif %}
+                            <span class="text-primary font-bold text-sm mb-1">vs ad-hoc ops</span>
+                        </div>
+                        <p class="text-xs text-slate-500 mb-3">On scoped workflows &amp; volume</p>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div class="p-3 bg-slate-50 dark:bg-slate-800 rounded-xl">
+                                <p class="text-xs text-slate-500 mb-1">SLA coverage</p>
+                                {% if hero %}
+                                <p class="text-xl font-bold text-primary">{{ hero.sla_coverage }}</p>
+                                {% else %}
+                                <p class="text-xl font-bold text-primary">24/7</p>
+                                {% endif %}
+                            </div>
+                            <div class="p-3 bg-slate-50 dark:bg-slate-800 rounded-xl">
+                                <p class="text-xs text-slate-500 mb-1">QA target</p>
+                                {% if hero %}
+                                <p class="text-xl font-bold text-green-500">{{ hero.qa_accuracy }}</p>
+                                {% else %}
+                                <p class="text-xl font-bold text-green-500">99%+</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-4 bg-primary/5 rounded-xl border border-primary/20">
+                        <div class="flex items-center gap-2 mb-2">
+                            <span class="material-symbols-outlined text-primary text-sm">verified</span>
+                            <p class="text-xs font-bold text-primary">SLA-backed delivery &amp; documented SOPs</p>
+                        </div>
+                        <p class="text-xs text-slate-500">Playbooks, QA sampling, and transparent reporting</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- BPO Services -->
+<section id="bpo-services" class="py-24 bg-white dark:bg-background-dark scroll-mt-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold mb-4">Comprehensive BPO services</h2>
+            <p class="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">Customer support, data operations, back office, and compliance-ready workflows—scoped to your tools and volume.</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {% for service in services %}
+            <div class="group p-6 rounded-xl border border-[#cfd9e7] dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-primary transition-all duration-300">
+                <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-primary/15 to-primary/5 dark:from-primary/25 dark:to-primary/10 ring-1 ring-primary/15 flex items-center justify-center mb-6 group-hover:scale-105 transition-transform p-2.5">
+                    {% if service.icon_image %}
+                    <img src="{{ service.icon_image.url }}" alt="" role="presentation" class="w-10 h-10 object-contain" width="40" height="40" loading="lazy" decoding="async">
+                    {% elif forloop.counter == 1 %}
+                    <img src="{% static 'images/bpo/service_icons/customer-support.svg' %}" alt="" role="presentation" class="w-10 h-10 object-contain" width="40" height="40" loading="lazy" decoding="async">
+                    {% elif forloop.counter == 2 %}
+                    <img src="{% static 'images/bpo/service_icons/data-processing.svg' %}" alt="" role="presentation" class="w-10 h-10 object-contain" width="40" height="40" loading="lazy" decoding="async">
+                    {% elif forloop.counter == 3 %}
+                    <img src="{% static 'images/bpo/service_icons/back-office.svg' %}" alt="" role="presentation" class="w-10 h-10 object-contain" width="40" height="40" loading="lazy" decoding="async">
+                    {% elif forloop.counter == 4 %}
+                    <img src="{% static 'images/bpo/service_icons/compliance.svg' %}" alt="" role="presentation" class="w-10 h-10 object-contain" width="40" height="40" loading="lazy" decoding="async">
+                    {% else %}
+                    <span class="material-symbols-outlined text-primary text-[28px] leading-none" aria-hidden="true">{{ service.icon|default:'support_agent' }}</span>
+                    {% endif %}
+                </div>
+                <h3 class="text-lg font-bold mb-2">{{ service.title }}</h3>
+                <p class="text-sm text-slate-600 dark:text-slate-400 mb-4">{{ service.description }}</p>
+                <ul class="text-xs space-y-2 text-slate-500">
+                    {% if service.feature_1 %}
+                    <li class="flex items-center gap-2"><span class="material-symbols-outlined text-xs text-green-500">check_circle</span> {{ service.feature_1 }}</li>
+                    {% endif %}
+                    {% if service.feature_2 %}
+                    <li class="flex items-center gap-2"><span class="material-symbols-outlined text-xs text-green-500">check_circle</span> {{ service.feature_2 }}</li>
+                    {% endif %}
+                    {% if service.feature_3 %}
+                    <li class="flex items-center gap-2"><span class="material-symbols-outlined text-xs text-green-500">check_circle</span> {{ service.feature_3 }}</li>
+                    {% endif %}
+                    {% if service.feature_4 %}
+                    <li class="flex items-center gap-2"><span class="material-symbols-outlined text-xs text-green-500">check_circle</span> {{ service.feature_4 }}</li>
+                    {% endif %}
+                </ul>
+            </div>
+            {% empty %}
+            <p class="col-span-full text-center text-slate-500">Add BPO services from the admin panel.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- How we run BPO operations — delivery model + visual -->
+<section class="relative py-20 lg:py-28 overflow-hidden bg-gradient-to-b from-slate-100/90 via-white to-slate-50 dark:from-slate-900/60 dark:via-background-dark dark:to-slate-900/40" aria-labelledby="bpo-operations-heading">
+    <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgb(148_163_184/0.22)_1px,transparent_0)] [background-size:28px_28px] dark:bg-[radial-gradient(circle_at_1px_1px,rgb(71_85_105/0.25)_1px,transparent_0)]" aria-hidden="true"></div>
+    <div class="pointer-events-none absolute -top-24 right-0 h-80 w-80 rounded-full bg-primary/15 blur-3xl dark:bg-primary/10" aria-hidden="true"></div>
+    <div class="pointer-events-none absolute -bottom-32 left-0 h-72 w-72 rounded-full bg-sky-400/10 blur-3xl dark:bg-sky-500/5" aria-hidden="true"></div>
+
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12 lg:mb-16 max-w-3xl mx-auto">
+            <p class="text-xs font-bold uppercase tracking-[0.2em] text-primary mb-3">Delivery model</p>
+            <h2 id="bpo-operations-heading" class="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white mb-4 tracking-tight">
+                How we run BPO operations
+            </h2>
+            <p class="text-slate-600 dark:text-slate-400 text-base sm:text-lg leading-relaxed">
+                Structured delivery: <span class="text-slate-800 dark:text-slate-200 font-medium">discovery</span>, <span class="text-slate-800 dark:text-slate-200 font-medium">playbooks</span>, <span class="text-slate-800 dark:text-slate-200 font-medium">transition</span>, and <span class="text-slate-800 dark:text-slate-200 font-medium">scale</span>—with tooling and reporting aligned to your business.
+            </p>
+        </div>
+
+        <div class="grid lg:grid-cols-2 gap-10 lg:gap-12 xl:gap-16 lg:items-stretch">
+            <div class="space-y-4">
+                <div class="mb-1 sm:mb-2">
+                    <p class="text-xs font-bold uppercase tracking-widest text-primary mb-1">Delivery pillars</p>
+                    <p class="text-sm text-slate-600 dark:text-slate-400">What you can expect week over week</p>
+                </div>
+                {% for b in benefits %}
+                {% if forloop.counter <= 4 %}
+                <article class="group relative rounded-2xl border border-slate-200/90 bg-white/90 p-5 sm:p-6 shadow-sm backdrop-blur-sm transition-all duration-300 hover:border-primary/35 hover:shadow-lg hover:shadow-primary/5 dark:border-slate-700/80 dark:bg-slate-900/70 dark:hover:border-primary/40">
+                    <div class="flex gap-4 sm:gap-5">
+                        <div class="flex-shrink-0 w-14 h-14 rounded-2xl bg-gradient-to-br from-primary/15 to-primary/5 dark:from-primary/25 dark:to-primary/10 ring-1 ring-primary/15 flex items-center justify-center shadow-inner">
+                            {% if b.icon_image %}
+                            <img src="{{ b.icon_image.url }}" alt="" role="presentation" class="w-9 h-9 object-contain" width="36" height="36" loading="lazy" decoding="async">
+                            {% elif forloop.counter == 1 %}
+                            <img src="{% static 'images/bpo/benefit_icons/sla.svg' %}" alt="" role="presentation" class="w-9 h-9 object-contain" width="36" height="36" loading="lazy" decoding="async">
+                            {% elif forloop.counter == 2 %}
+                            <img src="{% static 'images/bpo/benefit_icons/playbook.svg' %}" alt="" role="presentation" class="w-9 h-9 object-contain" width="36" height="36" loading="lazy" decoding="async">
+                            {% elif forloop.counter == 3 %}
+                            <img src="{% static 'images/bpo/benefit_icons/quality.svg' %}" alt="" role="presentation" class="w-9 h-9 object-contain" width="36" height="36" loading="lazy" decoding="async">
+                            {% elif forloop.counter == 4 %}
+                            <img src="{% static 'images/bpo/benefit_icons/security.svg' %}" alt="" role="presentation" class="w-9 h-9 object-contain" width="36" height="36" loading="lazy" decoding="async">
+                            {% else %}
+                            <span class="material-symbols-outlined text-primary text-[32px] leading-none" aria-hidden="true">{{ b.icon|default:'verified' }}</span>
+                            {% endif %}
+                        </div>
+                        <div class="min-w-0 pt-0.5">
+                            <h3 class="font-bold text-slate-900 dark:text-white text-lg mb-1.5 leading-snug">{{ b.title }}</h3>
+                            <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">{{ b.description }}</p>
+                        </div>
+                    </div>
+                </article>
+                {% endif %}
+                {% empty %}
+                <p class="text-sm text-slate-500 dark:text-slate-400 rounded-2xl border border-dashed border-slate-300 dark:border-slate-600 p-8 text-center">Add BPO benefits in admin to populate delivery pillars.</p>
+                {% endfor %}
+            </div>
+
+            <div class="flex w-full max-w-xl flex-col justify-center mx-auto lg:mx-0 lg:max-w-none lg:h-full lg:min-h-0">
+                <div class="relative w-full">
+                    <div class="absolute -inset-0.5 rounded-2xl bg-gradient-to-br from-primary/25 via-transparent to-sky-400/10 opacity-80 blur-[2px] dark:from-primary/20 dark:to-sky-500/5 pointer-events-none" aria-hidden="true"></div>
+                    <figure class="relative overflow-hidden rounded-2xl bg-white dark:bg-slate-900 ring-1 ring-slate-200/90 shadow-lg dark:ring-slate-700/80 dark:shadow-black/25" aria-label="Delivery model: people and processes, then systems and reporting">
+                        <div class="p-3 sm:p-4">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-3">
+                                <div class="flex flex-col gap-1.5">
+                                    <p class="text-[10px] font-bold uppercase tracking-wider text-center text-primary sm:text-left">People &amp; delivery</p>
+                                    <div class="relative h-36 sm:h-40 w-full overflow-hidden rounded-xl bg-slate-100 dark:bg-slate-800 ring-1 ring-slate-200/70 dark:ring-slate-600/50">
+                                        <img src="{% static 'images/bpo/bpo-delivery-top.webp' %}" alt="BPO leadership and service delivery alignment" class="h-full w-full object-cover object-center" width="600" height="400" loading="lazy" decoding="async">
+                                    </div>
+                                </div>
+                                <div class="flex flex-col gap-1.5">
+                                    <p class="text-[10px] font-bold uppercase tracking-wider text-center text-primary sm:text-left">Tooling &amp; reporting</p>
+                                    <div class="relative h-36 sm:h-40 w-full overflow-hidden rounded-xl bg-slate-100 dark:bg-slate-800 ring-1 ring-slate-200/70 dark:ring-slate-600/50">
+                                        <img src="{% static 'images/bpo/bpo-delivery-process.webp' %}" alt="Dashboards and visibility for outsourced operations" class="h-full w-full object-cover object-center" width="600" height="400" loading="lazy" decoding="async">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <figcaption class="border-t border-slate-100/90 bg-gradient-to-b from-slate-50/80 to-slate-50 dark:border-slate-800 dark:from-slate-900 dark:to-slate-900/95">
+                            <div class="flex flex-col items-center gap-3 px-4 py-4 text-center sm:flex-row sm:items-center sm:gap-4 sm:px-5 sm:py-4 sm:text-left">
+                                <span class="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-primary/10 shadow-inner ring-1 ring-primary/15 dark:bg-primary/15 dark:ring-primary/20" aria-hidden="true">
+                                    <img src="{% static 'images/bpo/service_icons/operating-model.svg' %}" alt="" role="presentation" class="h-7 w-7 object-contain" width="28" height="28" loading="lazy" decoding="async">
+                                </span>
+                                <div class="min-w-0 max-w-md sm:max-w-none sm:flex-1">
+                                    <p class="text-sm font-semibold tracking-tight text-slate-800 dark:text-slate-100">
+                                        One operating model
+                                    </p>
+                                    <p class="mt-1 text-xs leading-relaxed text-slate-600 dark:text-slate-400 sm:text-sm">
+                                        Clear handoffs, measurable SLAs, and visible quality.
+                                    </p>
+                                </div>
+                            </div>
+                        </figcaption>
+                    </figure>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- BPO Process -->
+<section class="py-24 bg-white dark:bg-background-dark">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-3xl mx-auto mb-20">
+            <h2 class="text-3xl font-bold text-slate-900 dark:text-white mb-4">Our BPO implementation process</h2>
+            <p class="text-slate-600 dark:text-slate-400">Systematic rollout from discovery to scale—so outsourced work stays accurate, measurable, and easy to govern.</p>
+        </div>
+        <div class="relative">
+            <div class="hidden lg:block absolute top-1/2 left-0 right-0 h-0.5 bg-slate-200 dark:bg-slate-800 -translate-y-1/2"></div>
+            <div class="grid lg:grid-cols-4 gap-12 lg:gap-8">
+                {% for step in process_steps %}
+                <div class="relative bg-white dark:bg-background-dark px-4">
+                    <div class="w-12 h-12 bg-primary text-white font-black rounded-full flex items-center justify-center mb-6 relative z-10 shadow-lg shadow-primary/30 mx-auto lg:mx-0 text-sm">{{ step.step_number|default:'01' }}</div>
+                    <h4 class="text-xl font-bold text-slate-900 dark:text-white mb-2 text-center lg:text-left">{{ step.title }}</h4>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 text-center lg:text-left leading-relaxed">
+                        {{ step.description }}
+                    </p>
+                </div>
+                {% empty %}
+                <p class="col-span-full text-center text-slate-500">Add process steps from the admin panel.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Benefits Section -->
+<section class="py-24 bg-primary text-white overflow-hidden relative">
+    <div class="absolute top-0 right-0 -mt-20 -mr-20 w-96 h-96 bg-white/10 rounded-full blur-3xl"></div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="lg:grid lg:grid-cols-2 lg:gap-16 items-center">
+            <div class="mb-12 lg:mb-0">
+                <h2 class="text-3xl md:text-4xl font-black mb-6">Why outsource your business processes?</h2>
+                <p class="text-blue-100 text-lg mb-8 leading-relaxed">
+                    Scale capacity with SLAs, documented playbooks, and QA—without adding fixed headcount. Clear reporting and secure handoffs protect your brand and data.
+                </p>
+                <div class="grid sm:grid-cols-2 gap-6">
+                    {% for benefit in benefits %}
+                    <div class="flex gap-4 items-start">
+                        <span class="flex-shrink-0 inline-flex w-11 h-11 rounded-xl bg-white/15 border border-white/20 items-center justify-center p-1.5">
+                            {% if benefit.icon_image %}
+                            <img src="{{ benefit.icon_image.url }}" alt="" role="presentation" class="w-7 h-7 object-contain drop-shadow-sm" loading="lazy" decoding="async">
+                            {% elif forloop.counter == 1 %}
+                            <img src="{% static 'images/bpo/benefit_icons/sla.svg' %}" alt="" role="presentation" class="w-7 h-7 object-contain brightness-0 invert" loading="lazy" decoding="async">
+                            {% elif forloop.counter == 2 %}
+                            <img src="{% static 'images/bpo/benefit_icons/playbook.svg' %}" alt="" role="presentation" class="w-7 h-7 object-contain brightness-0 invert" loading="lazy" decoding="async">
+                            {% elif forloop.counter == 3 %}
+                            <img src="{% static 'images/bpo/benefit_icons/quality.svg' %}" alt="" role="presentation" class="w-7 h-7 object-contain brightness-0 invert" loading="lazy" decoding="async">
+                            {% elif forloop.counter == 4 %}
+                            <img src="{% static 'images/bpo/benefit_icons/security.svg' %}" alt="" role="presentation" class="w-7 h-7 object-contain brightness-0 invert" loading="lazy" decoding="async">
+                            {% else %}
+                            <span class="material-symbols-outlined text-white text-2xl" aria-hidden="true">{{ benefit.icon|default:'verified' }}</span>
+                            {% endif %}
+                        </span>
+                        <div class="min-w-0">
+                            <h5 class="font-bold">{{ benefit.title }}</h5>
+                            <p class="text-sm opacity-80">{{ benefit.description }}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="bg-white/10 backdrop-blur-lg p-8 rounded-2xl border border-white/20">
+                <h4 class="text-xl font-bold mb-6 flex items-center gap-3">
+                    <span class="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-white/10">
+                        <img src="{% static 'images/bpo/benefit_icons/performance.svg' %}" alt="" role="presentation" class="h-6 w-6 object-contain brightness-0 invert opacity-95" width="24" height="24" loading="lazy" decoding="async">
+                    </span>
+                    Operations performance view
+                </h4>
+                <div class="space-y-6">
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-sm font-bold">SLA adherence</span>
+                            <span class="text-green-400 font-bold">On target</span>
+                        </div>
+                        <div class="w-full bg-white/10 h-2 rounded-full">
+                            <div class="bg-green-400 h-2 rounded-full w-[95%]"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-sm font-bold">QA sampling</span>
+                            <span class="text-green-400 font-bold">Active</span>
+                        </div>
+                        <div class="w-full bg-white/10 h-2 rounded-full">
+                            <div class="bg-green-400 h-2 rounded-full w-[92%]"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-sm font-bold">Process documentation</span>
+                            <span class="text-green-400 font-bold">Strong</span>
+                        </div>
+                        <div class="w-full bg-white/10 h-2 rounded-full">
+                            <div class="bg-green-400 h-2 rounded-full w-[90%]"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-sm font-bold">Reporting &amp; visibility</span>
+                            <span class="text-green-400 font-bold">Weekly+</span>
+                        </div>
+                        <div class="w-full bg-white/10 h-2 rounded-full">
+                            <div class="bg-green-400 h-2 rounded-full w-[100%]"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Final CTA -->
+<section class="py-24 bg-slate-50 dark:bg-slate-900/30">
+    <div class="max-w-5xl mx-auto px-4 text-center">
+        {% if cta %}
+        <h2 class="text-4xl md:text-5xl font-black text-slate-900 dark:text-white mb-6">{{ cta.headline }}</h2>
+        <p class="text-xl text-slate-600 dark:text-slate-400 mb-10 max-w-2xl mx-auto">
+            {{ cta.description }}
+        </p>
+        <div class="flex flex-col sm:flex-row justify-center gap-4">
+            <a href="{{ cta.cta_primary_url }}" class="bg-primary hover:bg-primary/90 text-white px-10 py-5 rounded-lg font-black text-lg transition-all shadow-xl shadow-primary/25">
+                {{ cta.cta_primary_text }}
+            </a>
+            {% if cta.cta_secondary_url %}
+            <a href="{{ cta.cta_secondary_url }}" class="border-2 border-primary text-primary hover:bg-primary/5 px-10 py-5 rounded-lg font-black text-lg transition-all">
+                {{ cta.cta_secondary_text }}
+            </a>
+            {% endif %}
+        </div>
+        {% else %}
+        <h2 class="text-4xl md:text-5xl font-black text-slate-900 dark:text-white mb-6">Ready to outsource with confidence?</h2>
+        <p class="text-xl text-slate-600 dark:text-slate-400 mb-10 max-w-2xl mx-auto">
+            Tell us what you want to outsource and we will return a workflow-driven plan, SLA options, and pricing aligned to your volume.
+        </p>
+        <div class="flex flex-col sm:flex-row justify-center gap-4">
+            <a href="{% url 'contact' %}" class="bg-primary hover:bg-primary/90 text-white px-10 py-5 rounded-lg font-black text-lg transition-all shadow-xl shadow-primary/25">
+                Talk to a BPO specialist
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</section>
+</main>
+{% endblock %}

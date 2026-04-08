@@ -429,6 +429,54 @@
         </table>
     </div>
 
+    <!-- Contact Page Content (edit /contact/ page text) -->
+    <div class="app-website module" style="margin-top: 20px;">
+        <table>
+            <caption>
+                <a href="#" class="section-title" onclick="toggleSection('contact-page-section'); return false;" style="display: flex; align-items: center; justify-content: space-between; padding: 10px; background: linear-gradient(to right, #0d9488, #14b8a6); color: white; text-decoration: none; border-radius: 4px; font-weight: bold; font-size: 14px;">
+                    <span style="display: flex; align-items: center; gap: 8px;">
+                        <span style="font-size: 18px;">📞</span>
+                        <span>Contact Page Content</span>
+                    </span>
+                    <span id="contact-page-toggle" style="font-size: 12px;">▶</span>
+                </a>
+            </caption>
+            <tbody id="contact-page-section" style="display: none;">
+                {% for model in app_list %}
+                    {% if model.app_label == 'website' %}
+                        {% for model_item in model.models %}
+                            {% if model_item.object_name == 'ContactPage' or model_item.object_name == 'ContactPageFeature' or model_item.object_name == 'ContactPageFAQ' %}
+                                <tr class="model-{{ model_item.object_name|lower }}">
+                                    {% if model_item.admin_url %}
+                                        <th scope="row">
+                                            <a href="{{ model_item.admin_url }}" style="color: #447e9b;">
+                                                {{ model_item.name }}
+                                            </a>
+                                        </th>
+                                    {% else %}
+                                        <th scope="row">{{ model_item.name }}</th>
+                                    {% endif %}
+
+                                    {% if model_item.add_url %}
+                                        <td><a href="{{ model_item.add_url }}" class="addlink" style="color: #5b80b2;">➕ Add</a></td>
+                                    {% else %}
+                                        <td>&nbsp;</td>
+                                    {% endif %}
+
+                                    {% if model_item.admin_url %}
+                                        <td><a href="{{ model_item.admin_url }}" class="changelink" style="color: #5b80b2;">✏️ Change</a></td>
+                                    {% else %}
+                                        <td>&nbsp;</td>
+                                    {% endif %}
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
     <!-- Contact Forms Section -->
     <div class="app-website module" style="margin-top: 20px;">
         <table>

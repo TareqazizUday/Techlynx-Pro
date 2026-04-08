@@ -16,6 +16,7 @@ urlpatterns = [
     path('services/finance-accounting/', views.finance_accounting, name='finance_accounting'),
     path('services/content-production/', views.content_production, name='content_production'),
     path('services/virtual-assistance/', views.virtual_assistance, name='virtual_assistance'),
+    path('services/bpo/', views.bpo, name='bpo'),
     
     path('industries/', views.industries, name='industries'),
     path('case-studies/', views.case_studies, name='case_studies'),

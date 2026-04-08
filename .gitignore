@@ -43,6 +43,9 @@ db.sqlite3-journal
 .DS_Store
 Thumbs.db
 
+# Node (Tailwind / JS build)
+node_modules/
+
 # Environment variables
 .env
 .env.local

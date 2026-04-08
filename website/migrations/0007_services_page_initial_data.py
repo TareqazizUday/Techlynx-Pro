@@ -102,7 +102,7 @@ def populate_services_page_data(apps, schema_editor):
             'description': 'Professional remote support services to handle administrative tasks and business operations.',
             'icon': 'support_agent',
             'detail_page_url': '/services',
-            'order': 7,
+            'order': 10,
             'features': [
                 'Executive Assistance',
                 'Customer Support'

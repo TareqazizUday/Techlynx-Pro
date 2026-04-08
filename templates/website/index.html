@@ -25,7 +25,7 @@
                         <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
                         <span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
                     </span>
-                    US-Based IT Excellence
+                    Trusted Global Digital Partner
                 </div>
                 
                 {% if hero_section %}
@@ -159,10 +159,11 @@
     </div>
 </section>
 
-<!-- Trusted By Section -->
+<!-- Trusted By Section (dynamic: count from DB, logos from media/partners) -->
+{% if partners %}
 <section class="py-12 bg-white dark:bg-background-dark border-y border-slate-100 dark:border-slate-800">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <p class="text-center text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-[0.25em] mb-8">Trusted by {{ partners.count }}+ Global Enterprises</p>
+        <p class="text-center text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-[0.25em] mb-8">{{ trusted_by_headline }}</p>
         <div class="flex flex-wrap justify-center items-center gap-12 lg:gap-20 opacity-80 hover:opacity-100 transition-all duration-300">
             {% for partner in partners %}
             {% if partner.logo %}
@@ -172,6 +173,7 @@
         </div>
     </div>
 </section>
+{% endif %}
 
 <!-- Core Services Section -->
 <section class="py-20 bg-gradient-to-b from-white to-background-light dark:from-slate-900 dark:to-background-dark">
@@ -186,7 +188,7 @@
         
         <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {% for service in services %}
-            <a href="{{ service.detail_page_url }}" class="group bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-primary hover:shadow-2xl hover:shadow-primary/10 transition-all duration-300 hover:-translate-y-1 overflow-hidden">
+            <a href="{{ service.detail_page_url }}" class="group bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-primary hover:shadow-2xl hover:shadow-primary/10 transition-all duration-300 hover:-translate-y-1 overflow-hidden{% if home_services_last_row_center and forloop.last %} home-services-grid-last-middle{% endif %}">
                 {% if service.image %}
                 <div class="w-full h-48 overflow-hidden">
                     <img src="{{ service.image.url }}" alt="{{ service.title }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">

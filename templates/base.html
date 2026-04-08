@@ -25,7 +25,7 @@
     <meta property="og:title" content="{% block og_title %}Techlynx Pro | Digital Dominance & IT Excellence{% endblock %}">
     <meta property="og:description" content="{% block og_description %}Professional IT and digital marketing services for businesses. Custom web development, AI solutions, SEO, and app development by expert US-based team.{% endblock %}">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://techlynxpro.com{% block og_url %}/{% endblock %}">
+    <meta property="og:url" content="{% block og_url %}{{ request.scheme }}://{{ request.get_host }}{{ request.path }}{% endblock %}">
     <meta property="og:image" content="{% block og_image %}{% static 'images/og-image.jpg' %}{% endblock %}">
     
     <!-- Twitter Card Meta Tags -->
@@ -35,14 +35,17 @@
     <meta name="twitter:image" content="{% block twitter_image %}{% static 'images/twitter-card.jpg' %}{% endblock %}">
     
     <!-- Canonical URL -->
-    <link rel="canonical" href="https://techlynxpro.com{% block canonical_url %}/{% endblock %}">
+    <link rel="canonical" href="{% block canonical_url %}{{ request.scheme }}://{{ request.get_host }}{{ request.path }}{% endblock %}">
     
     <!-- Additional Meta Tags -->
     {% block additional_meta %}{% endblock %}
-    
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    
+
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+
+    <!-- Production Tailwind + site CSS (minified — replaces dev CDN JIT) -->
+    <link rel="stylesheet" href="{% static 'css/app.min.css' %}"/>
+
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
     
@@ -50,33 +53,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@300;400;500;600;700" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
     
-    <script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        "primary": "#136dec",
-                        "background-light": "#f6f7f8",
-                        "background-dark": "#101822",
-                    },
-                    fontFamily: {
-                        "display": ["Inter", "sans-serif"]
-                    },
-                    borderRadius: {
-                        "DEFAULT": "0.25rem",
-                        "lg": "0.5rem",
-                        "xl": "0.75rem",
-                        "full": "9999px"
-                    },
-                },
-            },
-        }
-    </script>
-    
     <style>
-        body { font-family: 'Inter', sans-serif; }
-        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
         {% block extra_css %}{% endblock %}
     </style>
     
@@ -267,28 +244,8 @@
         </div>
     </div>
 
-    <!-- Mobile Fullscreen Chat Overlay -->
-    <style>
-        @media (max-width: 768px) {
-            #chat-window {
-                position: fixed !important;
-                bottom: 0 !important;
-                right: 0 !important;
-                left: 0 !important;
-                width: 100% !important;
-                max-width: 100% !important;
-                height: 100vh !important;
-                max-height: 100vh !important;
-                border-radius: 0 !important;
-            }
-            #chat-window.hidden {
-                transform: translateY(100%);
-            }
-        }
-    </style>
-
-    <!-- Custom JavaScript -->
-    <script src="{% static 'js/custom.js' %}" defer></script>
+    <!-- Custom JavaScript (minified build — run: npm run build:js) -->
+    <script src="{% static 'js/custom.min.js' %}" defer></script>
 
     {% block extra_js %}{% endblock %}
 </body>

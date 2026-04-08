@@ -1,0 +1,15 @@
+{% extends "admin/change_list.html" %}
+{% load i18n %}
+
+{% block content %}
+<div class="module" style="margin-bottom: 1.5rem; padding: 1rem; background: #f8f9fa; border: 1px solid #e0e0e0; border-radius: 4px;">
+    <h2 style="margin-top: 0;">Trusted By Headline</h2>
+    <p style="color: #666; font-size: 13px; margin-bottom: 0.75rem;">Shown on the homepage above partner logos. Use <code>{count}</code> for dynamic number (e.g. Trusted by {count}+ Global Enterprises).</p>
+    <form method="post" action="{% url 'admin:website_partner_headline_save' %}" style="display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
+        {% csrf_token %}
+        <input type="text" name="trusted_by_headline" value="{{ trusted_by_headline }}" placeholder="Trusted by {count}+ Global Enterprises" size="50" style="padding: 6px 10px; flex: 1; min-width: 280px; max-width: 500px;">
+        <input type="submit" value="Save headline" class="default" style="padding: 6px 12px;">
+    </form>
+</div>
+{{ block.super }}
+{% endblock %}

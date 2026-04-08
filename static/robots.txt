@@ -1,9 +1,10 @@
+# Fallback copy only. Production serves /robots.txt dynamically (see website.views.robots_txt).
 User-agent: *
 Allow: /
+
 Disallow: /admin/
 Disallow: /api/
+Disallow: /newsletter/
 Disallow: /media/
 
-# Sitemap
 Sitemap: https://techlynxpro.com/sitemap.xml
-

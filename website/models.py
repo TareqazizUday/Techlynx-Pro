@@ -51,6 +51,80 @@ class Newsletter(models.Model):
         return self.email
 
 
+# ==================== CONTACT PAGE DYNAMIC CONTENT ====================
+
+class ContactPage(models.Model):
+    """Contact page content (singleton). Edit from Admin for hero, form, contact info, FAQ heading."""
+    # Hero
+    badge_text = models.CharField(max_length=100, default="Let's Connect")
+    headline = models.CharField(max_length=300, default="Ready to Transform Your Digital Presence?")
+    hero_description = models.TextField(
+        default="Get a custom proposal from our expert team. Most inquiries receive a detailed response within 24 hours."
+    )
+    # Form
+    form_heading = models.CharField(max_length=200, default="Send Us a Message")
+    submit_button_text = models.CharField(max_length=100, default="Send Message")
+    # Get In Touch block
+    get_in_touch_heading = models.CharField(max_length=200, default="Get In Touch")
+    get_in_touch_intro = models.TextField(
+        default="Have questions? Our team is here to help. Reach out through any of these channels and we'll get back to you promptly."
+    )
+    email_label = models.CharField(max_length=100, default="Email Us")
+    email_description = models.CharField(max_length=200, default="Direct inquiries to our team")
+    email_address = models.EmailField(max_length=254, default="hello@techlynxpro.com")
+    phone_label = models.CharField(max_length=100, default="Call Sales")
+    phone_description = models.CharField(max_length=200, default="Mon-Fri, 9am - 6pm EST")
+    phone_number = models.CharField(max_length=50, default="+1 (520) 666-4699")
+    location_label = models.CharField(max_length=100, default="Office Location")
+    location_description = models.CharField(max_length=200, default="Visit our headquarters")
+    address_line1 = models.CharField(max_length=200, default="123 Business Avenue")
+    address_line2 = models.CharField(max_length=200, default="Suite 500, New York, NY 10001", blank=True)
+    live_chat_label = models.CharField(max_length=100, default="Live Chat")
+    live_chat_description = models.CharField(max_length=200, default="Available during business hours")
+    live_chat_button_text = models.CharField(max_length=100, default="Start Chat →")
+    # FAQ section
+    faq_heading = models.CharField(max_length=200, default="Frequently Asked Questions")
+    faq_subtext = models.CharField(max_length=200, default="Quick answers to common questions")
+
+    class Meta:
+        verbose_name = "Contact Page Content"
+        verbose_name_plural = "Contact Page Content"
+
+    def __str__(self):
+        return "Contact Page"
+
+
+class ContactPageFeature(models.Model):
+    """Feature cards below hero on contact page (e.g. Fast Response, Expert Team, No Obligation)."""
+    icon = models.CharField(max_length=100, default="schedule")
+    title = models.CharField(max_length=150)
+    description = models.TextField()
+    order = models.IntegerField(default=0)
+
+    class Meta:
+        verbose_name = "Contact Page Feature"
+        verbose_name_plural = "Contact Page Features"
+        ordering = ['order']
+
+    def __str__(self):
+        return self.title
+
+
+class ContactPageFAQ(models.Model):
+    """FAQ items on contact page."""
+    question = models.CharField(max_length=300)
+    answer = models.TextField()
+    order = models.IntegerField(default=0)
+
+    class Meta:
+        verbose_name = "Contact Page FAQ"
+        verbose_name_plural = "Contact Page FAQs"
+        ordering = ['order']
+
+    def __str__(self):
+        return self.question[:60] + ("..." if len(self.question) > 60 else "")
+
+
 # ==================== HOME PAGE DYNAMIC CONTENT MODELS ====================
 
 class HeroSection(models.Model):
@@ -293,6 +367,12 @@ class Partner(models.Model):
     logo = models.FileField(upload_to='partners/', help_text="Partner SVG logo file")
     website_url = models.URLField(blank=True, help_text="Partner website (optional)")
     order = models.IntegerField(default=0, help_text="Display order (lower first)")
+    trusted_by_headline = models.CharField(
+        max_length=255,
+        blank=True,
+        default="",
+        help_text="Homepage headline above partner logos. Only the first partner's value is used. Use {count} for dynamic number (e.g. Trusted by {count}+ Global Enterprises)."
+    )
     
     class Meta:
         verbose_name = '3️⃣ Partner Logo'
@@ -325,7 +405,7 @@ class CTASection(models.Model):
 
 class ServicesPageHero(models.Model):
     """Services page hero section (singleton - only one record should exist)"""
-    badge_text = models.CharField(max_length=100, default="Trusted US-Based Agency",
+    badge_text = models.CharField(max_length=100, default="Trusted Global Digital Partner",
                                   help_text="Top badge text")
     headline = models.CharField(max_length=200, 
                                default="Scalable IT & Digital Marketing Solutions")
@@ -414,6 +494,26 @@ class WhyChooseItem(models.Model):
     
     def __str__(self):
         return self.title
+
+
+class WhyChooseSection(models.Model):
+    """Section headline and description for Why Choose Us (services page). Singleton."""
+    headline = models.CharField(
+        max_length=200,
+        default="Why Choose Techlynx Pro",
+        help_text="Section headline (e.g. Why Choose Techlynx Pro)"
+    )
+    description = models.TextField(
+        default="We combine US-based technical excellence with an SEO-first methodology to deliver measurable results that impact your bottom line.",
+        help_text="Section description below the headline"
+    )
+
+    class Meta:
+        verbose_name = "Why Choose Section (Headline)"
+        verbose_name_plural = "Why Choose Section (Headline)"
+
+    def __str__(self):
+        return self.headline[:50] + ("..." if len(self.headline) > 50 else "")
 
 
 class WhyChooseImage(models.Model):
@@ -1918,6 +2018,125 @@ class VACTA(models.Model):
         super().save(*args, **kwargs)
 
 
+# ==================== BPO (BUSINESS PROCESS OUTSOURCING) PAGE MODELS ====================
+
+class BPOHero(models.Model):
+    """Hero section for BPO page (singleton)."""
+    badge_icon = models.CharField(max_length=50, default='domain')
+    badge_text = models.CharField(max_length=100, default='Operational Excellence')
+    headline = models.TextField(default='Business Process Outsourcing (BPO) That Scales With You')
+    description = models.TextField(
+        default='Reduce overhead, improve accuracy, and accelerate execution with a dedicated BPO team built around your workflows.'
+    )
+    cta_primary_text = models.CharField(max_length=100, default='Get a BPO Proposal')
+    cta_primary_url = models.CharField(max_length=200, default='/contact/')
+    cta_secondary_text = models.CharField(max_length=100, default='View BPO Services')
+    cta_secondary_url = models.CharField(max_length=200, default='#bpo-services')
+    hero_image = models.ImageField(upload_to='services/bpo/', blank=True, null=True)
+    efficiency_gain = models.CharField(max_length=50, default='30-60%')
+    sla_coverage = models.CharField(max_length=50, default='24/7')
+    qa_accuracy = models.CharField(max_length=50, default='99%+')
+    is_active = models.BooleanField(default=True)
+
+    class Meta:
+        verbose_name = "BPO Hero"
+        verbose_name_plural = "BPO Hero"
+
+    def __str__(self):
+        return "BPO Hero"
+
+    def save(self, *args, **kwargs):
+        if not self.pk and BPOHero.objects.exists():
+            return
+        super().save(*args, **kwargs)
+
+
+class BPOService(models.Model):
+    """BPO service offerings (grid items)."""
+    icon = models.CharField(max_length=50, help_text="Material icon name", default='support_agent')
+    icon_image = models.FileField(
+        upload_to='services/bpo/service_icons/', blank=True, null=True, help_text="SVG icon file (stored in DB/media)"
+    )
+    title = models.CharField(max_length=200)
+    description = models.TextField()
+    feature_1 = models.CharField(max_length=200, blank=True, default='')
+    feature_2 = models.CharField(max_length=200, blank=True, default='')
+    feature_3 = models.CharField(max_length=200, blank=True, default='')
+    feature_4 = models.CharField(max_length=200, blank=True, default='')
+    is_active = models.BooleanField(default=True)
+    order = models.IntegerField(default=0)
+
+    class Meta:
+        verbose_name = "BPO Service"
+        verbose_name_plural = "BPO Services"
+        ordering = ['order']
+
+    def __str__(self):
+        return self.title
+
+
+class BPOBenefit(models.Model):
+    """Benefits/why choose BPO."""
+    icon = models.CharField(max_length=50, help_text="Material icon name", default='verified')
+    icon_image = models.FileField(
+        upload_to='services/bpo/benefit_icons/', blank=True, null=True, help_text="SVG icon file (stored in DB/media)"
+    )
+    title = models.CharField(max_length=200)
+    description = models.TextField()
+    is_active = models.BooleanField(default=True)
+    order = models.IntegerField(default=0)
+
+    class Meta:
+        verbose_name = "BPO Benefit"
+        verbose_name_plural = "BPO Benefits"
+        ordering = ['order']
+
+    def __str__(self):
+        return self.title
+
+
+class BPOProcessStep(models.Model):
+    """Delivery process steps for BPO."""
+    step_number = models.CharField(max_length=10, default='01')
+    title = models.CharField(max_length=200)
+    description = models.TextField()
+    is_active = models.BooleanField(default=True)
+    order = models.IntegerField(default=0)
+
+    class Meta:
+        verbose_name = "BPO Process Step"
+        verbose_name_plural = "BPO Process Steps"
+        ordering = ['order']
+
+    def __str__(self):
+        return f"{self.step_number} - {self.title}"
+
+
+class BPOCTA(models.Model):
+    """Call to Action section for BPO page (singleton)."""
+    headline = models.CharField(max_length=200, default='Ready to Outsource With Confidence?')
+    description = models.TextField(
+        default='Tell us what you want to outsource and we’ll return a workflow-driven plan, SLA, and pricing options.'
+    )
+    cta_primary_text = models.CharField(max_length=100, default='Talk to a Specialist')
+    cta_primary_url = models.CharField(max_length=200, default='/contact/')
+    cta_secondary_text = models.CharField(max_length=100, default='See Case Studies')
+    cta_secondary_url = models.CharField(max_length=200, default='/case-studies/')
+    is_active = models.BooleanField(default=True)
+
+    class Meta:
+        verbose_name = "BPO CTA"
+        verbose_name_plural = "BPO CTA"
+
+    def __str__(self):
+        return "BPO CTA"
+
+    def save(self, *args, **kwargs):
+        if not self.pk and BPOCTA.objects.exists():
+            return
+        super().save(*args, **kwargs)
+
+
 # ==================== FINANCE & ACCOUNTING PAGE MODELS ====================
 
 class FAHero(models.Model):
@@ -2254,7 +2473,7 @@ class TestimonialsPageHero(models.Model):
     headline = models.TextField(default="Real Clients. Real Results.")
     subheadline = models.CharField(max_length=200, default="(No Made-Up Quotes.)")
     description = models.TextField(
-        default="We've been helping businesses grow online since 2015. Here's what clients say about working with Techlynx Pro—straight from the people who've actually worked with us.")
+        default="We've been helping businesses grow online since 2020. Here's what clients say about working with Techlynx Pro—straight from the people who've actually worked with us.")
     cta_text = models.CharField(max_length=50, default="Get Quote")
     cta_url = models.CharField(max_length=200, default="/contact")
     cta_icon = models.CharField(max_length=50, default="arrow_forward")

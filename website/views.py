@@ -1,16 +1,18 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_GET
 from django.conf import settings
 import google.generativeai as genai
 import json
 import time
 import requests
 from .models import (
-    ContactInquiry, Newsletter, HeroSection, HeroBenefit, CompanyStat,
+    ContactInquiry, Newsletter, ContactPage, ContactPageFeature, ContactPageFAQ,
+    HeroSection, HeroBenefit, CompanyStat,
     Service, Benefit, Guarantee, CaseStudy, Testimonial, Partner, CTASection,
-    ServicesPageHero, ServiceDetail, WhyChooseItem, WhyChooseImage, ServicesPageCTA,
+    ServicesPageHero, ServiceDetail, WhyChooseItem, WhyChooseSection, WhyChooseImage, ServicesPageCTA,
     SEOAuditHero, SEOAuditService, SEOAuditTool, SEOAuditToolLogo,
     SEOAuditProcess, SEOAuditResult, SEOAuditBenefit, SEOAuditHealthMetric,
     SEOAuditTestimonial, SEOAuditCTA,
@@ -28,21 +30,50 @@ from .chatbot_context import get_chatbot_context
 
 # Create your views here.
 
+
+@require_GET
+def robots_txt(request):
+    """Serve robots.txt with dynamic sitemap URL so Google can find sitemap on any domain."""
+    scheme = 'https' if not settings.DEBUG else request.scheme
+    domain = request.get_host()
+    sitemap_url = f"{scheme}://{domain}/sitemap.xml"
+    return render(request, 'robots.txt', {'sitemap_url': sitemap_url}, content_type='text/plain')
+
 def home(request):
     """Homepage view with dynamic content"""
+    # All active home-page services (do not cap at 9 — adding BPO made 10+ cards and hid the last one).
+    services_home = list(
+        Service.objects.filter(is_active=True).order_by('order')
+    )
+    n = len(services_home)
+    # lg 3-col grid: last row has one card when n % 3 == 1 (1,4,7,10,…); template centers it with .home-services-grid-last-middle
+    home_services_last_row_center = n > 0 and (n % 3 == 1)
     context = {
         'hero_section': HeroSection.objects.first(),
         'hero_benefits': HeroBenefit.objects.all().order_by('order'),
         'stats': CompanyStat.objects.all().order_by('order'),
-        'services': Service.objects.filter(is_active=True).order_by('order'),
+        'services': services_home,
+        'home_services_last_row_center': home_services_last_row_center,
         'benefits': Benefit.objects.all().order_by('order'),
         'guarantees': Guarantee.objects.all().order_by('order'),
         'featured_case_study': CaseStudy.objects.filter(is_featured=True).first(),
         'testimonials': Testimonial.objects.filter(is_active=True).order_by('order'),
         'partners': Partner.objects.all().order_by('order'),
+        'trusted_by_headline': _get_trusted_by_headline(),
         'cta_section': CTASection.objects.first(),
     }
     return render(request, 'website/index.html', context)
+
+
+def _get_trusted_by_headline():
+    """Resolve headline from first Partner's trusted_by_headline, replacing {count} with partner count."""
+    partners = Partner.objects.all().order_by('order')
+    count = max(partners.count(), 5) if partners.exists() else 5
+    first = partners.first()
+    headline = (first.trusted_by_headline or "").strip() if first else ""
+    if headline:
+        return headline.replace('{count}', str(count))
+    return f"Trusted by {count}+ Global Enterprises"
 
 
 def about(request):
@@ -61,7 +92,7 @@ def about(request):
     timeline_section = AboutPageTimelineSection.objects.filter(is_active=True).first()
     timeline_items = AboutPageTimeline.objects.filter(is_active=True).order_by('order')
     team_section = AboutPageTeamSection.objects.filter(is_active=True).first()
-    team_members = AboutPageTeamMember.objects.filter(is_active=True).order_by('order')
+    team_members = AboutPageTeamMember.objects.filter(is_active=True).order_by('order')[:3]
     cta = AboutPageCTA.objects.filter(is_active=True).first()
     
     context = {
@@ -169,6 +200,7 @@ def services(request):
     context = {
         'hero': ServicesPageHero.objects.first(),
         'services': ServiceDetail.objects.filter(is_active=True).prefetch_related('features').order_by('order'),
+        'why_choose_section': WhyChooseSection.objects.first(),
         'why_choose_items': WhyChooseItem.objects.filter(is_active=True).order_by('order'),
         'why_choose_images': WhyChooseImage.objects.filter(is_active=True).order_by('order')[:4],  # Limit to 4 active images for 2x2 grid
         'cta_section': ServicesPageCTA.objects.filter(is_active=True).prefetch_related('checklist_items').first(),
@@ -337,6 +369,21 @@ def virtual_assistance(request):
     }
     
     return render(request, 'website/virtual-assistance.html', context)
+
+
+def bpo(request):
+    """Business Process Outsourcing (BPO) services page"""
+    from .models import BPOHero, BPOService, BPOBenefit, BPOProcessStep, BPOCTA
+
+    context = {
+        'hero': BPOHero.objects.filter(is_active=True).first(),
+        'services': BPOService.objects.filter(is_active=True).order_by('order'),
+        'benefits': BPOBenefit.objects.filter(is_active=True).order_by('order'),
+        'process_steps': BPOProcessStep.objects.filter(is_active=True).order_by('order'),
+        'cta': BPOCTA.objects.filter(is_active=True).first(),
+    }
+
+    return render(request, 'website/bpo.html', context)
 
 
 def industries(request):
@@ -812,6 +859,9 @@ def contact(request):
         'utm_medium': request.GET.get('utm_medium', ''),
         'utm_campaign': request.GET.get('utm_campaign', ''),
         'referrer': request.META.get('HTTP_REFERER', ''),
+        'contact_page': ContactPage.objects.first(),
+        'contact_features': ContactPageFeature.objects.all().order_by('order'),
+        'contact_faqs': ContactPageFAQ.objects.all().order_by('order'),
     }
     
     return render(request, 'website/contact.html', context)

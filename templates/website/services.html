@@ -184,10 +184,17 @@
     <div class="max-w-7xl mx-auto px-6 lg:px-10">
         <div class="grid lg:grid-cols-2 gap-20 items-center">
             <div>
+                {% if why_choose_section %}
+                <h2 class="text-4xl font-black text-slate-900 dark:text-white mb-6">{{ why_choose_section.headline }}</h2>
+                <p class="text-lg text-slate-600 dark:text-slate-400 mb-10 leading-relaxed">
+                    {{ why_choose_section.description }}
+                </p>
+                {% else %}
                 <h2 class="text-4xl font-black text-slate-900 dark:text-white mb-6">Why Choose Techlynx Pro</h2>
                 <p class="text-lg text-slate-600 dark:text-slate-400 mb-10 leading-relaxed">
                     We combine US-based technical excellence with an SEO-first methodology to deliver measurable results that impact your bottom line.
                 </p>
+                {% endif %}
                 <div class="space-y-6">
                     {% for item in why_choose_items %}
                     <div class="flex gap-4 p-5 rounded-xl bg-white dark:bg-slate-900 shadow-sm border border-slate-100 dark:border-slate-800">
@@ -202,23 +209,24 @@
                     {% endfor %}
                 </div>
             </div>
-            <div class="relative">
-                <div class="grid grid-cols-2 gap-4 w-full">
+            <div class="relative min-w-0">
+                {# Uniform 2×2 grid — no stagger margins (they broke row heights and showed gray gaps under images). #}
+                <div class="grid grid-cols-2 gap-4 w-full [grid-auto-rows:1fr]">
                     {% for image in why_choose_images %}
-                    <div class="relative group overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 {% cycle '' 'mt-8' '-mt-8' '' %}">
-                        <div class="aspect-square bg-slate-200 dark:bg-slate-800 relative overflow-hidden">
-                            {% if image.image %}
-                            <img src="{{ image.image.url }}" 
-                                 alt="{{ image.alt_text|default:'Why Choose Techlynx Pro' }}" 
-                                 class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                            {% else %}
-                            <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-primary/10 to-primary/5">
-                                <span class="material-symbols-outlined text-primary/40 text-6xl">image</span>
-                            </div>
-                            {% endif %}
+                    <figure class="group relative aspect-square w-full min-h-0 overflow-hidden rounded-2xl bg-slate-200 shadow-lg ring-1 ring-slate-200/80 transition-shadow duration-300 hover:shadow-2xl dark:bg-slate-800 dark:ring-slate-700/80">
+                        {% if image.image %}
+                        <img src="{{ image.image.url }}"
+                             alt="{{ image.alt_text|default:'Why Choose Techlynx Pro' }}"
+                             width="900"
+                             height="900"
+                             class="absolute inset-0 h-full w-full min-h-full min-w-full object-cover object-center transition-transform duration-500 ease-out group-hover:scale-105">
+                        <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/25 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" aria-hidden="true"></div>
+                        {% else %}
+                        <div class="flex h-full w-full items-center justify-center bg-gradient-to-br from-primary/10 to-primary/5">
+                            <span class="material-symbols-outlined text-primary/40 text-6xl">image</span>
                         </div>
-                    </div>
+                        {% endif %}
+                    </figure>
                     {% empty %}
                     <!-- Placeholder when no images are added -->
                     <div class="col-span-2 aspect-square bg-gradient-to-br from-primary/10 to-primary/5 rounded-2xl flex items-center justify-center">

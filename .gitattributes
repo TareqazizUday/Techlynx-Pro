@@ -1,0 +1,2 @@
+# Shell scripts must use LF (Linux) — avoids "cannot execute: required file not found"
+*.sh text eol=lf

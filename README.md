@@ -101,6 +101,25 @@ techlynx_project/
 - **Testimonials** (`/testimonials/`)
 - **Contact** (`/contact/`)
 
+## Deploy to server (Windows)
+
+PowerShell (project root, `tech.pem` same folder):
+
+```powershell
+.\upload_all_to_server.ps1
+```
+
+SSH and apply updates:
+
+```bash
+cd ~/techlynxpro
+sed -i 's/\r$//' update_code.sh   # only if ./update_code.sh says "required file not found"
+chmod +x update_code.sh
+./update_code.sh
+```
+
+`upload_all_to_server.ps1` uploads code, `db.sqlite3`, and `media` (not `venv`, `.env`, `staticfiles`, or `*.pem`).
+
 ## License
 
 © 2025 Techlynx Pro. All rights reserved.
