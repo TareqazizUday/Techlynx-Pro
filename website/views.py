@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.http import JsonResponse, HttpResponse
-from django.views.decorators.csrf import csrf_exempt
-from django.views.decorators.http import require_GET
+from django.views.decorators.http import require_GET, require_POST
+import logging
 from django.conf import settings
 import google.generativeai as genai
 import json
@@ -27,6 +27,8 @@ from .models import (
     AboutPageTeamMember, AboutPageTeamSection, AboutPageCTA
 )
 from .chatbot_context import get_chatbot_context
+
+logger = logging.getLogger(__name__)
 
 # Create your views here.
 
@@ -910,11 +912,9 @@ def newsletter_subscribe(request):
     return redirect(referer)
 
 
-@csrf_exempt
+@require_POST
 def chatbot_query(request):
-    """Handle chatbot queries using Gemini API with security measures"""
-    if request.method != 'POST':
-        return JsonResponse({'error': 'Method not allowed'}, status=405)
+    """Handle chatbot queries using Gemini API with security measures (CSRF required)."""
     
     try:
         # Parse request body with size limit
@@ -1009,7 +1009,7 @@ Provide a helpful, accurate response based on the context above:"""
     except json.JSONDecodeError:
         return JsonResponse({'error': 'Invalid JSON'}, status=400)
     except Exception as e:
-        print(f"Chatbot error: {e}")
+        logger.exception("Chatbot error")
         return JsonResponse({
             'error': 'Sorry, I encountered an error. Please try again.',
             'status': 'error'

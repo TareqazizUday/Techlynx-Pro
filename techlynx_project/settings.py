@@ -12,6 +12,23 @@ from decouple import config
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
+def _resolve_sqlite_path() -> Path:
+    """Keep SQLite outside MEDIA_ROOT/STATIC_ROOT; optional SQLITE_PATH env override."""
+    env_path = config('SQLITE_PATH', default='').strip()
+    if env_path:
+        p = Path(env_path)
+        if not p.is_absolute():
+            p = BASE_DIR / p
+        p.parent.mkdir(parents=True, exist_ok=True)
+        return p
+    legacy = BASE_DIR / 'db.sqlite3'
+    private_db = BASE_DIR / 'private' / 'db.sqlite3'
+    if legacy.is_file():
+        return legacy
+    private_db.parent.mkdir(parents=True, exist_ok=True)
+    return private_db
+
+
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = config('SECRET_KEY', default='django-insecure-change-this-in-production-to-secure-random-key')
 
@@ -20,8 +37,11 @@ DEBUG = config('DEBUG', default=True, cast=bool)
 
 # ALLOWED_HOSTS - Set specific domains in production
 # Supports: http://techlynxpro.com, https://techlynxpro.com, www.techlynxpro.com
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost,127.0.0.1,techlynxpro.com,www.techlynxpro.com,3.82.24.132').split(',')
+ALLOWED_HOSTS = [h.strip() for h in config('ALLOWED_HOSTS', default='localhost,127.0.0.1,techlynxpro.com,www.techlynxpro.com,3.82.24.132').split(',') if h.strip()]
 
+# HTTPS origins for CSRF when behind a reverse proxy / alternate hostnames (comma-separated).
+_csrf_origins = config('CSRF_TRUSTED_ORIGINS', default='', cast=str).strip()
+CSRF_TRUSTED_ORIGINS = [o.strip() for o in _csrf_origins.split(',') if o.strip()]
 
 # Gemini API Configuration
 GEMINI_API_KEY = config('GEMINI_API_KEY', default='')
@@ -42,6 +62,8 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'website.middleware.RejectSuspiciousPathMiddleware',
+    'website.middleware.SecurityHeadersMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',  # Compressed static files when Django serves /static/
     'django.middleware.gzip.GZipMiddleware',  # Compress HTML from views (nginx /static/ bypasses this)
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -54,19 +76,23 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'techlynx_project.urls'
 
+# Avoid exposing template debug info when DEBUG is False.
+_template_context_processors = [
+    'django.template.context_processors.request',
+    'django.contrib.auth.context_processors.auth',
+    'django.contrib.messages.context_processors.messages',
+    'django.template.context_processors.media',
+]
+if DEBUG:
+    _template_context_processors.insert(0, 'django.template.context_processors.debug')
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-                'django.template.context_processors.media',
-            ],
+            'context_processors': _template_context_processors,
         },
     },
 ]
@@ -80,7 +106,7 @@ WSGI_APPLICATION = 'techlynx_project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': _resolve_sqlite_path(),
     }
 }
 
@@ -178,8 +204,13 @@ if not DEBUG:
 # Additional Security
 SECURE_REFERRER_POLICY = 'strict-origin-when-cross-origin'
 
-# Admin Security
-ADMIN_URL = 'admin/'  # Change this in production to something unique
+# Isolate browsing context (helps against some cross-origin attacks)
+SECURE_CROSS_ORIGIN_OPENER_POLICY = 'same-origin'
+
+# Admin Security — set ADMIN_PATH in env (e.g. "manage-tlx/") to avoid default /admin/ guess
+ADMIN_PATH = config('ADMIN_PATH', default='admin/')
+if not ADMIN_PATH.endswith('/'):
+    ADMIN_PATH = ADMIN_PATH + '/'
 
 # Data Validation
 DATA_UPLOAD_MAX_MEMORY_SIZE = 10485760  # 10MB max upload
