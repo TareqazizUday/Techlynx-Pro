@@ -33,7 +33,7 @@ class SecurityHeadersMiddleware:
         if response.get("Content-Security-Policy"):
             return response
 
-        # Align with current templates: inline handlers/styles, Google Fonts, same-origin API.
+        # Align with current templates: inline handlers/styles, Google Fonts, GA4 (gtag), same-origin API.
         parts = [
             "default-src 'self'",
             "base-uri 'self'",
@@ -43,8 +43,9 @@ class SecurityHeadersMiddleware:
             "img-src 'self' data: https: blob:",
             "font-src 'self' data: https://fonts.gstatic.com",
             "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-            "script-src 'self' 'unsafe-inline'",
-            "connect-src 'self'",
+            "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com",
+            "connect-src 'self' https://www.googletagmanager.com https://www.google-analytics.com "
+            "https://analytics.google.com https://stats.g.doubleclick.net",
         ]
         if not settings.DEBUG:
             parts.append("upgrade-insecure-requests")
