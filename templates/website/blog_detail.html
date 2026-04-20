@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}{{ post.title }} | Techlynx Pro Blog{% endblock %}
 
@@ -7,6 +8,29 @@
 {% block og_title %}{{ post.title }} | Techlynx Pro{% endblock %}
 
 {% block og_description %}{{ post.excerpt }}{% endblock %}
+
+{% block og_type %}article{% endblock %}
+
+{% block og_image %}{% if post.featured_image %}{{ SITE_ORIGIN }}{{ post.featured_image.url }}{% else %}{{ SITE_ORIGIN }}{% static 'images/og-image.jpg' %}{% endif %}{% endblock %}
+
+{% block twitter_image %}{% if post.featured_image %}{{ SITE_ORIGIN }}{{ post.featured_image.url }}{% else %}{{ SITE_ORIGIN }}{% static 'images/twitter-card.jpg' %}{% endif %}{% endblock %}
+
+{% block extra_head %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {"@type": "WebPage", "@id": "{{ SITE_ORIGIN }}{{ request.path }}"},
+  "headline": "{{ post.title|escapejs }}",
+  "description": "{{ post.excerpt|striptags|truncatechars:300|escapejs }}",
+  "datePublished": "{{ post.published_date|date:'c' }}",
+  "dateModified": "{{ post.updated_at|date:'c' }}",
+  "author": {"@type": "Organization", "name": "{{ post.author|escapejs }}"},
+  "publisher": {"@type": "Organization", "name": "Techlynx Pro", "logo": {"@type": "ImageObject", "url": "{{ SITE_ORIGIN }}{% static 'favicons/apple-touch-icon.png' %}"}}
+  {% if post.featured_image %},"image": ["{{ SITE_ORIGIN }}{{ post.featured_image.url }}"]{% endif %}
+}
+</script>
+{% endblock %}
 
 {% block content %}
 <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">

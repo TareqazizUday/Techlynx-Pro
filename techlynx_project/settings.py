@@ -45,6 +45,7 @@ CSRF_TRUSTED_ORIGINS = [o.strip() for o in _csrf_origins.split(',') if o.strip()
 
 # Gemini API Configuration
 GEMINI_API_KEY = config('GEMINI_API_KEY', default='')
+GEMINI_MODEL = config('GEMINI_MODEL', default='gemini-2.0-flash')
 
 
 # Application definition
@@ -82,6 +83,7 @@ _template_context_processors = [
     'django.contrib.auth.context_processors.auth',
     'django.contrib.messages.context_processors.messages',
     'django.template.context_processors.media',
+    'website.context_processors.site_seo',
 ]
 if DEBUG:
     _template_context_processors.insert(0, 'django.template.context_processors.debug')

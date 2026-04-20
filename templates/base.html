@@ -33,18 +33,28 @@
     <!-- Open Graph / Social Media Meta Tags -->
     <meta property="og:title" content="{% block og_title %}Techlynx Pro | Digital Dominance & IT Excellence{% endblock %}">
     <meta property="og:description" content="{% block og_description %}Professional IT and digital marketing services for businesses. Custom web development, AI solutions, SEO, and app development by expert US-based team.{% endblock %}">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="{% block og_url %}{{ request.scheme }}://{{ request.get_host }}{{ request.path }}{% endblock %}">
-    <meta property="og:image" content="{% block og_image %}{% static 'images/og-image.jpg' %}{% endblock %}">
+    <meta property="og:type" content="{% block og_type %}website{% endblock %}">
+    <meta property="og:url" content="{% block og_url %}{{ SITE_ORIGIN }}{{ request.path }}{% endblock %}">
+    <meta property="og:image" content="{% block og_image %}{{ SITE_ORIGIN }}{% static 'images/og-image.jpg' %}{% endblock %}">
+    <meta property="og:locale" content="en_US">
     
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="{% block twitter_title %}Techlynx Pro | Digital Dominance & IT Excellence{% endblock %}">
     <meta name="twitter:description" content="{% block twitter_description %}Professional IT and digital marketing services for businesses. Custom web development, AI solutions, SEO, and app development by expert US-based team.{% endblock %}">
-    <meta name="twitter:image" content="{% block twitter_image %}{% static 'images/twitter-card.jpg' %}{% endblock %}">
+    <meta name="twitter:image" content="{% block twitter_image %}{{ SITE_ORIGIN }}{% static 'images/twitter-card.jpg' %}{% endblock %}">
     
-    <!-- Canonical URL -->
-    <link rel="canonical" href="{% block canonical_url %}{{ request.scheme }}://{{ request.get_host }}{{ request.path }}{% endblock %}">
+    <!-- Canonical URL (absolute HTTPS in production via SITE_ORIGIN) -->
+    <link rel="canonical" href="{% block canonical_url %}{{ SITE_ORIGIN }}{{ request.path }}{% endblock %}">
+
+    <!-- Structured data: Organization + WebSite (helps Google Knowledge Panel / sitelinks) -->
+    <script type="application/ld+json">
+    {"@context": "https://schema.org", "@graph": [
+      {"@type": "WebSite", "name": "Techlynx Pro", "url": "{{ SITE_ORIGIN }}/"},
+      {"@type": "Organization", "name": "Techlynx Pro", "url": "{{ SITE_ORIGIN }}/",
+       "logo": {"@type": "ImageObject", "url": "{{ SITE_ORIGIN }}{% static 'favicons/apple-touch-icon.png' %}"}}
+    ]}
+    </script>
     
     <!-- Additional Meta Tags -->
     {% block additional_meta %}{% endblock %}
@@ -233,6 +243,7 @@
             <!-- Chat Input -->
             <div class="p-4 bg-white dark:bg-slate-900 border-t border-[#e7ecf3] dark:border-slate-800">
                 <form id="chat-form" class="flex gap-2">
+                    {% csrf_token %}
                     <input 
                         type="text" 
                         id="chat-input" 

@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.http import JsonResponse, HttpResponse
+from django.views.decorators.cache import cache_control
 from django.views.decorators.http import require_GET, require_POST
 import logging
 from django.conf import settings
@@ -34,12 +35,19 @@ logger = logging.getLogger(__name__)
 
 
 @require_GET
+@cache_control(max_age=86400, public=True)
 def robots_txt(request):
-    """Serve robots.txt with dynamic sitemap URL so Google can find sitemap on any domain."""
+    """robots.txt: security-focused disallows + Sitemap URL for any host (staging/production)."""
     scheme = 'https' if not settings.DEBUG else request.scheme
     domain = request.get_host()
     sitemap_url = f"{scheme}://{domain}/sitemap.xml"
-    return render(request, 'robots.txt', {'sitemap_url': sitemap_url}, content_type='text/plain')
+    admin_path = (settings.ADMIN_PATH or 'admin/').strip('/') or 'admin'
+    return render(
+        request,
+        'robots.txt',
+        {'sitemap_url': sitemap_url, 'admin_path': admin_path},
+        content_type='text/plain',
+    )
 
 def home(request):
     """Homepage view with dynamic content"""
@@ -928,34 +936,24 @@ def chatbot_query(request):
         if not user_message:
             return JsonResponse({'error': 'Message is required'}, status=400)
         
-        # Length validation
+        # Length validation (do not HTML-escape before the model — breaks questions; JSON response is safe)
         if len(user_message) > 500:
             return JsonResponse({'error': 'Message too long (max 500 characters)'}, status=400)
+        user_message = user_message[:500]
         
-        # Basic input sanitization - remove potentially dangerous characters
-        user_message = user_message.replace('<', '&lt;').replace('>', '&gt;')[:500]
-        
-        # Check rate limiting (session-based)
+        # Rate limiting (session-based) — count only after successful model response
         if 'chatbot_queries' not in request.session:
             request.session['chatbot_queries'] = []
-        
-        # Clean up old queries (older than 1 hour)
         current_time = time.time()
         request.session['chatbot_queries'] = [
-            t for t in request.session['chatbot_queries'] 
+            t for t in request.session['chatbot_queries']
             if current_time - t < 3600
         ]
-        
-        # Check if user exceeded limit (10 queries per hour)
         if len(request.session['chatbot_queries']) >= 10:
             return JsonResponse({
                 'error': 'Rate limit exceeded. Please try again later.',
                 'status': 'rate_limited'
             }, status=429)
-        
-        # Add current query timestamp
-        request.session['chatbot_queries'].append(current_time)
-        request.session.modified = True
         
         # Get API key from settings
         api_key = settings.GEMINI_API_KEY
@@ -967,7 +965,8 @@ def chatbot_query(request):
         
         # Configure Gemini
         genai.configure(api_key=api_key)
-        model = genai.GenerativeModel('gemini-2.5-flash')
+        model_name = getattr(settings, 'GEMINI_MODEL', 'gemini-2.0-flash')
+        model = genai.GenerativeModel(model_name)
         
         # Get site context
         site_context = get_chatbot_context()
@@ -999,8 +998,19 @@ Provide a helpful, accurate response based on the context above:"""
         
         # Generate response
         response = model.generate_content(system_prompt)
-        bot_response = response.text
-        
+        try:
+            bot_response = (response.text or '').strip()
+        except ValueError:
+            bot_response = ''
+        if not bot_response:
+            return JsonResponse({
+                'error': 'No reply from the assistant. Please try a different question.',
+                'status': 'error'
+            }, status=503)
+
+        request.session['chatbot_queries'].append(current_time)
+        request.session.modified = True
+
         return JsonResponse({
             'response': bot_response,
             'status': 'success'

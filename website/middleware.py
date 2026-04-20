@@ -33,6 +33,11 @@ class SecurityHeadersMiddleware:
         if response.get("Content-Security-Policy"):
             return response
 
+        # CSP applies to HTML documents; skip for sitemap, robots, JSON, static errors, etc.
+        content_type = (response.get("Content-Type") or "").split(";")[0].strip().lower()
+        if content_type != "text/html":
+            return response
+
         # Align with current templates: inline handlers/styles, Google Fonts, GA4 (gtag), same-origin API.
         parts = [
             "default-src 'self'",

@@ -1,9 +1,30 @@
+# Techlynx Pro — robots.txt
+# Security: block admin, APIs, and form endpoints. SEO: allow public pages + assets for rendering.
+# Ref: https://developers.google.com/search/docs/crawling-indexing/robots/robots_txt
+
 User-agent: *
 Allow: /
 
-Disallow: /admin/
+# --- Security (no public HTML to index) ---
+Disallow: /{{ admin_path }}/
 Disallow: /api/
 Disallow: /newsletter/
-Disallow: /media/
+
+# Reserved / future internal prefixes (harmless if unused)
+Disallow: /private/
+
+# --- Crawl budget: block obvious junk (optional legacy paths) ---
+Disallow: /cgi-bin/
+Disallow: /tmp/
+Disallow: /temp/
+
+# --- Assets: Google needs CSS/JS/images for rendering & Discover ---
+Allow: /static/
+Allow: /media/
+
+# Generic static paths (if used by CDN or future routes)
+Allow: /images/
+Allow: /css/
+Allow: /js/
 
 Sitemap: {{ sitemap_url }}

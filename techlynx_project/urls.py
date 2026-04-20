@@ -11,13 +11,19 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.views.generic import TemplateView
 from website.views import robots_txt
-from website.sitemaps import StaticViewSitemap, BlogPostSitemap, CaseStudySitemap
+from website.sitemaps import (
+    StaticViewSitemap,
+    BlogPostSitemap,
+    CaseStudySitemap,
+    CareersJobSitemap,
+)
 
 # Sitemap configuration
 sitemaps = {
     'static': StaticViewSitemap,
     'blog': BlogPostSitemap,
     'case_studies': CaseStudySitemap,
+    'careers_jobs': CareersJobSitemap,
 }
 
 urlpatterns = [

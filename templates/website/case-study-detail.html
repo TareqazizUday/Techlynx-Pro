@@ -1,8 +1,34 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}{{ case_study.title }} - Case Study | {{ case_study.category }}{% endblock %}
 
 {% block meta_description %}{{ case_study.description }}{% endblock %}
+
+{% block og_title %}{{ case_study.title }} | Techlynx Pro{% endblock %}
+
+{% block og_description %}{{ case_study.description }}{% endblock %}
+
+{% block og_type %}article{% endblock %}
+
+{% block og_image %}{% if case_study.background_image %}{{ SITE_ORIGIN }}{{ case_study.background_image.url }}{% else %}{{ SITE_ORIGIN }}{% static 'images/og-image.jpg' %}{% endif %}{% endblock %}
+
+{% block twitter_image %}{% if case_study.background_image %}{{ SITE_ORIGIN }}{{ case_study.background_image.url }}{% else %}{{ SITE_ORIGIN }}{% static 'images/twitter-card.jpg' %}{% endif %}{% endblock %}
+
+{% block extra_head %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "{{ case_study.title|escapejs }}",
+  "description": "{{ case_study.description|striptags|truncatechars:300|escapejs }}",
+  "datePublished": "{{ case_study.created_at|date:'c' }}",
+  "author": {"@type": "Organization", "name": "Techlynx Pro"},
+  "publisher": {"@type": "Organization", "name": "Techlynx Pro", "logo": {"@type": "ImageObject", "url": "{{ SITE_ORIGIN }}{% static 'favicons/apple-touch-icon.png' %}"}}
+  {% if case_study.background_image %},"image": ["{{ SITE_ORIGIN }}{{ case_study.background_image.url }}"]{% endif %}
+}
+</script>
+{% endblock %}
 
 {% block content %}
 <!-- Hero Section -->

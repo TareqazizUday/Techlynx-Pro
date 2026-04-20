@@ -161,29 +161,41 @@ class TechlynxChatbot {
         this.showTypingIndicator();
 
         try {
-            // Get CSRF token
-            const csrfToken = this.getCookie('csrftoken');
+            const csrfToken = this.getCsrfToken();
+            if (!csrfToken) {
+                this.hideTypingIndicator();
+                this.displayMessage('Security token missing. Please refresh the page and try again.', false, true);
+                return;
+            }
 
-            // Send request to backend
             const response = await fetch('/api/chat/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'X-CSRFToken': csrfToken
                 },
+                credentials: 'same-origin',
                 body: JSON.stringify({ message: message })
             });
 
-            // Hide typing indicator
             this.hideTypingIndicator();
 
             if (!response.ok) {
-                const errorData = await response.json();
-                
+                let errorMessage = 'Sorry, I encountered an error. Please try again.';
+                try {
+                    const errorData = await response.json();
+                    if (errorData.error) {
+                        errorMessage = errorData.error;
+                    }
+                } catch (_) {
+                    if (response.status === 403) {
+                        errorMessage = 'Session expired or blocked. Please refresh the page and try again.';
+                    }
+                }
                 if (response.status === 429) {
                     this.displayMessage('You have reached the query limit. Please try again later.', false, true);
                 } else {
-                    this.displayMessage(errorData.error || 'Sorry, I encountered an error. Please try again.', false, true);
+                    this.displayMessage(errorMessage, false, true);
                 }
                 return;
             }
@@ -298,6 +310,15 @@ class TechlynxChatbot {
             }
         }
         return cookieValue;
+    }
+
+    /** CSRF cookie is often HttpOnly — read token from chat form hidden input first. */
+    getCsrfToken() {
+        const fromForm = this.chatForm && this.chatForm.querySelector('input[name="csrfmiddlewaretoken"]');
+        if (fromForm && fromForm.value) {
+            return fromForm.value;
+        }
+        return this.getCookie('csrftoken');
     }
 
     saveHistory() {
