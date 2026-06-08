@@ -50,8 +50,20 @@ chown -R ec2-user:ec2-user media/ 2>/dev/null || true
 
 echo -e "${YELLOW}[6] Restarting services...${NC}"
 sudo systemctl restart techlynxpro
-# Reload nginx config if you deployed nginx/techlynxpro.conf: sudo cp nginx/techlynxpro.conf /etc/nginx/conf.d/ && sudo nginx -t && sudo systemctl reload nginx
-sudo systemctl reload nginx 2>/dev/null || sudo systemctl restart nginx
+# Deploy nginx (ACME + HTTPS): sudo cp nginx/techlynxpro.conf /etc/nginx/conf.d/ && sudo nginx -t && sudo systemctl reload nginx
+if [ -f nginx/techlynxpro.conf ]; then
+    sudo cp nginx/techlynxpro.conf /etc/nginx/conf.d/techlynxpro.conf
+fi
+sudo nginx -t && sudo systemctl reload nginx 2>/dev/null || sudo systemctl restart nginx
+
+echo -e "${YELLOW}[6b] SSL certificate (Let's Encrypt) — renew if due or expired...${NC}"
+if command -v certbot >/dev/null 2>&1; then
+    sudo mkdir -p /var/www/certbot/.well-known/acme-challenge
+    sudo certbot renew --quiet --deploy-hook "systemctl reload nginx" || \
+        echo -e "${YELLOW}  certbot renew skipped/failed — run ./renew_ssl.sh if site shows ERR_CERT_DATE_INVALID${NC}"
+else
+    echo -e "${YELLOW}  (certbot not installed — run setup_ssl.sh or renew_ssl.sh)${NC}"
+fi
 
 echo ""
 echo -e "${YELLOW}[7] Checking service status...${NC}"

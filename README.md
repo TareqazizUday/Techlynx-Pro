@@ -120,6 +120,23 @@ chmod +x update_code.sh
 
 `upload_all_to_server.ps1` uploads code, `db.sqlite3`, and `media` (not `venv`, `.env`, `staticfiles`, or `*.pem`).
 
+## SSL / "Your connection is not private" (ERR_CERT_DATE_INVALID)
+
+This means the **Let's Encrypt certificate on the server expired**. It is fixed **on the EC2 server**, not in Django code.
+
+**Immediate fix (SSH into server):**
+
+```bash
+cd ~/techlynxpro
+sed -i 's/\r$//' renew_ssl.sh update_code.sh   # if needed (Windows line endings)
+chmod +x renew_ssl.sh
+./renew_ssl.sh
+```
+
+**Root cause:** Port 80 was redirecting **all** traffic to HTTPS, including `/.well-known/acme-challenge/`, so automatic renewal could never complete. `nginx/techlynxpro.conf` now allows ACME on HTTP before redirect.
+
+After `./renew_ssl.sh`, verify in a private browser window: `https://techlynxpro.com`
+
 ## License
 
 © 2025 Techlynx Pro. All rights reserved.

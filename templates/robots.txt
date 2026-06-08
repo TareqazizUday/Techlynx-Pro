@@ -5,6 +5,15 @@
 User-agent: *
 Allow: /
 
+# Main navigation — explicit crawl/index targets (matches primary menu)
+Allow: /services/
+Allow: /case-studies/
+Allow: /testimonials/
+Allow: /about/
+Allow: /careers/
+Allow: /blog/
+Allow: /blog/all/
+
 # --- Security (no public HTML to index) ---
 Disallow: /{{ admin_path }}/
 Disallow: /api/

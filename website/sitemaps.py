@@ -16,33 +16,43 @@ class StaticViewSitemap(Sitemap):
 
     protocol = 'https' if not getattr(settings, 'DEBUG', True) else None
 
+    # Home + primary nav (menu) — highest priority for indexing hints
     _priority = {
         'home': 1.0,
-        'services': 0.95,
-        'case_studies': 0.95,
-        'blog': 0.95,
+        'services': 0.96,
+        'case_studies': 0.96,
+        'testimonials': 0.96,
+        'about': 0.96,
+        'careers': 0.96,
+        'blog': 0.96,
         'contact': 0.9,
-        'about': 0.9,
-        'testimonials': 0.85,
-        'careers': 0.85,
         'industries': 0.85,
         'all_blogs': 0.85,
     }
     _changefreq = {
         'home': 'weekly',
+        'services': 'weekly',
+        'case_studies': 'weekly',
+        'testimonials': 'weekly',
+        'about': 'weekly',
+        'careers': 'weekly',
         'blog': 'weekly',
         'all_blogs': 'weekly',
-        'case_studies': 'weekly',
-        'careers': 'weekly',
         'privacy_policy': 'yearly',
         'terms_of_service': 'yearly',
     }
 
     def items(self):
+        # Order: home → main nav pages Google Search Console cares about → rest
         return [
             'home',
-            'about',
             'services',
+            'case_studies',
+            'testimonials',
+            'about',
+            'careers',
+            'blog',
+            'all_blogs',
             'contact',
             'web_development',
             'digital_marketing',
@@ -55,11 +65,6 @@ class StaticViewSitemap(Sitemap):
             'virtual_assistance',
             'bpo',
             'industries',
-            'case_studies',
-            'blog',
-            'all_blogs',
-            'careers',
-            'testimonials',
             'privacy_policy',
             'terms_of_service',
         ]
